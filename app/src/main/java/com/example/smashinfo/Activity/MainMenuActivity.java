@@ -53,6 +53,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 Partie partie = new Partie(pseudo.getText().toString(), JOINER_NAME, "white");
                 mDatabase.child("parties").push().setValue(partie);
                 Toast toast = Toast.makeText(getApplicationContext(), "partie créée. en attente de joueur", Toast.LENGTH_LONG);
+                toast.show();
             }
         });
 
