@@ -6,11 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".Activity.MainMenuActivity">
 
-    <Button
-        android:id="@+id/buttonDeconnexion"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Deconnexion"
-        tools:layout_editor_absoluteX="152dp"
-        tools:layout_editor_absoluteY="328dp" />
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/pseudo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="pseudo"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/createGame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/createGameText" />
+
+        <Button
+            android:id="@+id/loadGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/LoadGameText" />
+
+        <Button
+            android:id="@+id/buttonDeconnexion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Deconnexion" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
