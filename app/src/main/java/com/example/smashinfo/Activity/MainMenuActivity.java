@@ -1,5 +1,6 @@
 package com.example.smashinfo.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -13,12 +14,16 @@ import android.widget.Toast;
 import com.example.smashinfo.R;
 import com.example.smashinfo.data.Partie;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainMenuActivity extends AppCompatActivity {
 
     public static final String JOINER_NAME = "searching";
+    public static final String PARTIES = "parties";
     private Button buttonDeconnexion, createGame, loadGame;
     private EditText pseudo;
     private DatabaseReference mDatabase;
@@ -51,9 +56,38 @@ public class MainMenuActivity extends AppCompatActivity {
                     return;
                 }
                 Partie partie = new Partie(pseudo.getText().toString(), JOINER_NAME, "white");
-                mDatabase.child("parties").push().setValue(partie);
+                mDatabase.child(PARTIES).push().setValue(partie);
                 Toast toast = Toast.makeText(getApplicationContext(), "partie créée. en attente de joueur", Toast.LENGTH_LONG);
                 toast.show();
+            }
+        });
+
+        final ValueEventListener partieAdded = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (pseudo.getText().toString().equals("")) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "complete pseudo please", Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
+                Partie partie = dataSnapshot.getValue(Partie.class);
+                partie.joinerName = pseudo.getText().toString();
+                mDatabase.child(PARTIES).child(dataSnapshot.getRef().toString()).setValue(partie);
+                Toast toast = Toast.makeText(getApplicationContext(), "partie join, pseudo : " + partie.joinerName, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+
+        loadGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDatabase.addValueEventListener(partieAdded);
+                for(Partie partie : mDatabase.child(PARTIES).)
             }
         });
 
