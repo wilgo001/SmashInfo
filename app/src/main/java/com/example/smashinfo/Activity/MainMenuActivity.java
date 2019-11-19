@@ -2,8 +2,10 @@ package com.example.smashinfo.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -62,6 +64,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 mDatabase.child(PARTIES).push().setValue(partie);
                 Toast toast = Toast.makeText(getApplicationContext(), "partie créée. en attente de joueur", Toast.LENGTH_LONG);
                 toast.show();
+
             }
         });
 
@@ -73,15 +76,19 @@ public class MainMenuActivity extends AppCompatActivity {
                     toast.show();
                     return;
                 }
-                Partie partie = dataSnapshot.getValue(Partie.class);
-                Log.d("debug1", dataSnapshot.getValue().toString());
-                Log.d("debug2", dataSnapshot.getValue(Partie.class).toString());
-                Log.d("debug3", partie.toString());
-                //aaa
-                partie.joinerName = pseudo.getText().toString();
-                mDatabase.child(dataSnapshot.getKey()).setValue(partie);
-                //Toast toast = Toast.makeText(getApplicationContext(), partie.toString(), Toast.LENGTH_SHORT);
-                //toast.show();
+                Partie partie;
+                for(DataSnapshot data : dataSnapshot.getChildren()) {
+                    partie = data.getValue(Partie.class);
+                    Log.d("debug1", data.getValue().toString());
+                    Log.d("debug3", partie.toString());
+                    if ((partie.joinerName.equals(JOINER_NAME))&&(!partie.hosterName.equals(pseudo.getText().toString()))) {
+                        partie.joinerName = pseudo.getText().toString();
+                        Toast toast = Toast.makeText(getApplicationContext(), "key : " + data.getKey(), Toast.LENGTH_SHORT);
+                        toast.show();
+                        mDatabase.child(PARTIES).child(data.getKey()).setValue(partie);
+                        return;
+                    }
+                }
             }
 
             @Override
@@ -109,7 +116,28 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mDatabase.addChildEventListener(partieAdded);
-                //for(Partie partie : mDatabase.child(PARTIES).)
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("debugAlertDialog", "1.ca marche pas ?");
+                        AlertDialog alertDialog = new AlertDialog.Builder(getApplicationContext()).create();
+                        Log.d("debugAlertDialog", "2.ca marche pas ?");
+                        alertDialog.setTitle("Recherche en cours");
+                /*alertDialog.setMessage("Veuillez patientez, nous recherchons une partie");
+                mDatabase.addChildEventListener(partieAdded);
+                alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "annuler", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mDatabase.removeEventListener(partieAdded);
+                        //alertDialog.setCancelable(true);
+                    }
+                });
+                Log.d("debugAlertDialog", "ca marche pas ?");*/
+                        alertDialog.show();
+                    }
+                });
+
+
             }
         });
 
