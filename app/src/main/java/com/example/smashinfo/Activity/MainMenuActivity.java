@@ -77,6 +77,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 Log.d("debug1", dataSnapshot.getValue().toString());
                 Log.d("debug2", dataSnapshot.getValue(Partie.class).toString());
                 Log.d("debug3", partie.toString());
+                //aaa
                 partie.joinerName = pseudo.getText().toString();
                 mDatabase.child(dataSnapshot.getKey()).setValue(partie);
                 //Toast toast = Toast.makeText(getApplicationContext(), partie.toString(), Toast.LENGTH_SHORT);
