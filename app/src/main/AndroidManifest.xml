@@ -11,13 +11,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".game.FieldActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:screenOrientation="landscape"/>
-
-        <activity android:name=".Activity.MainMenuActivity" />
-        <activity android:name=".Activity.LoginActivity" />
-        <activity android:name=".Activity.SignInActivity">
+        <activity
+            android:name=".game.FieldActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_field"
+            android:theme="@style/FullscreenTheme" />
+        <activity android:name=".activity.MainMenuActivity" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

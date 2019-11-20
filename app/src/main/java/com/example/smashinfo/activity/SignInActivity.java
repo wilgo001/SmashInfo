@@ -1,4 +1,4 @@
-package com.example.smashinfo.Activity;
+package com.example.smashinfo.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
