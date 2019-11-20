@@ -1,4 +1,4 @@
-package com.example.smashinfo.Activity;
+package com.example.smashinfo.activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -79,7 +79,7 @@ public class MainMenuActivity extends AppCompatActivity {
                     @Override
                     public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         for(DataSnapshot data : dataSnapshot.getChildren()) {
-                            if (partieKey.equals(data.getKey())) {
+                            if (partieKey.equals(data.getKey())) {//s
                                 Partie partie = data.getValue(Partie.class);
                                 if(!partie.getJoinerName().equals(JOINER_NAME)) {
                                     partie.setStart(true);
