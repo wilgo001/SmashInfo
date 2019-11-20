@@ -7,14 +7,24 @@ public class Partie {
     public String hosterName;
     public String joinerName;
     public String color;
+    public boolean start;
 
     public Partie() {
     }
 
-    public Partie(String hosterName, String joinerName, String color) {
+    public Partie(String hosterName, String joinerName, String color, boolean start) {
         this.hosterName = hosterName;
         this.joinerName = joinerName;
         this.color = color;
+        this.start = start;
+    }
+
+    public boolean isStart() {
+        return start;
+    }
+
+    public void setStart(boolean start) {
+        this.start = start;
     }
 
     public String getHosterName() {

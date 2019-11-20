@@ -8,30 +8,35 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EdgeEffect;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.smashinfo.R;
 import com.example.smashinfo.data.Partie;
+import com.example.smashinfo.game.FieldActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainMenuActivity extends AppCompatActivity {
 
     public static final String JOINER_NAME = "searching";
     public static final String PARTIES = "parties";
+    public static final String MESSAGE = "Veuillez patientez, nous recherchons une partie\n";
+    public static final String HOSTER_NAME = "hosterName";
     private Button buttonDeconnexion, createGame, loadGame;
     private EditText pseudo;
     private DatabaseReference mDatabase;
+    private String message;
+    private String partieKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +65,47 @@ public class MainMenuActivity extends AppCompatActivity {
                     toast.show();
                     return;
                 }
-                Partie partie = new Partie(pseudo.getText().toString(), JOINER_NAME, "white");
+                final Partie partie = new Partie(pseudo.getText().toString(), JOINER_NAME, "white", false);
+                mDatabase.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        for(DataSnapshot data : dataSnapshot.getChildren()) {
+                            if(data.child(HOSTER_NAME).getValue().equals(pseudo.getText().toString()))
+                                partieKey = data.getKey();
+                        }
+
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        for(DataSnapshot data : dataSnapshot.getChildren()) {
+                            if (partieKey.equals(data.getKey())) {
+                                Partie partie = data.getValue(Partie.class);
+                                if(!partie.getJoinerName().equals(JOINER_NAME)) {
+                                    partie.setStart(true);
+                                    mDatabase.child(PARTIES).child(partieKey).setValue(partie);
+                                    startPartie();
+                                }
+                            }
+
+                        }
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
                 mDatabase.child(PARTIES).push().setValue(partie);
                 Toast toast = Toast.makeText(getApplicationContext(), "partie créée. en attente de joueur", Toast.LENGTH_LONG);
                 toast.show();
@@ -71,21 +116,15 @@ public class MainMenuActivity extends AppCompatActivity {
         final ChildEventListener partieAdded = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (pseudo.getText().toString().equals("")) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "complete pseudo please", Toast.LENGTH_SHORT);
-                    toast.show();
-                    return;
-                }
                 Partie partie;
                 for(DataSnapshot data : dataSnapshot.getChildren()) {
                     partie = data.getValue(Partie.class);
-                    Log.d("debug1", data.getValue().toString());
-                    Log.d("debug3", partie.toString());
                     if ((partie.joinerName.equals(JOINER_NAME))&&(!partie.hosterName.equals(pseudo.getText().toString()))) {
                         partie.joinerName = pseudo.getText().toString();
                         Toast toast = Toast.makeText(getApplicationContext(), "key : " + data.getKey(), Toast.LENGTH_SHORT);
                         toast.show();
-                        mDatabase.child(PARTIES).child(data.getKey()).setValue(partie);
+                        partieKey=data.getKey();
+                        mDatabase.child(PARTIES).child(partieKey).setValue(partie);
                         return;
                     }
                 }
@@ -93,7 +132,13 @@ public class MainMenuActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                for(DataSnapshot data : dataSnapshot.getChildren()) {
+                    if (partieKey.equals(data.getKey())) {
+                        Partie partie = data.getValue(Partie.class);
+                        if(partie.isStart())
+                            startPartie();
+                    }
+                }
             }
 
             @Override
@@ -115,32 +160,51 @@ public class MainMenuActivity extends AppCompatActivity {
         loadGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (pseudo.getText().toString().equals("")) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "complete pseudo please", Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
+                message = MESSAGE;
                 mDatabase.addChildEventListener(partieAdded);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.d("debugAlertDialog", "1.ca marche pas ?");
-                        AlertDialog alertDialog = new AlertDialog.Builder(getApplicationContext()).create();
-                        Log.d("debugAlertDialog", "2.ca marche pas ?");
-                        alertDialog.setTitle("Recherche en cours");
-                /*alertDialog.setMessage("Veuillez patientez, nous recherchons une partie");
+                final AlertDialog alertDialog = new AlertDialog.Builder(MainMenuActivity.this).create();
+                alertDialog.setTitle("Recherche en cours");
+                alertDialog.setMessage(message);
                 mDatabase.addChildEventListener(partieAdded);
-                alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "annuler", new DialogInterface.OnClickListener() {
+                alertDialog.setButton(DialogInterface.BUTTON_NEUTRAL, "annuler", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         mDatabase.removeEventListener(partieAdded);
-                        //alertDialog.setCancelable(true);
-                    }
-                });
-                Log.d("debugAlertDialog", "ca marche pas ?");*/
-                        alertDialog.show();
                     }
                 });
 
+                Timer timer = new Timer();
+                TimerTask timerTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
 
+                                if(message.equals(MESSAGE + "..."))
+                                    message = MESSAGE;
+                                else
+                                    message = message + ".";
+                                alertDialog.setMessage(message);
+                            }
+                        });
+                    }
+                };
+                alertDialog.show();
+                timer.schedule(timerTask, 0, 1000);
             }
         });
 
+    }
+
+    private void startPartie() {
+        Intent myIntent = new Intent(this, FieldActivity.class);
+        startActivity(myIntent);
     }
 
     private void quitApp() {
