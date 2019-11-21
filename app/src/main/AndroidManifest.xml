@@ -13,9 +13,8 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".game.FieldActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_field"
-            android:theme="@style/FullscreenTheme" />
+            android:screenOrientation="portrait"
+            />
         <activity android:name=".activity.MainMenuActivity" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.SignInActivity">

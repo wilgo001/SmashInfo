@@ -32,6 +32,7 @@ public class MainMenuActivity extends AppCompatActivity {
     public static final String PARTIES = "parties";
     public static final String MESSAGE = "Veuillez patientez, nous recherchons une partie\n";
     public static final String HOSTER_NAME = "hosterName";
+    public static final String PARTIE_KEY = "com.example.smashinfo.PARTIE_KEY";
     private Button buttonDeconnexion, createGame, loadGame;
     private EditText pseudo;
     private DatabaseReference mDatabase;
@@ -204,6 +205,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private void startPartie() {
         Intent myIntent = new Intent(this, FieldActivity.class);
+        myIntent.putExtra(PARTIE_KEY, partieKey);
         startActivity(myIntent);
     }
 
