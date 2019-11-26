@@ -22,6 +22,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,7 +36,7 @@ public class MainMenuActivity extends AppCompatActivity {
     public static final String PARTIE_KEY = "com.example.smashinfo.PARTIE_KEY";
     private Button buttonDeconnexion, createGame, loadGame;
     private EditText pseudo;
-    private DatabaseReference mDatabase;
+    private DatabaseReference refGeneral, refPartie;
     private String message;
     private String partieKey;
 
@@ -48,7 +49,24 @@ public class MainMenuActivity extends AppCompatActivity {
         createGame = (Button) findViewById(R.id.createGame);
         loadGame = (Button) findViewById(R.id.loadGame);
         pseudo = (EditText) findViewById(R.id.pseudo);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        refGeneral = FirebaseDatabase.getInstance().getReference();
+
+        final ValueEventListener createdPartie = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Partie partie = dataSnapshot.getValue(Partie.class);
+                if(!partie.getJoinerName().equals(JOINER_NAME)) {
+                    partie.setStart(true);
+                    refGeneral.child(PARTIES).child(partieKey).setValue(partie);
+                    startPartie();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
 
         buttonDeconnexion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,48 +84,10 @@ public class MainMenuActivity extends AppCompatActivity {
                     toast.show();
                     return;
                 }
-                final Partie partie = new Partie(pseudo.getText().toString(), JOINER_NAME, "white", false);
-                mDatabase.addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                        for(DataSnapshot data : dataSnapshot.getChildren()) {
-                            if(data.child(HOSTER_NAME).getValue().equals(pseudo.getText().toString()))
-                                partieKey = data.getKey();
-                        }
-
-                    }
-
-                    @Override
-                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                        for(DataSnapshot data : dataSnapshot.getChildren()) {
-                            if (partieKey.equals(data.getKey())) {//s
-                                Partie partie = data.getValue(Partie.class);
-                                if(!partie.getJoinerName().equals(JOINER_NAME)) {
-                                    partie.setStart(true);
-                                    mDatabase.child(PARTIES).child(partieKey).setValue(partie);
-                                    startPartie();
-                                }
-                            }
-
-                        }
-                    }
-
-                    @Override
-                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-                mDatabase.child(PARTIES).push().setValue(partie);
+                Partie partie = new Partie(pseudo.getText().toString(), JOINER_NAME, "white", false);
+                refPartie = refGeneral.child(PARTIES).push();
+                refPartie.addValueEventListener(createdPartie);
+                refPartie.setValue(partie);
                 Toast toast = Toast.makeText(getApplicationContext(), "partie créée. en attente de joueur", Toast.LENGTH_LONG);
                 toast.show();
 
@@ -125,7 +105,7 @@ public class MainMenuActivity extends AppCompatActivity {
                         Toast toast = Toast.makeText(getApplicationContext(), "key : " + data.getKey(), Toast.LENGTH_SHORT);
                         toast.show();
                         partieKey=data.getKey();
-                        mDatabase.child(PARTIES).child(partieKey).setValue(partie);
+                        refGeneral.child(PARTIES).child(partieKey).setValue(partie);
                         return;
                     }
                 }
@@ -167,15 +147,15 @@ public class MainMenuActivity extends AppCompatActivity {
                     return;
                 }
                 message = MESSAGE;
-                mDatabase.addChildEventListener(partieAdded);
+                refGeneral.addChildEventListener(partieAdded);
                 final AlertDialog alertDialog = new AlertDialog.Builder(MainMenuActivity.this).create();
                 alertDialog.setTitle("Recherche en cours");
                 alertDialog.setMessage(message);
-                mDatabase.addChildEventListener(partieAdded);
+                refGeneral.addChildEventListener(partieAdded);
                 alertDialog.setButton(DialogInterface.BUTTON_NEUTRAL, "annuler", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        mDatabase.removeEventListener(partieAdded);
+                        refGeneral.removeEventListener(partieAdded);
                     }
                 });
 
