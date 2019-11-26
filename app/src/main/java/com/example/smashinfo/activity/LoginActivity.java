@@ -68,9 +68,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_login);
 
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
@@ -147,6 +144,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
+        Log.v("debug", "coucou");
         //background.setLayoutParams(new ConstraintLayout.LayoutParams(intro.getWidth(), intro.getHeight()));
         int logoSize = intro.getWidth()/4;
         int punchSize = intro.getWidth()/5;
@@ -159,6 +157,8 @@ public class LoginActivity extends AppCompatActivity {
         titreAST.setX(intro.getWidth()/2-logoSize/2);
         titreAST.setY(intro.getHeight()/2+logoSize);
 
+        Toast.makeText(LoginActivity.this, "AST set", Toast.LENGTH_SHORT).show();
+        Log.v("debug", "AST set");
 
         //create the logo IUT
         logoIUT.setLayoutParams(new RelativeLayout.LayoutParams(logoSize, logoSize));
@@ -265,6 +265,12 @@ public class LoginActivity extends AppCompatActivity {
         punchRed.setAlpha(1.0f);
         punchRed.startAnimation(rightToLeft);
         punchBlue.startAnimation(leftToRight);
+        intro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToLogIn();
+            }
+        });
         run = new Runnable() {
             @Override
             public void run() {
@@ -288,13 +294,6 @@ public class LoginActivity extends AppCompatActivity {
 
         introMusic.setVolume(0.5f, 0.5f);
         introMusic.start();
-
-        intro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToLogIn();
-            }
-        });
     }
 
     @Override
@@ -307,10 +306,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        Log.i("info", "in login");
-        //FirebaseUser currentUser = mAuth.getCurrentUser();
-        //updateUser(currentUser);
+        Log.i("information", "in login");
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateUser(currentUser);
     }
 
 
