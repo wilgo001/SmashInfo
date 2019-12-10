@@ -77,7 +77,7 @@ public class DeckGestion {
         CARDREF.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.println(Log.DEBUG, "debug", "je marche pas");
+                Log.println(Log.DEBUG, "debug", "je marche pa s");
 
                 dataCard = dataSnapshot.child(id).getValue(DataSmasheurCard.class);
                 /*
