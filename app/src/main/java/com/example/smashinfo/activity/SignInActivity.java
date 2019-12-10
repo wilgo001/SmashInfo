@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.smashinfo.R;
 import com.example.smashinfo.data.DataCard;
 import com.example.smashinfo.data.DataUser;
+import com.example.smashinfo.data.DeckGestion;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -82,11 +83,11 @@ public class SignInActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        /*FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser!=null) {
             goMainMenu();
         }
-
+*/
     }
 
     private void goToLogIn() {
@@ -127,16 +128,12 @@ public class SignInActivity extends AppCompatActivity {
 
     private void updateUser(final FirebaseUser user) {
         if(user != null) {
-            final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(USERS).child(user.getUid());
             DataUser dataUser = new DataUser(user.getEmail(), editTextPseudo.getText().toString());
-            DataCard[] deck = autoDeck();
-
-            databaseReference.child(USERS).child(user.getUid()).setValue(dataUser);
-            for(DataCard card : deck) {
-                databaseReference.child("deck").setValue(card);
-                databaseReference.child(USERS).child(user.getUid()).child(DECKS_LIST).child("deck1").setValue(card);
-            }
-
+            databaseReference.setValue(dataUser);
+            DeckGestion autoDeck = new DeckGestion(databaseReference.child("deck1"));
+            Log.println(Log.DEBUG, "debug", DeckGestion.getCardWithId("-LvQ7FVfEcyIvTAOB9Ue", DeckGestion.SMASHEUR).toString());
+            Toast.makeText(this, "card : " + DeckGestion.getCardWithId("-LvQ7FVfEcyIvTAOB9Ue", DeckGestion.SMASHEUR).toString(), Toast.LENGTH_LONG).show();
             goMainMenu();
         }
 
@@ -154,14 +151,6 @@ public class SignInActivity extends AppCompatActivity {
             return false;
         }
         return true;
-    }
-
-    public DataCard[] autoDeck() {
-        DataCard[] deck = new DataCard[30];
-        //TODO : ajouter des cartes dans le deck automatique de base.
-        deck[0] = new DataCard("lucas", "fuck lucas", "0", "0");
-        deck[1] = new DataCard("mamie", "anes batés", "150", "150");
-        return deck;
     }
 
 }

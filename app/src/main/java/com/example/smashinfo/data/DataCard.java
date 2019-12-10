@@ -4,8 +4,6 @@ public class DataCard {
 
     public String name;
     public String description;
-    public String valAttaque;
-    public String valDefense;
 
     public DataCard() {
     }
@@ -13,8 +11,6 @@ public class DataCard {
     public DataCard(String name, String description, String valAttaque, String valDefense) {
         this.name = name;
         this.description = description;
-        this.valAttaque = valAttaque;
-        this.valDefense = valDefense;
     }
 
     public String getName() {
@@ -33,19 +29,9 @@ public class DataCard {
         this.description = description;
     }
 
-    public String getValAttaque() {
-        return valAttaque;
-    }
-
-    public void setValAttaque(String valAttaque) {
-        this.valAttaque = valAttaque;
-    }
-
-    public String getValDefense() {
-        return valDefense;
-    }
-
-    public void setValDefense(String valDefense) {
-        this.valDefense = valDefense;
+    @Override
+    public String toString() {
+        return "name:" + name +
+                ", description:" + description;
     }
 }

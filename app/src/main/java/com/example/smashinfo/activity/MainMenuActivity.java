@@ -8,15 +8,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.smashinfo.R;
+import com.example.smashinfo.data.DataCard;
+import com.example.smashinfo.data.DeckGestion;
 import com.example.smashinfo.data.Partie;
 import com.example.smashinfo.game.FieldActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,11 +43,14 @@ public class MainMenuActivity extends AppCompatActivity {
     private DatabaseReference refGeneral, refPartie;
     private String message;
     private String partieKey;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         buttonDeconnexion = (Button) findViewById(R.id.buttonDeconnexion);
         createGame = (Button) findViewById(R.id.createGame);
@@ -181,6 +188,21 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(SignInActivity.USERS).child(user.getUid());
+        DeckGestion autoDeck = new DeckGestion(databaseReference.child("deck1"));
+
+        DataCard dataCard = DeckGestion.getCardWithId("-LvQ7FVfEcyIvTAOB9Ue", DeckGestion.SMASHEUR);
+        if (dataCard == null) {
+            Toast.makeText(this, "card is null ", Toast.LENGTH_LONG).show();
+        }else {
+            Log.println(Log.DEBUG, "debug", dataCard.toString());
+            Toast.makeText(this, "card : " + dataCard.toString(), Toast.LENGTH_LONG).show();
+        }
     }
 
     private void startPartie() {
