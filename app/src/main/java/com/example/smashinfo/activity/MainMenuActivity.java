@@ -191,53 +191,6 @@ public class MainMenuActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(SignInActivity.USERS).child(user.getUid());
-        DeckGestion autoDeck = new DeckGestion(databaseReference.child("deck1"));
-
-        FirebaseDatabase.getInstance().getReference().child("cartes").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Toast.makeText(getApplicationContext(), dataSnapshot.toString(), Toast.LENGTH_LONG).show();
-
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    //Toast.makeText(getApplicationContext(), data.toString(), Toast.LENGTH_LONG).show();
-                    DataSmasheurCard card = data.getValue(DataSmasheurCard.class);
-                    Toast.makeText(getApplicationContext(), card.toString(), Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        /*DataCard dataCard = DeckGestion.getCardWithId("-LvQ7FVfEcyIvTAOB9Ue", DeckGestion.SMASHEUR);
-        if (dataCard == null) {
-            Toast.makeText(this, "card is null ", Toast.LENGTH_LONG).show();
-        }else {
-            Log.println(Log.DEBUG, "debug", dataCard.toString());
-            Toast.makeText(this, "card : " + dataCard.toString(), Toast.LENGTH_LONG).show();
-        }*/
-    }
-
     private void startPartie() {
         Intent myIntent = new Intent(this, FieldActivity.class);
         myIntent.putExtra(PARTIE_KEY, partieKey);
@@ -247,5 +200,16 @@ public class MainMenuActivity extends AppCompatActivity {
     private void quitApp() {
         Intent myIntent = new Intent(this, LoginActivity.class);
         startActivity(myIntent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(SignInActivity.USERS).child(user.getUid());
+        DatabaseReference deckRef = databaseReference.child("starter deck");
+        String id = "-LvQ7FVfEcyIvTAOB9Ue";
+        DataCard dataCard = DeckGestion.getCardWithId(id);
+        Toast.makeText(this, dataCard.toString(), Toast.LENGTH_LONG);
+        deckRef.child(id).setValue(dataCard);
     }
 }

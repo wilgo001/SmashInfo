@@ -1,6 +1,5 @@
 package com.example.smashinfo.activity;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -16,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.smashinfo.R;
 import com.example.smashinfo.data.DataCard;
+import com.example.smashinfo.data.DataSmasheurCard;
 import com.example.smashinfo.data.DataUser;
 import com.example.smashinfo.data.DeckGestion;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,9 +24,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -49,12 +46,12 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
 
-        editTextPseudo = (EditText) findViewById(R.id.editTextPseudo);
-        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
-        editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-        editTextConfirmPassword = (EditText) findViewById(R.id.editTextConfirmPassword);
-        buttonSignIn = (Button) findViewById(R.id.buttonSignIn);
-        textViewGoConnecter = (TextView) findViewById(R.id.textViewGoInscrire);
+        editTextPseudo = findViewById(R.id.editTextPseudo);
+        editTextEmail = findViewById(R.id.editTextEmail);
+        editTextPassword = findViewById(R.id.editTextPassword);
+        editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
+        buttonSignIn = findViewById(R.id.buttonSignIn);
+        textViewGoConnecter = findViewById(R.id.textViewGoInscrire);
 
         textViewGoConnecter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +70,7 @@ public class SignInActivity extends AppCompatActivity {
                 ok = ok && (editTextPassword.getText().toString().equals(editTextConfirmPassword.getText().toString()));
 
                 if(ok) {
-                    créerCompte(editTextEmail.getText().toString(), editTextPassword.getText().toString());
+                    creerCompte(editTextEmail.getText().toString(), editTextPassword.getText().toString());
                 }
             }
         });
@@ -85,7 +82,6 @@ public class SignInActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         /*FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser!=null) {
-            goMainMenu();
         }
 */
     }
@@ -96,7 +92,7 @@ public class SignInActivity extends AppCompatActivity {
         startActivity(myIntent);
     }
 
-    private void créerCompte(String email, String password) {
+    private void creerCompte(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -131,10 +127,13 @@ public class SignInActivity extends AppCompatActivity {
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(USERS).child(user.getUid());
             DataUser dataUser = new DataUser(user.getEmail(), editTextPseudo.getText().toString());
             databaseReference.setValue(dataUser);
-            DeckGestion autoDeck = new DeckGestion(databaseReference.child("deck1"));
-            Log.println(Log.DEBUG, "debug", DeckGestion.getCardWithId("-LvQ7FVfEcyIvTAOB9Ue", DeckGestion.SMASHEUR).toString());
-            Toast.makeText(this, "card : " + DeckGestion.getCardWithId("-LvQ7FVfEcyIvTAOB9Ue", DeckGestion.SMASHEUR).toString(), Toast.LENGTH_LONG).show();
-            goMainMenu();
+
+            DatabaseReference deckRef = databaseReference.child("starter deck");
+            //DeckGestion autoDeck = new DeckGestion(deckRef);
+            String id = "-LvQ7FVfEcyIvTAOB9Ue";
+            DataCard dataCard = (DataSmasheurCard) DeckGestion.getCardWithId(id);
+            Toast.makeText(this, dataCard.toString(), Toast.LENGTH_LONG);
+            deckRef.child(id).setValue(dataCard);
         }
 
     }

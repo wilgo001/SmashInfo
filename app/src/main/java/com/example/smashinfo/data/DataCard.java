@@ -2,23 +2,25 @@ package com.example.smashinfo.data;
 
 public class DataCard {
 
-    public String name;
+    public String nom;
     public String description;
+    public String probabilite;
 
     public DataCard() {
     }
 
-    public DataCard(String name, String description, String valAttaque, String valDefense) {
-        this.name = name;
+    public DataCard(String nom, String description, String probabilite) {
+        this.nom = nom;
         this.description = description;
+        this.probabilite = probabilite;
     }
 
     public String getName() {
-        return name;
+        return nom;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String nom) {
+        this.nom = nom;
     }
 
     public String getDescription() {
@@ -31,7 +33,8 @@ public class DataCard {
 
     @Override
     public String toString() {
-        return "name:" + name +
-                ", description:" + description;
+        return "nom:" + nom +
+                ", description:" + description +
+                ", probabilite:" + probabilite;
     }
 }
