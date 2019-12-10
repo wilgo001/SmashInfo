@@ -38,6 +38,7 @@ public class DeckGestion {
 
     private void generateAutoDeck() {
         //TODO : faire un meilleur generateur de starterDeck automatique
+        Log.println(Log.DEBUG, "debug", "je marche pas1");
         deckRef.child("name").setValue("starter deck");
         deckRef.child("card").setValue(getCardWithId("-LvQ7FVfEcyIvTAOB9Ue", SMASHEUR));
         for (int i = 0; i < deck.length; i++) {
@@ -45,11 +46,44 @@ public class DeckGestion {
             //deckRef.child(""+i).setValue(deck[i]);
         }
     }
+
+    public static DataSnapshot test(final String id) {
+        final DataSnapshot[] data = new DataSnapshot[1];
+        CARDREF.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                data[0] = dataSnapshot;
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return data[0];
+    }
+
     public static DataCard getCardWithId(final String id, final String typeCard) {
         CARDREF.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Log.println(Log.DEBUG, "debug", "je marche pas");
+                Log.println(Log.DEBUG, "debug", "je marche pas2");
 
                 dataCard = dataSnapshot.child(id).getValue(DataSmasheurCard.class);
             }

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.smashinfo.R;
 import com.example.smashinfo.data.DataCard;
+import com.example.smashinfo.data.DataSmasheurCard;
 import com.example.smashinfo.data.DeckGestion;
 import com.example.smashinfo.data.Partie;
 import com.example.smashinfo.game.FieldActivity;
@@ -196,13 +197,45 @@ public class MainMenuActivity extends AppCompatActivity {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(SignInActivity.USERS).child(user.getUid());
         DeckGestion autoDeck = new DeckGestion(databaseReference.child("deck1"));
 
-        DataCard dataCard = DeckGestion.getCardWithId("-LvQ7FVfEcyIvTAOB9Ue", DeckGestion.SMASHEUR);
+        FirebaseDatabase.getInstance().getReference().child("cartes").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Toast.makeText(getApplicationContext(), dataSnapshot.toString(), Toast.LENGTH_LONG).show();
+
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    //Toast.makeText(getApplicationContext(), data.toString(), Toast.LENGTH_LONG).show();
+                    DataSmasheurCard card = data.getValue(DataSmasheurCard.class);
+                    Toast.makeText(getApplicationContext(), card.toString(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        /*DataCard dataCard = DeckGestion.getCardWithId("-LvQ7FVfEcyIvTAOB9Ue", DeckGestion.SMASHEUR);
         if (dataCard == null) {
             Toast.makeText(this, "card is null ", Toast.LENGTH_LONG).show();
         }else {
             Log.println(Log.DEBUG, "debug", dataCard.toString());
             Toast.makeText(this, "card : " + dataCard.toString(), Toast.LENGTH_LONG).show();
-        }
+        }*/
     }
 
     private void startPartie() {
