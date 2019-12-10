@@ -9,4 +9,12 @@
     <string name="title_activity_field">FieldActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string-array name="phase_jeu">
+        <item>Draw Phase</item>
+        <item>Main Phase 1</item>
+        <item>Battle Phase</item>
+        <item>Main Phase 2</item>
+        <item>End Phase</item>
+    </string-array>
 </resources>
