@@ -49,7 +49,7 @@ MainMenuActivity extends AppCompatActivity {
     private ConstraintLayout accueilLayout, lootLayout, deckLayout, lobbyLayout, setPartieLayout;
     FirebaseUser user;
     private ValueEventListener createdPartie;
-    private int creatorStep;
+    private int step;
     private CheckBox hostercheck, joinercheck;
 
     @Override
@@ -82,21 +82,23 @@ MainMenuActivity extends AppCompatActivity {
         lobbyLayout = findViewById(R.id.lobbylayout);
         setPartieLayout = findViewById(R.id.setpartieLayout);
 
-        hostercheck = findViewById(R.id.checkBox1);
-        joinercheck = findViewById(R.id.checkBox2);
+        hostercheck = findViewById(R.id.checkBox2);
+        joinercheck = findViewById(R.id.checkBox1);
         kickButton = findViewById(R.id.kickButton);
+        hosterName = findViewById(R.id.hosterName);
         kickButton.setAlpha(0F);
 
-        creatorStep = 0;
+        step = 0;
 
         createdPartie = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 final Partie partie = dataSnapshot.getValue(Partie.class);
-                switch (creatorStep) {
+                switch (step) {
                     case 0:
+                        hosterName.setText(partie.hosterName);
                         joinercheck.setClickable(false);
-                        creatorStep++;
+                        step++;
                         loadPartie();
                         break;
                     case 1:
@@ -110,10 +112,17 @@ MainMenuActivity extends AppCompatActivity {
                                 }
                             });
                             partie.hosterReady = hostercheck.isChecked();
+                        }else {
+                            combat();
+                            if (refPartie!=null) {
+                                refPartie.removeEventListener(createdPartie);
+                                refPartie.removeValue();
+                                step = 0;
+
+                            }
                         }
                         break;
                 }
-
                 refPartie.setValue(partie);
 
             }
@@ -152,15 +161,14 @@ MainMenuActivity extends AppCompatActivity {
         final ChildEventListener partieAdded = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Partie partie;
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    partie = data.getValue(Partie.class);
+                Partie partie = dataSnapshot.getValue(Partie.class);
                     if ((partie.joinerName.equals(JOINER_NAME)) && (!partie.hosterName.equals(pseudo.getText().toString()))) {
                         partie.joinerName = pseudo.getText().toString();
-                        partieKey = data.getKey();
+                        partieKey = dataSnapshot.getKey();
                         refGeneral.child(PARTIES).child(partieKey).setValue(partie);
+                        hostercheck.setClickable(false);
+                        loadPartie();
                     }
-                }
             }
 
             @Override
@@ -168,8 +176,14 @@ MainMenuActivity extends AppCompatActivity {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     if (partieKey.equals(data.getKey())) {
                         Partie partie = data.getValue(Partie.class);
-                        if (partie.isStart())
-                            loadPartie();
+                        hostercheck.setChecked(partie.hosterReady);
+                        if (partie.joinerName.equals(JOINER_NAME)) {
+                            Toast.makeText(getApplicationContext(), "vous avez été expulsé de la partie", Toast.LENGTH_LONG).show();
+                            refGeneral.removeEventListener(this);
+                            combat();
+                        }
+                        partie.hosterReady = hostercheck.isChecked();
+                        refGeneral.child(PARTIES).child(partieKey).setValue(partie);
                     }
                 }
             }
@@ -194,15 +208,15 @@ MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 message = MESSAGE;
-                refGeneral.addChildEventListener(partieAdded);
                 final AlertDialog alertDialog = new AlertDialog.Builder(MainMenuActivity.this).create();
                 alertDialog.setTitle("Recherche en cours");
                 alertDialog.setMessage(message);
-                refGeneral.addChildEventListener(partieAdded);
+                refGeneral.child(PARTIES).addChildEventListener(partieAdded);
                 alertDialog.setButton(DialogInterface.BUTTON_NEUTRAL, "annuler", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         refGeneral.removeEventListener(partieAdded);
+                        step = 0;
                     }
                 });
 
@@ -333,6 +347,8 @@ MainMenuActivity extends AppCompatActivity {
         if (refPartie!=null) {
             refPartie.removeEventListener(createdPartie);
             refPartie.removeValue();
+            step = 0;
+
         }
     }
 
