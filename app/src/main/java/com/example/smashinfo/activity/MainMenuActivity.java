@@ -70,6 +70,11 @@ MainMenuActivity extends AppCompatActivity {
         lootBox = (ImageButton) findViewById(R.id.lootBox);
         parametres = (ImageButton) findViewById(R.id.parametres);
 
+        accueilLayout = findViewById(R.id.accueilLayout);
+        lootLayout = findViewById(R.id.lootLayout);
+        deckLayout = findViewById(R.id.deckLayout);
+        lobbyLayout = findViewById(R.id.lobbylayout);
+
 
         final ValueEventListener createdPartie = new ValueEventListener() {
             @Override

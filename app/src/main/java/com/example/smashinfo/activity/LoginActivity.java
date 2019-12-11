@@ -321,7 +321,7 @@ public class LoginActivity extends AppCompatActivity {
                     updateUser(user);
                 }else{
                     Toast.makeText(LoginActivity.this, "Echec de connexion.",
-                            Toast.LENGTH_SHORT).show( );
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
