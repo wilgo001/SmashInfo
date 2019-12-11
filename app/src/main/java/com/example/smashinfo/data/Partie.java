@@ -8,15 +8,19 @@ public class Partie {
     public String joinerName;
     public String color;
     public boolean start;
+    public boolean hosterReady;
+    public boolean joinerReady;
 
     public Partie() {
     }
 
-    public Partie(String hosterName, String joinerName, String color, boolean start) {
+    public Partie(String hosterName, String joinerName, String color, boolean start, boolean hosterReady, boolean joinerReady) {
         this.hosterName = hosterName;
         this.joinerName = joinerName;
         this.color = color;
         this.start = start;
+        this.hosterReady = hosterReady;
+        this.joinerReady = joinerReady;
     }
 
     public boolean isStart() {

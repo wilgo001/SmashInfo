@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -39,7 +40,7 @@ MainMenuActivity extends AppCompatActivity {
     public static final String MESSAGE = "Veuillez patientez, nous recherchons une partie\n";
     public static final String HOSTER_NAME = "hosterName";
     public static final String PARTIE_KEY = "com.example.smashinfo.PARTIE_KEY";
-    private Button buttonDeconnexion, createGame, loadGame, startGame;
+    private Button buttonDeconnexion, createGame, loadGame, startGame, kickButton;
     private EditText pseudo;
     private DatabaseReference refGeneral, refPartie, refUser;
     private String message, partieKey;
@@ -47,6 +48,9 @@ MainMenuActivity extends AppCompatActivity {
     private ImageButton combat, deck, pageAccueil, lootBox, parametres;
     private ConstraintLayout accueilLayout, lootLayout, deckLayout, lobbyLayout, setPartieLayout;
     FirebaseUser user;
+    private ValueEventListener createdPartie;
+    private int creatorStep;
+    private CheckBox hostercheck, joinercheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,16 +82,40 @@ MainMenuActivity extends AppCompatActivity {
         lobbyLayout = findViewById(R.id.lobbylayout);
         setPartieLayout = findViewById(R.id.setpartieLayout);
 
+        hostercheck = findViewById(R.id.checkBox1);
+        joinercheck = findViewById(R.id.checkBox2);
+        kickButton = findViewById(R.id.kickButton);
+        kickButton.setAlpha(0F);
 
-        final ValueEventListener createdPartie = new ValueEventListener() {
+        creatorStep = 0;
+
+        createdPartie = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Partie partie = dataSnapshot.getValue(Partie.class);
-                if (!partie.getJoinerName().equals(JOINER_NAME)) {
-                    partie.setStart(true);
-                    refGeneral.child(PARTIES).child(partieKey).setValue(partie);
-                    loadPartie();
+                final Partie partie = dataSnapshot.getValue(Partie.class);
+                switch (creatorStep) {
+                    case 0:
+                        joinercheck.setClickable(false);
+                        creatorStep++;
+                        loadPartie();
+                        break;
+                    case 1:
+                        if (!partie.getJoinerName().equals(JOINER_NAME)) {
+                            kickButton.setAlpha(1F);
+                            joinercheck.setChecked(partie.joinerReady);
+                            kickButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    partie.joinerName = JOINER_NAME;
+                                }
+                            });
+                            partie.hosterReady = hostercheck.isChecked();
+                        }
+                        break;
                 }
+
+                refPartie.setValue(partie);
+
             }
 
             @Override
@@ -112,7 +140,7 @@ MainMenuActivity extends AppCompatActivity {
                     toast.show();
                     return;
                 }
-                Partie partie = new Partie(pseudo.getText().toString(), JOINER_NAME, "white", false);
+                Partie partie = new Partie(pseudo.getText().toString(), JOINER_NAME, "white", false, false, false);
                 refPartie = refGeneral.child(PARTIES).push();
                 refPartie.addValueEventListener(createdPartie);
                 refPartie.setValue(partie);
@@ -290,6 +318,7 @@ MainMenuActivity extends AppCompatActivity {
         deckLayout.setAlpha(0F);
         lobbyLayout.setAlpha(0F);
         setPartieLayout.setAlpha(1F);
+        kickButton.setAlpha(0F);
 
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -297,29 +326,12 @@ MainMenuActivity extends AppCompatActivity {
                 startPartie();
             }
         });
-
-
-        ValueEventListener createdPartie = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Partie partie = dataSnapshot.getValue(Partie.class);
-                if (!partie.getJoinerName().equals(JOINER_NAME)) {
-                    partie.setStart(true);
-                    refGeneral.child(PARTIES).child(partieKey).setValue(partie);
-                    loadPartie();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        };
     }
 
     public void annuler(View v) {
         combat();
         if (refPartie!=null) {
+            refPartie.removeEventListener(createdPartie);
             refPartie.removeValue();
         }
     }
