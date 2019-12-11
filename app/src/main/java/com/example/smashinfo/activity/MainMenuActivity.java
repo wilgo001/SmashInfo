@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.smashinfo.R;
@@ -32,7 +34,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainMenuActivity extends AppCompatActivity {
+public class
+MainMenuActivity extends AppCompatActivity {
 
     public static final String JOINER_NAME = "searching";
     public static final String PARTIES = "parties";
@@ -42,10 +45,10 @@ public class MainMenuActivity extends AppCompatActivity {
     private Button buttonDeconnexion, createGame, loadGame;
     private EditText pseudo;
     private DatabaseReference refGeneral, refPartie, refUser;
-    private String message;
-    private String partieKey;
-    private FirebaseUser user;
-
+    private String message, partieKey;
+    private ImageButton combat, deck, pageAccueil, lootBox, parametres;
+    private LinearLayout accueilLayout, lootLayout, deckLayout, lobbyLayout;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +64,18 @@ public class MainMenuActivity extends AppCompatActivity {
         refGeneral = FirebaseDatabase.getInstance().getReference();
         refUser = refGeneral.child(SignInActivity.USERS).child(user.getUid());
 
+        combat = (ImageButton) findViewById(R.id.combat);
+        deck = (ImageButton) findViewById(R.id.deck);
+        pageAccueil = (ImageButton) findViewById(R.id.pageAccueil);
+        lootBox = (ImageButton) findViewById(R.id.lootBox);
+        parametres = (ImageButton) findViewById(R.id.parametres);
+
+
         final ValueEventListener createdPartie = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Partie partie = dataSnapshot.getValue(Partie.class);
-                if(!partie.getJoinerName().equals(JOINER_NAME)) {
+                if (!partie.getJoinerName().equals(JOINER_NAME)) {
                     partie.setStart(true);
                     refGeneral.child(PARTIES).child(partieKey).setValue(partie);
                     startPartie();
@@ -108,11 +118,11 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Partie partie;
-                for(DataSnapshot data : dataSnapshot.getChildren()) {
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
                     partie = data.getValue(Partie.class);
-                    if ((partie.joinerName.equals(JOINER_NAME))&&(!partie.hosterName.equals(pseudo.getText().toString()))) {
+                    if ((partie.joinerName.equals(JOINER_NAME)) && (!partie.hosterName.equals(pseudo.getText().toString()))) {
                         partie.joinerName = pseudo.getText().toString();
-                        partieKey=data.getKey();
+                        partieKey = data.getKey();
                         refGeneral.child(PARTIES).child(partieKey).setValue(partie);
                     }
                 }
@@ -120,10 +130,10 @@ public class MainMenuActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                for(DataSnapshot data : dataSnapshot.getChildren()) {
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
                     if (partieKey.equals(data.getKey())) {
                         Partie partie = data.getValue(Partie.class);
-                        if(partie.isStart())
+                        if (partie.isStart())
                             startPartie();
                     }
                 }
@@ -169,7 +179,7 @@ public class MainMenuActivity extends AppCompatActivity {
                             @Override
                             public void run() {
 
-                                if(message.equals(MESSAGE + "..."))
+                                if (message.equals(MESSAGE + "..."))
                                     message = MESSAGE;
                                 else
                                     message = message + ".";
@@ -183,6 +193,84 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
+
+        buttonDeconnexion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                quitApp();
+            }
+        });
+
+
+        combat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                combat();
+            }
+        });
+
+        deck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deck();
+            }
+        });
+
+        pageAccueil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pageAccueil();
+            }
+        });
+
+        lootBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lootBox();
+            }
+        });
+
+        parametres.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                parametres();
+            }
+        });
+
+        combat();
+    }
+
+    private void combat(){
+        accueilLayout.setAlpha(0F);
+        lootLayout.setAlpha(1F);
+        deckLayout.setAlpha(0F);
+        lobbyLayout.setAlpha(0F);
+    }
+
+    private void deck(){
+        accueilLayout.setAlpha(0F);
+        lootLayout.setAlpha(0F);
+        deckLayout.setAlpha(1F);
+        lobbyLayout.setAlpha(0F);
+    }
+
+    private void pageAccueil(){
+        accueilLayout.setAlpha(1F);
+        lootLayout.setAlpha(0F);
+        deckLayout.setAlpha(0F);
+        lobbyLayout.setAlpha(0F);
+    }
+
+    private void lootBox(){
+        accueilLayout.setAlpha(0F);
+        lootLayout.setAlpha(1F);
+        deckLayout.setAlpha(0F);
+        lobbyLayout.setAlpha(0F);
+    }
+
+    private void parametres(){
+        //changer d'activity
     }
 
     private void startPartie() {

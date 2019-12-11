@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.example.smashinfo.R;
 
-public class IntroActivity extends AppCompatActivity {
+public class  IntroActivity extends AppCompatActivity {
 
     RelativeLayout intro;
     ImageView logoIUT;

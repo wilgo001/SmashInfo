@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smashinfo.R;
@@ -26,6 +27,8 @@ public class FieldActivity extends AppCompatActivity {
     private Button deckButton;
     private Button extraDeckButton;
     private Button cimetiereButton;
+    private TextView pv;
+    private TextView pvAdverse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +108,8 @@ public class FieldActivity extends AppCompatActivity {
                 }
             }
         });
+
+
     }
 
     private void main() {
