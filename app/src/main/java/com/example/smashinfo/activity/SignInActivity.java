@@ -128,13 +128,20 @@ public class SignInActivity extends AppCompatActivity {
             DataUser dataUser = new DataUser(user.getEmail(), editTextPseudo.getText().toString());
             databaseReference.setValue(dataUser);
 
-            DatabaseReference deckRef = databaseReference.child("starter deck");
+            DatabaseReference deckRef = databaseReference.child("decks").child("starter deck");
+            DatabaseReference listRef = databaseReference.child("card list");
             //DeckGestion autoDeck = new DeckGestion(deckRef);
             String id = "-LvQ7FVfEcyIvTAOB9Ue";
-            DataCard dataCard = (DataSmasheurCard) DeckGestion.getCardWithId(id);
-            Toast.makeText(this, dataCard.toString(), Toast.LENGTH_LONG);
-            deckRef.child(id).setValue(dataCard);
+            DataCard dataCard = DeckGestion.getCardWithId(id);
+            DatabaseReference cardRef;
+            for (int i = 0; i < 30; i++) {
+                cardRef = deckRef.child(id);
+                cardRef.setValue(dataCard);
+                cardRef = listRef.child(id);
+                cardRef.setValue(dataCard);
+            }
         }
+        goMainMenu();
 
     }
 

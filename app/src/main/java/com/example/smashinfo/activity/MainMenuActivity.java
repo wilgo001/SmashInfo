@@ -41,10 +41,11 @@ public class MainMenuActivity extends AppCompatActivity {
     public static final String PARTIE_KEY = "com.example.smashinfo.PARTIE_KEY";
     private Button buttonDeconnexion, createGame, loadGame;
     private EditText pseudo;
-    private DatabaseReference refGeneral, refPartie;
+    private DatabaseReference refGeneral, refPartie, refUser;
     private String message;
     private String partieKey;
     private FirebaseUser user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class MainMenuActivity extends AppCompatActivity {
         loadGame = (Button) findViewById(R.id.loadGame);
         pseudo = (EditText) findViewById(R.id.pseudo);
         refGeneral = FirebaseDatabase.getInstance().getReference();
+        refUser = refGeneral.child(SignInActivity.USERS).child(user.getUid());
 
         final ValueEventListener createdPartie = new ValueEventListener() {
             @Override
@@ -110,11 +112,8 @@ public class MainMenuActivity extends AppCompatActivity {
                     partie = data.getValue(Partie.class);
                     if ((partie.joinerName.equals(JOINER_NAME))&&(!partie.hosterName.equals(pseudo.getText().toString()))) {
                         partie.joinerName = pseudo.getText().toString();
-                        Toast toast = Toast.makeText(getApplicationContext(), "key : " + data.getKey(), Toast.LENGTH_SHORT);
-                        toast.show();
                         partieKey=data.getKey();
                         refGeneral.child(PARTIES).child(partieKey).setValue(partie);
-                        return;
                     }
                 }
             }
@@ -149,11 +148,6 @@ public class MainMenuActivity extends AppCompatActivity {
         loadGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (pseudo.getText().toString().equals("")) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "complete pseudo please", Toast.LENGTH_SHORT);
-                    toast.show();
-                    return;
-                }
                 message = MESSAGE;
                 refGeneral.addChildEventListener(partieAdded);
                 final AlertDialog alertDialog = new AlertDialog.Builder(MainMenuActivity.this).create();
@@ -202,14 +196,4 @@ public class MainMenuActivity extends AppCompatActivity {
         startActivity(myIntent);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(SignInActivity.USERS).child(user.getUid());
-        DatabaseReference deckRef = databaseReference.child("starter deck");
-        String id = "-LvQ7FVfEcyIvTAOB9Ue";
-        DataCard dataCard = DeckGestion.getCardWithId(id);
-        Toast.makeText(this, dataCard.toString(), Toast.LENGTH_LONG);
-        deckRef.child(id).setValue(dataCard);
-    }
 }

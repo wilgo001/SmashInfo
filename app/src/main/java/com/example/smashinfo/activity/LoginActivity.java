@@ -321,7 +321,7 @@ public class LoginActivity extends AppCompatActivity {
                     updateUser(user);
                 }else{
                     Toast.makeText(LoginActivity.this, "Echec de connexion.",
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT).show( );
                 }
             }
         });
@@ -337,7 +337,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void goToSignIn() {
         Log.i("info", "go to sign in");
-        Intent myIntent = new Intent(this, SignInActivity.class);
+        Intent myIntent = new Intent(this , SignInActivity.class);
         startActivity(myIntent);
     }
 

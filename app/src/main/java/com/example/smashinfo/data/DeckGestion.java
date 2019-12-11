@@ -38,7 +38,6 @@ public class DeckGestion {
 
     private void generateAutoDeck() {
         //TODO : faire un meilleur generateur de starterDeck automatique
-        Log.println(Log.DEBUG, "debug", "je marche pas1");
         deckRef.child("name").setValue("starter deck");
         String id = "-LvQ7FVfEcyIvTAOB9Ue";
         dataCard = getCardWithId(id);
@@ -47,6 +46,10 @@ public class DeckGestion {
             dataCard = getCardWithId(id);
             deckRef.child(id).setValue(dataCard);
         }
+    }
+
+    public static void addCardToDeck(String idCarte, String refDeck) {
+
     }
 
     public static DataCard getCardWithId(final String id) {
@@ -62,7 +65,11 @@ public class DeckGestion {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                if (dataSnapshot.getKey().equals(id)) {
+                    if (dataSnapshot.hasChild("attaque")) {
+                        dataCard = dataSnapshot.getValue(DataSmasheurCard.class);
+                    }
+                }
             }
 
             @Override
