@@ -4,22 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smashinfo.R;
-import com.example.smashinfo.data.DataCard;
-import com.example.smashinfo.data.DataSmasheurCard;
-import com.example.smashinfo.data.DeckGestion;
 import com.example.smashinfo.data.Partie;
 import com.example.smashinfo.game.FieldActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,12 +39,13 @@ MainMenuActivity extends AppCompatActivity {
     public static final String MESSAGE = "Veuillez patientez, nous recherchons une partie\n";
     public static final String HOSTER_NAME = "hosterName";
     public static final String PARTIE_KEY = "com.example.smashinfo.PARTIE_KEY";
-    private Button buttonDeconnexion, createGame, loadGame;
+    private Button buttonDeconnexion, createGame, loadGame, startGame;
     private EditText pseudo;
     private DatabaseReference refGeneral, refPartie, refUser;
     private String message, partieKey;
+    private TextView hosterName;
     private ImageButton combat, deck, pageAccueil, lootBox, parametres;
-    private LinearLayout accueilLayout, lootLayout, deckLayout, lobbyLayout;
+    private ConstraintLayout accueilLayout, lootLayout, deckLayout, lobbyLayout, setPartieLayout;
     FirebaseUser user;
 
     @Override
@@ -61,6 +59,8 @@ MainMenuActivity extends AppCompatActivity {
         createGame = (Button) findViewById(R.id.createGame);
         loadGame = (Button) findViewById(R.id.loadGame);
         pseudo = (EditText) findViewById(R.id.pseudo);
+        startGame = findViewById(R.id.startPartie);
+
         refGeneral = FirebaseDatabase.getInstance().getReference();
         refUser = refGeneral.child(SignInActivity.USERS).child(user.getUid());
 
@@ -70,10 +70,13 @@ MainMenuActivity extends AppCompatActivity {
         lootBox = (ImageButton) findViewById(R.id.lootBox);
         parametres = (ImageButton) findViewById(R.id.parametres);
 
+        hosterName = findViewById(R.id.hosterName);
+
         accueilLayout = findViewById(R.id.accueilLayout);
         lootLayout = findViewById(R.id.lootLayout);
         deckLayout = findViewById(R.id.deckLayout);
         lobbyLayout = findViewById(R.id.lobbylayout);
+        setPartieLayout = findViewById(R.id.setpartieLayout);
 
 
         final ValueEventListener createdPartie = new ValueEventListener() {
@@ -83,7 +86,7 @@ MainMenuActivity extends AppCompatActivity {
                 if (!partie.getJoinerName().equals(JOINER_NAME)) {
                     partie.setStart(true);
                     refGeneral.child(PARTIES).child(partieKey).setValue(partie);
-                    startPartie();
+                    loadPartie();
                 }
             }
 
@@ -113,8 +116,7 @@ MainMenuActivity extends AppCompatActivity {
                 refPartie = refGeneral.child(PARTIES).push();
                 refPartie.addValueEventListener(createdPartie);
                 refPartie.setValue(partie);
-                Toast toast = Toast.makeText(getApplicationContext(), "partie créée. en attente de joueur", Toast.LENGTH_LONG);
-                toast.show();
+                loadPartie();
 
             }
         });
@@ -139,7 +141,7 @@ MainMenuActivity extends AppCompatActivity {
                     if (partieKey.equals(data.getKey())) {
                         Partie partie = data.getValue(Partie.class);
                         if (partie.isStart())
-                            startPartie();
+                            loadPartie();
                     }
                 }
             }
@@ -248,9 +250,10 @@ MainMenuActivity extends AppCompatActivity {
 
     private void combat(){
         accueilLayout.setAlpha(0F);
-        lootLayout.setAlpha(1F);
+        lootLayout.setAlpha(0F);
         deckLayout.setAlpha(0F);
-        lobbyLayout.setAlpha(0F);
+        lobbyLayout.setAlpha(1F);
+        setPartieLayout.setAlpha(0F);
     }
 
     private void deck(){
@@ -258,6 +261,7 @@ MainMenuActivity extends AppCompatActivity {
         lootLayout.setAlpha(0F);
         deckLayout.setAlpha(1F);
         lobbyLayout.setAlpha(0F);
+        setPartieLayout.setAlpha(0F);
     }
 
     private void pageAccueil(){
@@ -265,6 +269,7 @@ MainMenuActivity extends AppCompatActivity {
         lootLayout.setAlpha(0F);
         deckLayout.setAlpha(0F);
         lobbyLayout.setAlpha(0F);
+        setPartieLayout.setAlpha(0F);
     }
 
     private void lootBox(){
@@ -272,13 +277,54 @@ MainMenuActivity extends AppCompatActivity {
         lootLayout.setAlpha(1F);
         deckLayout.setAlpha(0F);
         lobbyLayout.setAlpha(0F);
+        setPartieLayout.setAlpha(0F);
     }
 
     private void parametres(){
-        //changer d'activity
+        //TODO:changer d'activity
     }
 
-    private void startPartie() {
+    private void loadPartie() {
+        accueilLayout.setAlpha(0F);
+        lootLayout.setAlpha(0F);
+        deckLayout.setAlpha(0F);
+        lobbyLayout.setAlpha(0F);
+        setPartieLayout.setAlpha(1F);
+
+        startGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startPartie();
+            }
+        });
+
+
+        ValueEventListener createdPartie = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Partie partie = dataSnapshot.getValue(Partie.class);
+                if (!partie.getJoinerName().equals(JOINER_NAME)) {
+                    partie.setStart(true);
+                    refGeneral.child(PARTIES).child(partieKey).setValue(partie);
+                    loadPartie();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+    }
+
+    public void annuler(View v) {
+        combat();
+        if (refPartie!=null) {
+            refPartie.removeValue();
+        }
+    }
+
+    public void startPartie() {
         Intent myIntent = new Intent(this, FieldActivity.class);
         myIntent.putExtra(PARTIE_KEY, partieKey);
         startActivity(myIntent);

@@ -46,6 +46,7 @@
             android:layout_marginBottom="16dp"
             android:text="Se connecter"
             android:textSize="30sp"
+            android:textColor="@color/black_overlay"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
