@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,14 +41,15 @@ MainMenuActivity extends AppCompatActivity {
     public static final String MESSAGE = "Veuillez patientez, nous recherchons une partie\n";
     public static final String HOSTER_NAME = "hosterName";
     public static final String PARTIE_KEY = "com.example.smashinfo.PARTIE_KEY";
-    private Button buttonDeconnexion, createGame, loadGame, startGame, kickButton;
+    private Button buttonDeconnexion, createGame, loadGame, startGame, kickButton, validerVolume, tutoriel;
     private EditText pseudo;
     private DatabaseReference refGeneral, refPartie, refUser;
     private String message, partieKey;
     private TextView hosterName;
     private ImageButton combat, deck, pageAccueil, lootBox, parametres;
-    private ConstraintLayout accueilLayout, lootLayout, deckLayout, lobbyLayout, setPartieLayout;
+    private ConstraintLayout accueilLayout, lootLayout, deckLayout, lobbyLayout, setPartieLayout, parametresLayout;
     FirebaseUser user;
+    private SeekBar seekBarMusique, seekBarEffet;
     private ValueEventListener createdPartie;
     private int step;
     private CheckBox hostercheck, joinercheck;
@@ -59,7 +61,7 @@ MainMenuActivity extends AppCompatActivity {
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
-        buttonDeconnexion = (Button) findViewById(R.id.buttonDeconnexion);
+        buttonDeconnexion = (Button) findViewById(R.id.deconnexion);
         createGame = (Button) findViewById(R.id.createGame);
         loadGame = (Button) findViewById(R.id.loadGame);
         pseudo = (EditText) findViewById(R.id.pseudo);
@@ -81,6 +83,7 @@ MainMenuActivity extends AppCompatActivity {
         deckLayout = findViewById(R.id.deckLayout);
         lobbyLayout = findViewById(R.id.lobbylayout);
         setPartieLayout = findViewById(R.id.setpartieLayout);
+        parametresLayout = findViewById(R.id.parametresLayout);
 
         hostercheck = findViewById(R.id.checkBox2);
         joinercheck = findViewById(R.id.checkBox1);
@@ -112,9 +115,9 @@ MainMenuActivity extends AppCompatActivity {
                                 }
                             });
                             partie.hosterReady = hostercheck.isChecked();
-                        }else {
+                        } else {
                             combat();
-                            if (refPartie!=null) {
+                            if (refPartie != null) {
                                 refPartie.removeEventListener(createdPartie);
                                 refPartie.removeValue();
                                 step = 0;
@@ -162,13 +165,13 @@ MainMenuActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Partie partie = dataSnapshot.getValue(Partie.class);
-                    if ((partie.joinerName.equals(JOINER_NAME)) && (!partie.hosterName.equals(pseudo.getText().toString()))) {
-                        partie.joinerName = pseudo.getText().toString();
-                        partieKey = dataSnapshot.getKey();
-                        refGeneral.child(PARTIES).child(partieKey).setValue(partie);
-                        hostercheck.setClickable(false);
-                        loadPartie();
-                    }
+                if ((partie.joinerName.equals(JOINER_NAME)) && (!partie.hosterName.equals(pseudo.getText().toString()))) {
+                    partie.joinerName = pseudo.getText().toString();
+                    partieKey = dataSnapshot.getKey();
+                    refGeneral.child(PARTIES).child(partieKey).setValue(partie);
+                    hostercheck.setClickable(false);
+                    loadPartie();
+                }
             }
 
             @Override
@@ -288,42 +291,77 @@ MainMenuActivity extends AppCompatActivity {
         });
 
         combat();
+
+        this.seekBarMusique = (SeekBar) findViewById(R.id.seekBarMusique);
+        this.seekBarEffet = (SeekBar) findViewById(R.id.seekBarEffet);
+        this.validerVolume = (Button) findViewById(R.id.valider);
+
+        validerVolume.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                validerVolume();
+            }
+        });
+
+        tutoriel = findViewById(R.id.tutoriel);
+
+        this.tutoriel.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                tuto();
+            }
+        });
     }
 
-    private void combat(){
+    private void tuto(){
+        Intent intent=new Intent(this, TutorielActivity.class);
+        startActivity(intent);
+    }
+
+    private void combat() {
         accueilLayout.setAlpha(0F);
         lootLayout.setAlpha(0F);
         deckLayout.setAlpha(0F);
         lobbyLayout.setAlpha(1F);
         setPartieLayout.setAlpha(0F);
+        parametresLayout.setAlpha(0F);
     }
 
-    private void deck(){
+    private void deck() {
         accueilLayout.setAlpha(0F);
         lootLayout.setAlpha(0F);
         deckLayout.setAlpha(1F);
         lobbyLayout.setAlpha(0F);
         setPartieLayout.setAlpha(0F);
+        parametresLayout.setAlpha(0F);
     }
 
-    private void pageAccueil(){
+    private void pageAccueil() {
         accueilLayout.setAlpha(1F);
         lootLayout.setAlpha(0F);
         deckLayout.setAlpha(0F);
         lobbyLayout.setAlpha(0F);
         setPartieLayout.setAlpha(0F);
+        parametresLayout.setAlpha(0F);
     }
 
-    private void lootBox(){
+    private void lootBox() {
         accueilLayout.setAlpha(0F);
         lootLayout.setAlpha(1F);
         deckLayout.setAlpha(0F);
         lobbyLayout.setAlpha(0F);
         setPartieLayout.setAlpha(0F);
+        parametresLayout.setAlpha(0F);
     }
 
-    private void parametres(){
-        //TODO:changer d'activity
+    private void parametres() {
+        accueilLayout.setAlpha(0F);
+        lootLayout.setAlpha(0F);
+        deckLayout.setAlpha(0F);
+        lobbyLayout.setAlpha(0F);
+        setPartieLayout.setAlpha(0F);
+        parametresLayout.setAlpha(1F);
     }
 
     private void loadPartie() {
@@ -333,6 +371,7 @@ MainMenuActivity extends AppCompatActivity {
         lobbyLayout.setAlpha(0F);
         setPartieLayout.setAlpha(1F);
         kickButton.setAlpha(0F);
+        parametresLayout.setAlpha(0F);
 
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -340,11 +379,30 @@ MainMenuActivity extends AppCompatActivity {
                 startPartie();
             }
         });
+
+
+        ValueEventListener createdPartie = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Partie partie = dataSnapshot.getValue(Partie.class);
+                if (!partie.getJoinerName().equals(JOINER_NAME)) {
+                    partie.setStart(true);
+                    refGeneral.child(PARTIES).child(partieKey).setValue(partie);
+                    loadPartie();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+
     }
 
     public void annuler(View v) {
         combat();
-        if (refPartie!=null) {
+        if (refPartie != null) {
             refPartie.removeEventListener(createdPartie);
             refPartie.removeValue();
             step = 0;
@@ -362,5 +420,12 @@ MainMenuActivity extends AppCompatActivity {
         Intent myIntent = new Intent(this, LoginActivity.class);
         startActivity(myIntent);
     }
+
+    private void validerVolume() {
+        int volumeMusique = seekBarMusique.getProgress();
+        int voluleEffet = seekBarEffet.getProgress();
+    }
+
+
 
 }
