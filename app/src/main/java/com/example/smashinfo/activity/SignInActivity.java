@@ -141,8 +141,13 @@ public class SignInActivity extends AppCompatActivity {
                 cardRef.setValue(dataCard);
             }
         }
-        goMainMenu();
+        goTuto();
 
+    }
+
+    private void goTuto() {
+        Intent myIntent = new Intent(this, TutorielActivity.class);
+        startActivity(myIntent);
     }
 
     private void goMainMenu() {

@@ -8,6 +8,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -55,11 +60,16 @@ MainMenuActivity extends AppCompatActivity {
     private CheckBox hostercheck, joinercheck;
     private ValueEventListener joinedPartie;
     private AlertDialog alertDialog;
+    private ColorDrawable SELECTED_BUTTON_BACKGROUND = new ColorDrawable();
+    private Drawable background;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
+        SELECTED_BUTTON_BACKGROUND.setColor(Color.BLUE);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -94,6 +104,8 @@ MainMenuActivity extends AppCompatActivity {
         joinerName = findViewById(R.id.joinerName);
         annuler = findViewById(R.id.annulation);
         kickButton.setAlpha(0F);
+
+        background = getDrawable(R.drawable.default_button);
 
         step = 0;
 
@@ -355,6 +367,11 @@ MainMenuActivity extends AppCompatActivity {
     }
 
     private void combat() {
+        combat.setBackground(SELECTED_BUTTON_BACKGROUND);
+        deck.setBackground(background);
+        pageAccueil.setBackground(background);
+        lootBox.setBackground(background);
+        parametres.setBackground(background);
         pseudo.setClickable(true);
         createGame.setClickable(true);
         loadGame.setClickable(true);
@@ -367,6 +384,11 @@ MainMenuActivity extends AppCompatActivity {
     }
 
     private void deck() {
+        combat.setBackground(background);
+        deck.setBackground(SELECTED_BUTTON_BACKGROUND);
+        pageAccueil.setBackground(background);
+        lootBox.setBackground(background);
+        parametres.setBackground(background);
         pseudo.setClickable(false);
         createGame.setClickable(false);
         loadGame.setClickable(false);
@@ -379,6 +401,11 @@ MainMenuActivity extends AppCompatActivity {
     }
 
     private void pageAccueil() {
+        combat.setBackground(background);
+        deck.setBackground(background);
+        pageAccueil.setBackground(SELECTED_BUTTON_BACKGROUND);
+        lootBox.setBackground(background);
+        parametres.setBackground(background);
         pseudo.setClickable(false);
         createGame.setClickable(false);
         loadGame.setClickable(false);
@@ -391,6 +418,11 @@ MainMenuActivity extends AppCompatActivity {
     }
 
     private void lootBox() {
+        combat.setBackground(background);
+        deck.setBackground(background);
+        pageAccueil.setBackground(background);
+        lootBox.setBackground(SELECTED_BUTTON_BACKGROUND);
+        parametres.setBackground(background);
         pseudo.setClickable(false);
         createGame.setClickable(false);
         loadGame.setClickable(false);
@@ -403,6 +435,11 @@ MainMenuActivity extends AppCompatActivity {
     }
 
     private void parametres() {
+        combat.setBackground(background);
+        deck.setBackground(background);
+        pageAccueil.setBackground(background);
+        lootBox.setBackground(background);
+        parametres.setBackground(SELECTED_BUTTON_BACKGROUND);
         pseudo.setClickable(false);
         createGame.setClickable(false);
         loadGame.setClickable(false);
