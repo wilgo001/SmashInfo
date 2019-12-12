@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,12 +22,9 @@ public class FieldActivity extends AppCompatActivity {
     public static String partieKey;
     public Player player1;
     public Player player2;
-    private Button mainButton;
-    private Button deckButton;
-    private Button extraDeckButton;
-    private Button cimetiereButton;
-    private TextView pv;
-    private TextView pvAdverse;
+    private Button mainButton, deckButton, extraDeckButton, cimetiereButton;
+    private ImageButton A1, A2, A3, A4, B1, B2, B3, B4, C1, C2, C3, C4, D1, D2, D3, D4;
+    private TextView pv, pvAdverse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
