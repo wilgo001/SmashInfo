@@ -132,6 +132,8 @@ MainMenuActivity extends AppCompatActivity {
                                     kickButton.setAlpha(0f);
                                 }
                             });
+                        }else {
+                            kickButton.setAlpha(0f);
                         }
                         break;
                 }
@@ -222,7 +224,7 @@ MainMenuActivity extends AppCompatActivity {
                 hostercheck.setChecked(partie.hosterReady);
                 if (partie.joinerName.equals(JOINER_NAME)) {
                     Toast.makeText(getApplicationContext(), "vous avez été expulsé de la partie", Toast.LENGTH_LONG).show();
-                    refGeneral.removeEventListener(this);
+                    refPartie.removeEventListener(this);
                     combat();
                 }
             }
@@ -353,6 +355,9 @@ MainMenuActivity extends AppCompatActivity {
     }
 
     private void combat() {
+        pseudo.setClickable(true);
+        createGame.setClickable(true);
+        loadGame.setClickable(true);
         accueilLayout.setAlpha(0F);
         lootLayout.setAlpha(0F);
         deckLayout.setAlpha(0F);
@@ -362,6 +367,9 @@ MainMenuActivity extends AppCompatActivity {
     }
 
     private void deck() {
+        pseudo.setClickable(false);
+        createGame.setClickable(false);
+        loadGame.setClickable(false);
         accueilLayout.setAlpha(0F);
         lootLayout.setAlpha(0F);
         deckLayout.setAlpha(1F);
@@ -371,6 +379,9 @@ MainMenuActivity extends AppCompatActivity {
     }
 
     private void pageAccueil() {
+        pseudo.setClickable(false);
+        createGame.setClickable(false);
+        loadGame.setClickable(false);
         accueilLayout.setAlpha(1F);
         lootLayout.setAlpha(0F);
         deckLayout.setAlpha(0F);
@@ -380,6 +391,9 @@ MainMenuActivity extends AppCompatActivity {
     }
 
     private void lootBox() {
+        pseudo.setClickable(false);
+        createGame.setClickable(false);
+        loadGame.setClickable(false);
         accueilLayout.setAlpha(0F);
         lootLayout.setAlpha(1F);
         deckLayout.setAlpha(0F);
@@ -389,6 +403,9 @@ MainMenuActivity extends AppCompatActivity {
     }
 
     private void parametres() {
+        pseudo.setClickable(false);
+        createGame.setClickable(false);
+        loadGame.setClickable(false);
         accueilLayout.setAlpha(0F);
         lootLayout.setAlpha(0F);
         deckLayout.setAlpha(0F);
@@ -398,6 +415,9 @@ MainMenuActivity extends AppCompatActivity {
     }
 
     private void loadPartie() {
+        pseudo.setClickable(false);
+        createGame.setClickable(false);
+        loadGame.setClickable(false);
         accueilLayout.setAlpha(0F);
         lootLayout.setAlpha(0F);
         deckLayout.setAlpha(0F);

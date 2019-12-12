@@ -37,7 +37,7 @@ public class FieldActivity extends AppCompatActivity {
 
         //Toast toast = Toast.makeText(getApplicationContext(), "key : " + partieKey, Toast.LENGTH_SHORT);
         //toast.show();
-        /*
+
         hideNavigationBar();
 
         mainButton = findViewById(R.id.main);
@@ -105,9 +105,9 @@ public class FieldActivity extends AppCompatActivity {
             }
         });
 
-*/
+
     }
-/*
+
     private void main() {
 
     }
@@ -133,5 +133,5 @@ public class FieldActivity extends AppCompatActivity {
     private void hideNavigationBar() {
         this.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
     }
- */
+
 }
