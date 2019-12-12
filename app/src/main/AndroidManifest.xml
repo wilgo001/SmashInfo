@@ -28,6 +28,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.SignInActivity" />
+        <activity android:name=".activity.TutorielActivity"/>
     </application>
 
 </manifest>
