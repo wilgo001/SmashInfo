@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activity.FieldActivity">
 
-   <!-- <LinearLayout
+    <LinearLayout
         android:layout_width="735dp"
         android:layout_height="366dp"
         android:orientation="horizontal"

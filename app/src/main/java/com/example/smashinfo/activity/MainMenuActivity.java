@@ -131,15 +131,6 @@ MainMenuActivity extends AppCompatActivity {
                                     kickButton.setAlpha(0f);
                                 }
                             });
-                            partie.hosterReady = hostercheck.isChecked();
-                        } else {
-                            combat();
-                            if (refPartie != null) {
-                                refPartie.removeEventListener(createdPartie);
-                                refPartie.removeValue();
-                                step = 0;
-
-                            }
                         }
                         break;
                 }
@@ -227,8 +218,6 @@ MainMenuActivity extends AppCompatActivity {
                     refGeneral.removeEventListener(this);
                     combat();
                 }
-                partie.hosterReady = hostercheck.isChecked();
-                refGeneral.child(PARTIES).child(partieKey).setValue(partie);
             }
 
             @Override
