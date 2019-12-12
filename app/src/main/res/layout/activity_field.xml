@@ -6,280 +6,290 @@
     android:layout_height="match_parent"
     tools:context=".activity.FieldActivity">
 
-   <!-- <LinearLayout
-        android:layout_width="735dp"
-        android:layout_height="366dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:baselineAligned="false">
+   <LinearLayout
+       android:layout_margin="4dp"
+       android:layout_width="735dp"
+       android:layout_height="366dp"
+       android:background="#3F51B5"
+       android:baselineAligned="false"
+       android:orientation="horizontal"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.25"
-            android:orientation="vertical">
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_margin="4dp"
+          android:layout_weight="0.25"
+          android:orientation="vertical">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5" >
+         <androidx.constraintlayout.widget.ConstraintLayout
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:layout_marginBottom="4dp"
+             android:layout_weight="0.5"
+             android:background="#FF9800">
 
-                <ImageButton
-                    android:id="@+id/B4"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginEnd="50dp"
-                    android:layout_marginBottom="25dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:srcCompat="@color/colorPrimary" />
+            <ImageButton
+                android:id="@+id/B4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@color/colorPrimary" />
 
-                <ImageButton
-                    android:id="@+id/B2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="85dp"
-                    android:layout_marginBottom="25dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/B1"
-                    app:srcCompat="@color/colorPrimary" />
+            <ImageButton
+                android:id="@+id/B2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="85dp"
+                android:layout_marginBottom="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/B1"
+                app:srcCompat="@color/colorPrimary" />
 
-                <ImageButton
-                    android:id="@+id/B3"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="85dp"
-                    android:layout_marginBottom="25dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/B2"
-                    app:srcCompat="@color/colorPrimary" />
+            <ImageButton
+                android:id="@+id/B3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="85dp"
+                android:layout_marginBottom="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/B2"
+                app:srcCompat="@color/colorPrimary" />
 
-                <ImageButton
-                    android:id="@+id/B1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginBottom="25dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@color/colorPrimary" />
+            <ImageButton
+                android:id="@+id/B1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginBottom="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@color/colorPrimary" />
 
-                <ImageButton
-                    android:id="@+id/A1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginTop="25dp"
-                    app:layout_constraintBottom_toTopOf="@+id/B1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    app:srcCompat="@color/colorPrimary" />
+            <ImageButton
+                android:id="@+id/A1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="25dp"
+                app:layout_constraintBottom_toTopOf="@+id/B1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@color/colorPrimary" />
 
-                <ImageButton
-                    android:id="@+id/A2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="85dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginBottom="12dp"
-                    app:layout_constraintBottom_toTopOf="@+id/B2"
-                    app:layout_constraintStart_toEndOf="@+id/A1"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    app:srcCompat="@color/colorPrimary" />
+            <ImageButton
+                android:id="@+id/A2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="85dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="12dp"
+                app:layout_constraintBottom_toTopOf="@+id/B2"
+                app:layout_constraintStart_toEndOf="@+id/A1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@color/colorPrimary" />
 
-                <ImageButton
-                    android:id="@+id/A3"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="85dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginBottom="12dp"
-                    app:layout_constraintBottom_toTopOf="@+id/B3"
-                    app:layout_constraintStart_toEndOf="@+id/A2"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    app:srcCompat="@color/colorPrimary" />
+            <ImageButton
+                android:id="@+id/A3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="85dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="12dp"
+                app:layout_constraintBottom_toTopOf="@+id/B3"
+                app:layout_constraintStart_toEndOf="@+id/A2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@color/colorPrimary" />
 
-                <ImageButton
-                    android:id="@+id/A4"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginEnd="50dp"
-                    android:layout_marginBottom="12dp"
-                    app:layout_constraintBottom_toTopOf="@+id/B4"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    app:srcCompat="@color/colorPrimary" />
+            <ImageButton
+                android:id="@+id/A4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="12dp"
+                app:layout_constraintBottom_toTopOf="@+id/B4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@color/colorPrimary" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+         </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <view
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:layout_weight="0"
-                android:background="#000000" />
+         <!--<view
+             android:layout_width="match_parent"
+             android:layout_height="5dp"
+             android:layout_weight="0"
+             android:background="#000000" />
+             -->
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5">
+         <androidx.constraintlayout.widget.ConstraintLayout
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:layout_marginTop="4dp"
+             android:layout_weight="0.5"
+             android:background="#9C27B0">
 
-                <ImageButton
-                    android:id="@+id/C1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginTop="25dp"
-                    app:layout_constraintBottom_toTopOf="@+id/D1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    app:srcCompat="@color/colorPrimary" />
+            <ImageButton
+                android:id="@+id/C1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="25dp"
+                app:layout_constraintBottom_toTopOf="@+id/D1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@color/colorPrimary" />
 
-                <ImageButton
-                    android:id="@+id/C2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="85dp"
-                    android:layout_marginTop="25dp"
-                    app:layout_constraintBottom_toTopOf="@+id/D2"
-                    app:layout_constraintStart_toEndOf="@+id/C1"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    app:srcCompat="@color/colorPrimary" />
+            <ImageButton
+                android:id="@+id/C2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="85dp"
+                android:layout_marginTop="25dp"
+                app:layout_constraintBottom_toTopOf="@+id/D2"
+                app:layout_constraintStart_toEndOf="@+id/C1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@color/colorPrimary" />
 
-                <ImageButton
-                    android:id="@+id/C3"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="85dp"
-                    android:layout_marginTop="25dp"
-                    app:layout_constraintBottom_toTopOf="@+id/D3"
-                    app:layout_constraintStart_toEndOf="@+id/C2"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    app:srcCompat="@color/colorPrimary" />
+            <ImageButton
+                android:id="@+id/C3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="85dp"
+                android:layout_marginTop="25dp"
+                app:layout_constraintBottom_toTopOf="@+id/D3"
+                app:layout_constraintStart_toEndOf="@+id/C2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@color/colorPrimary" />
 
-                <ImageButton
-                    android:id="@+id/C4"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginEnd="50dp"
-                    app:layout_constraintBottom_toTopOf="@+id/D4"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    app:srcCompat="@color/colorPrimary" />
+            <ImageButton
+                android:id="@+id/C4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="50dp"
+                app:layout_constraintBottom_toTopOf="@+id/D4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@color/colorPrimary" />
 
-                <ImageButton
-                    android:id="@+id/D2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="85dp"
-                    android:layout_marginBottom="25dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/D1"
-                    app:srcCompat="@color/colorPrimary" />
+            <ImageButton
+                android:id="@+id/D2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="85dp"
+                android:layout_marginBottom="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/D1"
+                app:srcCompat="@color/colorPrimary" />
 
-                <ImageButton
-                    android:id="@+id/D4"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginEnd="50dp"
-                    android:layout_marginBottom="25dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:srcCompat="@color/colorPrimary" />
+            <ImageButton
+                android:id="@+id/D4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@color/colorPrimary" />
 
-                <ImageButton
-                    android:id="@+id/D1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginBottom="25dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:srcCompat="@color/colorPrimary" />
+            <ImageButton
+                android:id="@+id/D1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginBottom="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@color/colorPrimary" />
 
-                <ImageButton
-                    android:id="@+id/D3"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="85dp"
-                    android:layout_marginBottom="25dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/D2"
-                    app:srcCompat="@color/colorPrimary" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
+            <ImageButton
+                android:id="@+id/D3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="85dp"
+                android:layout_marginBottom="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/D2"
+                app:srcCompat="@color/colorPrimary" />
+         </androidx.constraintlayout.widget.ConstraintLayout>
+      </LinearLayout>
 
-        <view
-            android:layout_width="5dp"
-            android:layout_height="match_parent"
-            android:background="#000000" />
+      <!--<view
+          android:layout_width="5dp"
+          android:layout_height="match_parent"
+          android:background="#000000" />-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.75"
-            android:orientation="vertical">
+      <LinearLayout
+          android:layout_margin="4dp"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_weight="0.75"
+          android:background="#F44336"
+          android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/pv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="pv"
-                android:textSize="24sp" />
+         <TextView
+             android:id="@+id/pv"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="10dp"
+             android:text="pv"
+             android:textSize="24sp" />
 
-            <TextView
-                android:id="@+id/pvAdverse"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:text="pv adverse"
-                android:textSize="24sp" />
+         <TextView
+             android:id="@+id/pvAdverse"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="15dp"
+             android:text="pv adverse"
+             android:textSize="24sp" />
 
-            <Button
-                android:id="@+id/main"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="Main" />
+         <Button
+             android:id="@+id/main"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="10dp"
+             android:text="Main" />
 
-            <Button
-                android:id="@+id/deck"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="Deck" />
+         <Button
+             android:id="@+id/deck"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="10dp"
+             android:text="Deck" />
 
-            <Button
-                android:id="@+id/extraDeck"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="Extra-Deck" />
+         <Button
+             android:id="@+id/extraDeck"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="10dp"
+             android:text="Extra-Deck" />
 
-            <Button
-                android:id="@+id/cimetiere"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:text="Cimetière" />
+         <Button
+             android:id="@+id/cimetiere"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="15dp"
+             android:text="Cimetière" />
 
-            <Spinner
-                android:id="@+id/phaseJeu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-    </LinearLayout>-->
+         <Spinner
+             android:id="@+id/phaseJeu"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content" />
+      </LinearLayout>
+   </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
