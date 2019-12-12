@@ -478,7 +478,6 @@
                 android:id="@+id/annulation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="annuler"
                 android:text="annuler"
                 android:textColor="@color/black_overlay" />
 

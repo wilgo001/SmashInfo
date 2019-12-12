@@ -41,7 +41,7 @@ MainMenuActivity extends AppCompatActivity {
     public static final String MESSAGE = "Veuillez patientez, nous recherchons une partie\n";
     public static final String HOSTER_NAME = "hosterName";
     public static final String PARTIE_KEY = "com.example.smashinfo.PARTIE_KEY";
-    private Button buttonDeconnexion, createGame, loadGame, startGame, kickButton, validerVolume, tutoriel;
+    private Button buttonDeconnexion, createGame, loadGame, startGame, kickButton, validerVolume, tutoriel, annuler;
     private EditText pseudo;
     private DatabaseReference refGeneral, refPartie, refUser;
     private String message, partieKey;
@@ -92,6 +92,7 @@ MainMenuActivity extends AppCompatActivity {
         kickButton = findViewById(R.id.kickButton);
         hosterName = findViewById(R.id.hosterName);
         joinerName = findViewById(R.id.joinerName);
+        annuler = findViewById(R.id.annulation);
         kickButton.setAlpha(0F);
 
         step = 0;
@@ -164,6 +165,12 @@ MainMenuActivity extends AppCompatActivity {
                 refPartie = refGeneral.child(PARTIES).push();
                 refPartie.addValueEventListener(createdPartie);
                 refPartie.setValue(partie);
+                annuler.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        annuler();
+                    }
+                });
                 loadPartie();
 
             }
@@ -261,6 +268,13 @@ MainMenuActivity extends AppCompatActivity {
                 };
                 alertDialog.show();
                 timer.schedule(timerTask, 0, 1000);
+
+                annuler.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        refPartie.child("joinerName").setValue(JOINER_NAME);
+                    }
+                });
             }
         });
 
@@ -407,47 +421,22 @@ MainMenuActivity extends AppCompatActivity {
             }
         });
 
-
-        ValueEventListener createdPartie = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Partie partie = dataSnapshot.getValue(Partie.class);
-                if (!partie.getJoinerName().equals(JOINER_NAME)) {
-                    partie.setStart(true);
-                    refGeneral.child(PARTIES).child(partieKey).setValue(partie);
-                    loadPartie();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        };
-
     }
 
-    public void annuler(View v) {
+    public void annuler() {
         combat();
         refPartie.child("joinerName").setValue(JOINER_NAME);
         if (refPartie!=null) {
             refPartie.removeEventListener(createdPartie);
             refPartie.removeValue();
             step = 0;
-
         }
     }
 
     public void startPartie() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Intent myIntent = new Intent(MainMenuActivity.this, FieldActivity.class);
-                //myIntent.putExtra(PARTIE_KEY, partieKey);
-                startActivity(myIntent);
-            }
-        });
-
+        Intent myIntent = new Intent(MainMenuActivity.this, FieldActivity.class);
+        myIntent.putExtra(PARTIE_KEY, partieKey);
+        startActivity(myIntent);
         Toast.makeText(getApplicationContext(), "lancement de la partie", Toast.LENGTH_SHORT).show();
     }
 
