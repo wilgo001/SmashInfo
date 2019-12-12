@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
@@ -20,7 +21,6 @@ import android.widget.Toast;
 
 import com.example.smashinfo.R;
 import com.example.smashinfo.data.Partie;
-import com.example.smashinfo.game.FieldActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -45,7 +45,7 @@ MainMenuActivity extends AppCompatActivity {
     private EditText pseudo;
     private DatabaseReference refGeneral, refPartie, refUser;
     private String message, partieKey;
-    private TextView hosterName;
+    private TextView hosterName, joinerName;
     private ImageButton combat, deck, pageAccueil, lootBox, parametres;
     private ConstraintLayout accueilLayout, lootLayout, deckLayout, lobbyLayout, setPartieLayout, parametresLayout;
     FirebaseUser user;
@@ -53,6 +53,8 @@ MainMenuActivity extends AppCompatActivity {
     private ValueEventListener createdPartie;
     private int step;
     private CheckBox hostercheck, joinercheck;
+    private ValueEventListener joinedPartie;
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +91,7 @@ MainMenuActivity extends AppCompatActivity {
         joinercheck = findViewById(R.id.checkBox1);
         kickButton = findViewById(R.id.kickButton);
         hosterName = findViewById(R.id.hosterName);
+        joinerName = findViewById(R.id.joinerName);
         kickButton.setAlpha(0F);
 
         step = 0;
@@ -97,21 +100,35 @@ MainMenuActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 final Partie partie = dataSnapshot.getValue(Partie.class);
+                if (partie.start) {
+                    startPartie();
+                }
                 switch (step) {
                     case 0:
                         hosterName.setText(partie.hosterName);
                         joinercheck.setClickable(false);
                         step++;
                         loadPartie();
+                        startGame.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if (joinercheck.isChecked() && hostercheck.isChecked()) {
+                                    refPartie.child("start").setValue(true);
+                                }
+                            }
+                        });
                         break;
                     case 1:
+                        joinerName.setText(partie.joinerName);
                         if (!partie.getJoinerName().equals(JOINER_NAME)) {
                             kickButton.setAlpha(1F);
+                            joinerName.setText(partie.joinerName);
                             joinercheck.setChecked(partie.joinerReady);
                             kickButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    partie.joinerName = JOINER_NAME;
+                                    refPartie.child("joinerName").setValue(JOINER_NAME);
+                                    kickButton.setAlpha(0f);
                                 }
                             });
                             partie.hosterReady = hostercheck.isChecked();
@@ -168,37 +185,50 @@ MainMenuActivity extends AppCompatActivity {
                 if ((partie.joinerName.equals(JOINER_NAME)) && (!partie.hosterName.equals(pseudo.getText().toString()))) {
                     partie.joinerName = pseudo.getText().toString();
                     partieKey = dataSnapshot.getKey();
+                    refPartie = refGeneral.child(PARTIES).child(partieKey);
+                    refPartie.setValue(partie);
+                    hostercheck.setClickable(false);
+                    hosterName.setText(partie.hosterName);
+                    refPartie.addValueEventListener(joinedPartie);
+                    if (alertDialog!=null && alertDialog.isShowing()) {
+                        alertDialog.dismiss();
+                        refGeneral.removeEventListener(this);
+                    }
+                    loadPartie();
+                }
+                if ((partie.joinerName.equals(JOINER_NAME)) && (!partie.hosterName.equals(pseudo.getText().toString()))) {
+                    partie.joinerName = pseudo.getText().toString();
+                    partieKey = dataSnapshot.getKey();
                     refGeneral.child(PARTIES).child(partieKey).setValue(partie);
                     hostercheck.setClickable(false);
                     loadPartie();
                 }
             }
-
             @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    if (partieKey.equals(data.getKey())) {
-                        Partie partie = data.getValue(Partie.class);
-                        hostercheck.setChecked(partie.hosterReady);
-                        if (partie.joinerName.equals(JOINER_NAME)) {
-                            Toast.makeText(getApplicationContext(), "vous avez été expulsé de la partie", Toast.LENGTH_LONG).show();
-                            refGeneral.removeEventListener(this);
-                            combat();
-                        }
-                        partie.hosterReady = hostercheck.isChecked();
-                        refGeneral.child(PARTIES).child(partieKey).setValue(partie);
-                    }
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        };
+
+        joinedPartie = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Partie partie = dataSnapshot.getValue(Partie.class);
+                if (partie.start) {
+                    startPartie();
                 }
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                hostercheck.setChecked(partie.hosterReady);
+                if (partie.joinerName.equals(JOINER_NAME)) {
+                    Toast.makeText(getApplicationContext(), "vous avez été expulsé de la partie", Toast.LENGTH_LONG).show();
+                    refGeneral.removeEventListener(this);
+                    combat();
+                }
+                partie.hosterReady = hostercheck.isChecked();
+                refGeneral.child(PARTIES).child(partieKey).setValue(partie);
             }
 
             @Override
@@ -211,7 +241,7 @@ MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 message = MESSAGE;
-                final AlertDialog alertDialog = new AlertDialog.Builder(MainMenuActivity.this).create();
+                alertDialog = new AlertDialog.Builder(MainMenuActivity.this).create();
                 alertDialog.setTitle("Recherche en cours");
                 alertDialog.setMessage(message);
                 refGeneral.child(PARTIES).addChildEventListener(partieAdded);
@@ -373,10 +403,18 @@ MainMenuActivity extends AppCompatActivity {
         kickButton.setAlpha(0F);
         parametresLayout.setAlpha(0F);
 
-        startGame.setOnClickListener(new View.OnClickListener() {
+
+        joinercheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                startPartie();
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                refPartie.child("joinerReady").setValue(b);
+            }
+        });
+
+        hostercheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                refPartie.child("hosterReady").setValue(b);
             }
         });
 
@@ -402,7 +440,8 @@ MainMenuActivity extends AppCompatActivity {
 
     public void annuler(View v) {
         combat();
-        if (refPartie != null) {
+        refPartie.child("joinerName").setValue(JOINER_NAME);
+        if (refPartie!=null) {
             refPartie.removeEventListener(createdPartie);
             refPartie.removeValue();
             step = 0;
@@ -411,9 +450,16 @@ MainMenuActivity extends AppCompatActivity {
     }
 
     public void startPartie() {
-        Intent myIntent = new Intent(this, FieldActivity.class);
-        myIntent.putExtra(PARTIE_KEY, partieKey);
-        startActivity(myIntent);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Intent myIntent = new Intent(MainMenuActivity.this, FieldActivity.class);
+                //myIntent.putExtra(PARTIE_KEY, partieKey);
+                startActivity(myIntent);
+            }
+        });
+
+        Toast.makeText(getApplicationContext(), "lancement de la partie", Toast.LENGTH_SHORT).show();
     }
 
     private void quitApp() {

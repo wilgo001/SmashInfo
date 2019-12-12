@@ -1,4 +1,4 @@
-package com.example.smashinfo.game;
+package com.example.smashinfo.activity;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,12 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.smashinfo.R;
-import com.example.smashinfo.activity.MainMenuActivity;
-import com.example.smashinfo.data.DeckGestion;
-import com.google.firebase.database.FirebaseDatabase;
+import com.example.smashinfo.game.Player;
 
 public class FieldActivity extends AppCompatActivity {
 
@@ -33,16 +30,15 @@ public class FieldActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_field);
 
-        Intent intent = this.getIntent();
-        partieKey = intent.getStringExtra(MainMenuActivity.PARTIE_KEY);
+        //Intent intent = this.getIntent();
+        //partieKey = intent.getStringExtra(MainMenuActivity.PARTIE_KEY);
 
         //Toast toast = Toast.makeText(getApplicationContext(), "key : " + partieKey, Toast.LENGTH_SHORT);
         //toast.show();
+        /*
         hideNavigationBar();
-
 
         mainButton = findViewById(R.id.main);
         this.mainButton.setOnClickListener(new Button.OnClickListener() {
@@ -53,7 +49,7 @@ public class FieldActivity extends AppCompatActivity {
             }
         });
 
-        deckButton = findViewById(R.id.main);
+        deckButton = findViewById(R.id.deck);
         this.deckButton.setOnClickListener(new Button.OnClickListener() {
 
             @Override
@@ -62,7 +58,7 @@ public class FieldActivity extends AppCompatActivity {
             }
         });
 
-        extraDeckButton = findViewById(R.id.main);
+        extraDeckButton = findViewById(R.id.extraDeck);
         this.extraDeckButton.setOnClickListener(new Button.OnClickListener() {
 
             @Override
@@ -71,7 +67,7 @@ public class FieldActivity extends AppCompatActivity {
             }
         });
 
-        cimetiereButton = findViewById(R.id.main);
+        cimetiereButton = findViewById(R.id.cimetiere);
         this.cimetiereButton.setOnClickListener(new Button.OnClickListener() {
 
             @Override
@@ -91,7 +87,7 @@ public class FieldActivity extends AppCompatActivity {
         phaseJeu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                /*switch case avec le i, i c'est l'index dans le tableau des données du spinner*/
+                //TODO:switch case avec le i, i c'est l'index dans le tableau des données du spinner
                 switch (i) {
                     case 0:
                         ;
@@ -109,9 +105,9 @@ public class FieldActivity extends AppCompatActivity {
             }
         });
 
-
+*/
     }
-
+/*
     private void main() {
 
     }
@@ -137,4 +133,5 @@ public class FieldActivity extends AppCompatActivity {
     private void hideNavigationBar() {
         this.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
     }
+ */
 }
