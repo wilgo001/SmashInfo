@@ -1,4 +1,4 @@
 package com.example.smashinfo.game;
 
-public class PlaceEffect implements place {
+public class PlaceEffect extends place {
 }

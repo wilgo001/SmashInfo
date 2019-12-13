@@ -8,23 +8,29 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smashinfo.R;
+import com.example.smashinfo.data.DataCard;
+import com.example.smashinfo.data.DataCardsNames;
+import com.example.smashinfo.data.DataEffectCard;
+import com.example.smashinfo.data.DataSmasheurCard;
+import com.example.smashinfo.data.DataSuperSmasheurCard;
+import com.example.smashinfo.data.DeckGestion;
 import com.example.smashinfo.data.Partie;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,6 +41,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -46,6 +54,7 @@ MainMenuActivity extends AppCompatActivity {
     public static final String MESSAGE = "Veuillez patientez, nous recherchons une partie\n";
     public static final String HOSTER_NAME = "hosterName";
     public static final String PARTIE_KEY = "com.example.smashinfo.PARTIE_KEY";
+    private final static DatabaseReference CARDREF = FirebaseDatabase.getInstance().getReference().child("cartes");
     private Button buttonDeconnexion, createGame, loadGame, startGame, kickButton, validerVolume, tutoriel, annuler;
     private EditText pseudo;
     private DatabaseReference refGeneral, refPartie, refUser;
@@ -53,7 +62,7 @@ MainMenuActivity extends AppCompatActivity {
     private TextView hosterName, joinerName;
     private ImageButton combat, deck, pageAccueil, lootBox, parametres;
     private ConstraintLayout accueilLayout, lootLayout, deckLayout, lobbyLayout, setPartieLayout, parametresLayout;
-    FirebaseUser user;
+    private FirebaseUser user;
     private SeekBar seekBarMusique, seekBarEffet;
     private ValueEventListener createdPartie;
     private int step;
@@ -62,6 +71,10 @@ MainMenuActivity extends AppCompatActivity {
     private AlertDialog alertDialog;
     private ColorDrawable SELECTED_BUTTON_BACKGROUND = new ColorDrawable();
     private Drawable background;
+    private DataCard dataCard;
+    private Spinner choixDeck;
+    private DatabaseReference refJoiner;
+    private DatabaseReference refHoster;
 
 
     @Override
@@ -105,6 +118,8 @@ MainMenuActivity extends AppCompatActivity {
         annuler = findViewById(R.id.annulation);
         kickButton.setAlpha(0F);
 
+        choixDeck = findViewById(R.id.choixDeck);
+
         background = getDrawable(R.drawable.default_button);
 
         step = 0;
@@ -114,6 +129,7 @@ MainMenuActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 final Partie partie = dataSnapshot.getValue(Partie.class);
                 if (partie.start) {
+                    finalizeDeck(refHoster);
                     startPartie();
                 }
                 switch (step) {
@@ -196,6 +212,7 @@ MainMenuActivity extends AppCompatActivity {
                 Partie partie = dataSnapshot.getValue(Partie.class);
                 if ((partie.joinerName.equals(JOINER_NAME)) && (!partie.hosterName.equals(pseudo.getText().toString()))) {
                     partie.joinerName = pseudo.getText().toString();
+                    joinerName.setText(partie.joinerName);
                     partieKey = dataSnapshot.getKey();
                     refPartie = refGeneral.child(PARTIES).child(partieKey);
                     refPartie.setValue(partie);
@@ -231,6 +248,7 @@ MainMenuActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Partie partie = dataSnapshot.getValue(Partie.class);
                 if (partie.start) {
+                    finalizeDeck(refJoiner);
                     startPartie();
                 }
                 hostercheck.setChecked(partie.hosterReady);
@@ -468,6 +486,7 @@ MainMenuActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 refPartie.child("joinerReady").setValue(b);
+                refJoiner = refPartie.child("joinerDeck");
             }
         });
 
@@ -475,9 +494,14 @@ MainMenuActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 refPartie.child("hosterReady").setValue(b);
+                refHoster = refPartie.child("hosterDeck");
             }
         });
 
+    }
+
+    private void finalizeDeck(DatabaseReference ref) {
+        DeckGestion.moveDeckWithTitle(refUser.child("decks").child(choixDeck.getSelectedItem().toString()), ref);
     }
 
     public void annuler() {
@@ -507,6 +531,38 @@ MainMenuActivity extends AppCompatActivity {
         int voluleEffet = seekBarEffet.getProgress();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        refUser.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                //Toast.makeText(getApplicationContext(), dataSnapshot.toString(), Toast.LENGTH_LONG).show();
+                if (dataSnapshot.getKey().equals("decks")) {
+                    ArrayAdapter<CharSequence> list = new ArrayAdapter<CharSequence>(getApplicationContext(), R.layout.simple_list_item_1);
+                    for (DataSnapshot dataDeck : dataSnapshot.getChildren()) {
+                        list.add(dataDeck.getKey());
+                        Toast.makeText(getApplicationContext(), dataDeck.getKey(), Toast.LENGTH_SHORT).show();
+                    }
+                    choixDeck.setAdapter(list);
+                }
+            }
 
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 }
