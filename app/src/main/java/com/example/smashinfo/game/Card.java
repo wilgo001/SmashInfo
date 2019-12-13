@@ -5,12 +5,14 @@ public class Card {
     private String name, cardKey;
     private int id;
     private String description;
+    private PositionCard positionCard;
 
     public void Card(int id, String name, String description, String cardKey, PositionCard positionCard ){
         this.id = id;
         this.name = name;
         this.description = description;
         this.cardKey = cardKey;
+        this.positionCard = positionCard;
     }
 
     public int getId() {
@@ -35,6 +37,14 @@ public class Card {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public PositionCard getPositionCard() {
+        return positionCard;
+    }
+
+    public void setPositionCard(PositionCard positionCard) {
+        this.positionCard = positionCard;
     }
 
     @Override
