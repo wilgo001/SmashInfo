@@ -2,6 +2,6 @@ package com.example.smashinfo.data;
 
 public enum DataCardsNames {
 
-    LvtQfAeTNBElbhwrQ8Q, LvtR7u88CzKn_w96oWV
-    ,LvwC8QmUgGhcXB3U2yQ,
+    Alexandre_Clouet, Antoine_Jonard, Charles_Caillon, Colin_Bouligand, Corentin_Dizel, Corentin_Livain,
+
 }
