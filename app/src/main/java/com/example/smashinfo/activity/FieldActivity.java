@@ -42,7 +42,7 @@ public class FieldActivity extends AppCompatActivity {
         Intent intent = this.getIntent();
         partieKey = intent.getStringExtra(MainMenuActivity.PARTIE_KEY);
         role = intent.getStringExtra(MainMenuActivity.ROLE);
-        String deckName = intent.getStringExtra(>MainMenuActivity.DECK_NAME);
+        String deckName = intent.getStringExtra(MainMenuActivity.DECK_NAME);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
