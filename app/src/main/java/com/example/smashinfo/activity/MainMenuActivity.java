@@ -200,6 +200,7 @@ MainMenuActivity extends AppCompatActivity {
                 }
                 Partie partie = new Partie(pseudo.getText().toString(), JOINER_NAME, "white", false, false, false);
                 refPartie = refGeneral.child(PARTIES).push();
+                partieKey = refPartie.getKey();
                 refPartie.addValueEventListener(createdPartie);
                 refPartie.setValue(partie);
                 annuler.setOnClickListener(new View.OnClickListener() {
