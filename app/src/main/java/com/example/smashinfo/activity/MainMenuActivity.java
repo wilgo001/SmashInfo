@@ -6,8 +6,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -75,6 +77,7 @@ MainMenuActivity extends AppCompatActivity {
     private Spinner choixDeck;
     private DatabaseReference refJoiner;
     private DatabaseReference refHoster;
+    public static int musique, effet;
 
 
     @Override
@@ -364,7 +367,7 @@ MainMenuActivity extends AppCompatActivity {
         validerVolume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                validerVolume();
+                doSave(view);
             }
         });
 
@@ -377,6 +380,8 @@ MainMenuActivity extends AppCompatActivity {
                 tuto();
             }
         });
+
+        this.loadGameSetting();
     }
 
     private void tuto(){
@@ -526,9 +531,41 @@ MainMenuActivity extends AppCompatActivity {
         startActivity(myIntent);
     }
 
-    private void validerVolume() {
-        int volumeMusique = seekBarMusique.getProgress();
-        int voluleEffet = seekBarEffet.getProgress();
+    private void loadGameSetting()  {
+        SharedPreferences sharedPreferences= this.getSharedPreferences("gameSetting", Context.MODE_PRIVATE);
+
+        if(sharedPreferences!= null) {
+
+            int musique = sharedPreferences.getInt("musique",50);
+            int effet = sharedPreferences.getInt("effet",50);
+
+
+            this.seekBarMusique.setProgress(musique);
+            this.seekBarEffet.setProgress(effet);
+
+        } else {
+            Toast.makeText(this,"Use the default game setting",Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    public void doSave(View view)  {
+        // The created file can only be accessed by the calling application
+        // (or all applications sharing the same user ID).
+        SharedPreferences sharedPreferences= this.getSharedPreferences("gameSetting", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putInt("musique", this.seekBarMusique.getProgress());
+        editor.putInt("effet", this.seekBarEffet.getProgress());
+
+        // Save.
+        editor.apply();
+
+        Toast.makeText(this,"Paramètres sauvegardés",Toast.LENGTH_LONG).show();
+
+        musique = seekBarMusique.getProgress();
+        effet = seekBarEffet.getProgress();
     }
 
     @Override
