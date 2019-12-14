@@ -16,6 +16,7 @@ public class DeckGestion {
     public static final String SUPER_SMASHEUR = "Super-Smasheur";
     private final static DatabaseReference CARDREF = FirebaseDatabase.getInstance().getReference().child("cartes");
     private static DataCard dataCard;
+    private static boolean test;
 
     public static void generateAutoDeck(DatabaseReference deckRef) {
         //TODO : faire un meilleur generateur de starterDeck automatique
@@ -200,15 +201,22 @@ public class DeckGestion {
     }
 
     public static void moveDeckWithTitle(DatabaseReference refDeckEmetteur, final DatabaseReference refDeckRecepteur) {
+        test = true;
         refDeckEmetteur.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                refDeckRecepteur.child(dataSnapshot.getKey()).setValue(dataSnapshot.getValue());
+                if (test) {
+                    refDeckRecepteur.child(dataSnapshot.getKey()).setValue(dataSnapshot.getValue());
+                    test = !test;
+                }
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                refDeckRecepteur.child(dataSnapshot.getKey()).setValue(dataSnapshot.getValue());
+                if (test) {
+                    refDeckRecepteur.child(dataSnapshot.getKey()).setValue(dataSnapshot.getValue());
+                    test = !test;
+                }
             }
 
             @Override

@@ -49,10 +49,7 @@ public class FieldActivity extends AppCompatActivity {
         refPartie = refGeneral.child(MainMenuActivity.PARTIES).child(partieKey);
         DatabaseReference refDeck = refPartie.child(role);
         DatabaseReference refUserDeck = refGeneral.child(SignInActivity.USERS).child(user.getUid()).child("decks").child(deckName);
-        //DeckGestion.moveDeckWithTitle(refUserDeck, refDeck);
-
-        Toast toast = Toast.makeText(getApplicationContext(), "refUser : " + refUserDeck + "\n refDeck : " + refDeck, Toast.LENGTH_SHORT);
-        toast.show();
+        DeckGestion.moveDeckWithTitle(refUserDeck, refDeck);
 
         hideNavigationBar();
 
