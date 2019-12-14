@@ -38,7 +38,7 @@ public class FieldActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_field);
-
+/*
         Intent intent = this.getIntent();
         partieKey = intent.getStringExtra(MainMenuActivity.PARTIE_KEY);
         role = intent.getStringExtra(MainMenuActivity.ROLE);
@@ -53,7 +53,7 @@ public class FieldActivity extends AppCompatActivity {
 
         Toast toast = Toast.makeText(getApplicationContext(), "key : " + partieKey, Toast.LENGTH_SHORT);
         toast.show();
-
+*/
         hideNavigationBar();
 
         mainButton = findViewById(R.id.main);
