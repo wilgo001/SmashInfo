@@ -132,8 +132,11 @@ MainMenuActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 final Partie partie = dataSnapshot.getValue(Partie.class);
                 if (partie.start) {
-                    finalizeDeck(refHoster);
-                    startPartie();
+                    if (dataSnapshot.hasChild("hosterDeck")) {
+                        startPartie();
+                    }else {
+                        finalizeDeck(refHoster);
+                    }
                 }
                 switch (step) {
                     case 0:
@@ -251,8 +254,11 @@ MainMenuActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Partie partie = dataSnapshot.getValue(Partie.class);
                 if (partie.start) {
-                    finalizeDeck(refJoiner);
-                    startPartie();
+                    if (dataSnapshot.hasChild("joinerDeck")) {
+                        startPartie();
+                    }else {
+                        finalizeDeck(refJoiner);
+                    }
                 }
                 hostercheck.setChecked(partie.hosterReady);
                 if (partie.joinerName.equals(JOINER_NAME)) {
@@ -579,7 +585,6 @@ MainMenuActivity extends AppCompatActivity {
                     ArrayAdapter<CharSequence> list = new ArrayAdapter<CharSequence>(getApplicationContext(), R.layout.simple_list_item_1);
                     for (DataSnapshot dataDeck : dataSnapshot.getChildren()) {
                         list.add(dataDeck.getKey());
-                        Toast.makeText(getApplicationContext(), dataDeck.getKey(), Toast.LENGTH_SHORT).show();
                     }
                     choixDeck.setAdapter(list);
                 }

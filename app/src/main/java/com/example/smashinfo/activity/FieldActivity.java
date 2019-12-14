@@ -82,7 +82,7 @@ public class FieldActivity extends AppCompatActivity {
                 getResources().getStringArray(R.array.phase_jeu));
         leAdaptater.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         phaseJeu.setAdapter(leAdaptater);
-
+/*
         phaseJeu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -104,7 +104,7 @@ public class FieldActivity extends AppCompatActivity {
             }
         });
 
-
+*/
     }
 
     private void main() {
