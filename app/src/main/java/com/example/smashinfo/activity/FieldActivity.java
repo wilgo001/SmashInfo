@@ -82,10 +82,11 @@ public class FieldActivity extends AppCompatActivity {
                 getResources().getStringArray(R.array.phase_jeu));
         leAdaptater.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         phaseJeu.setAdapter(leAdaptater);
-/*
-        phaseJeu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+        phaseJeu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 //TODO:switch case avec le i, i c'est l'index dans le tableau des données du spinner
                 switch (i) {
                     case 0:
@@ -102,9 +103,12 @@ public class FieldActivity extends AppCompatActivity {
                         break;
                 }
             }
-        });
 
-*/
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private void main() {
