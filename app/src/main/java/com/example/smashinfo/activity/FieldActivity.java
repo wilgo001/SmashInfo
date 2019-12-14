@@ -38,7 +38,7 @@ public class FieldActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_field);
-/*
+
         Intent intent = this.getIntent();
         partieKey = intent.getStringExtra(MainMenuActivity.PARTIE_KEY);
         role = intent.getStringExtra(MainMenuActivity.ROLE);
@@ -49,11 +49,11 @@ public class FieldActivity extends AppCompatActivity {
         refPartie = refGeneral.child(MainMenuActivity.PARTIES).child(partieKey);
         DatabaseReference refDeck = refPartie.child(role);
         DatabaseReference refUserDeck = refGeneral.child(SignInActivity.USERS).child(user.getUid()).child("decks").child(deckName);
-        DeckGestion.moveDeckWithTitle(refUserDeck, refDeck);
+        //DeckGestion.moveDeckWithTitle(refUserDeck, refDeck);
 
-        Toast toast = Toast.makeText(getApplicationContext(), "key : " + partieKey, Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(getApplicationContext(), "refUser : " + refUserDeck + "\n refDeck : " + refDeck, Toast.LENGTH_SHORT);
         toast.show();
-*/
+
         hideNavigationBar();
 
         mainButton = findViewById(R.id.main);
