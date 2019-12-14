@@ -15,16 +15,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smashinfo.R;
+import com.example.smashinfo.data.DeckGestion;
 import com.example.smashinfo.game.Player;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class FieldActivity extends AppCompatActivity {
 
     public static String partieKey;
+    public String role;
     public Player player1;
     public Player player2;
     private Button mainButton, deckButton, extraDeckButton, cimetiereButton;
     private ImageButton A1, A2, A3, A4, B1, B2, B3, B4, C1, C2, C3, C4, D1, D2, D3, D4;
     private TextView pv, pvAdverse;
+    private DatabaseReference refGeneral = FirebaseDatabase.getInstance().getReference(), refPartie;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +41,15 @@ public class FieldActivity extends AppCompatActivity {
 
         Intent intent = this.getIntent();
         partieKey = intent.getStringExtra(MainMenuActivity.PARTIE_KEY);
+        role = intent.getStringExtra(MainMenuActivity.ROLE);
+        String deckName = intent.getStringExtra(MainMenuActivity.DECK_NAME);
 
-        Toast toast = Toast.makeText(getApplicationContext(), "key : " + partieKey, Toast.LENGTH_SHORT);
-        toast.show();
+        user = FirebaseAuth.getInstance().getCurrentUser();
+
+        refPartie = refGeneral.child(MainMenuActivity.PARTIES).child(partieKey);
+        DatabaseReference refDeck = refPartie.child(role);
+        DatabaseReference refUserDeck = refGeneral.child(SignInActivity.USERS).child(user.getUid()).child("decks").child(deckName);
+        DeckGestion.moveDeckWithTitle(refUserDeck, refDeck);
 
         hideNavigationBar();
 
