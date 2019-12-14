@@ -57,6 +57,10 @@ MainMenuActivity extends AppCompatActivity {
     public static final String HOSTER_NAME = "hosterName";
     public static final String PARTIE_KEY = "com.example.smashinfo.PARTIE_KEY";
     private final static DatabaseReference CARDREF = FirebaseDatabase.getInstance().getReference().child("cartes");
+    public static final String JOINER = "joiner";
+    public static final String HOSTER = "hoster";
+    public static final String ROLE = "role";
+    public static final String DECK_NAME = "deckName";
     private Button buttonDeconnexion, createGame, loadGame, startGame, kickButton, validerVolume, tutoriel, annuler;
     private EditText pseudo;
     private DatabaseReference refGeneral, refPartie, refUser;
@@ -75,9 +79,10 @@ MainMenuActivity extends AppCompatActivity {
     private Drawable background;
     private DataCard dataCard;
     private Spinner choixDeck;
-    private DatabaseReference refJoiner;
-    private DatabaseReference refHoster;
+    private DatabaseReference refDeck;
     public static int musique, effet;
+    private String role;
+    private String deckName;
 
 
     @Override
@@ -132,11 +137,7 @@ MainMenuActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 final Partie partie = dataSnapshot.getValue(Partie.class);
                 if (partie.start) {
-                    if (dataSnapshot.hasChild("hosterDeck")) {
-                        startPartie();
-                    }else {
-                        finalizeDeck(refHoster);
-                    }
+                    startPartie();
                 }
                 switch (step) {
                     case 0:
@@ -254,11 +255,7 @@ MainMenuActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Partie partie = dataSnapshot.getValue(Partie.class);
                 if (partie.start) {
-                    if (dataSnapshot.hasChild("joinerDeck")) {
-                        startPartie();
-                    }else {
-                        finalizeDeck(refJoiner);
-                    }
+                    startPartie();
                 }
                 hostercheck.setChecked(partie.hosterReady);
                 if (partie.joinerName.equals(JOINER_NAME)) {
@@ -497,7 +494,8 @@ MainMenuActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 refPartie.child("joinerReady").setValue(b);
-                refJoiner = refPartie.child("joinerDeck");
+                role = JOINER;
+                deckName = choixDeck.getSelectedItem().toString();
             }
         });
 
@@ -505,7 +503,8 @@ MainMenuActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 refPartie.child("hosterReady").setValue(b);
-                refHoster = refPartie.child("hosterDeck");
+                role = HOSTER;
+                deckName = choixDeck.getSelectedItem().toString();
             }
         });
 
@@ -528,6 +527,8 @@ MainMenuActivity extends AppCompatActivity {
     public void startPartie() {
         Intent myIntent = new Intent(MainMenuActivity.this, FieldActivity.class);
         myIntent.putExtra(PARTIE_KEY, partieKey);
+        myIntent.putExtra(ROLE, role);
+        myIntent.putExtra(DECK_NAME, deckName);
         startActivity(myIntent);
         Toast.makeText(getApplicationContext(), "lancement de la partie", Toast.LENGTH_SHORT).show();
     }
