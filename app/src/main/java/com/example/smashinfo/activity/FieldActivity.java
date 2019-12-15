@@ -43,7 +43,7 @@ public class FieldActivity extends AppCompatActivity {
         partieKey = intent.getStringExtra(MainMenuActivity.PARTIE_KEY);
         role = intent.getStringExtra(MainMenuActivity.ROLE);
         String deckName = intent.getStringExtra(MainMenuActivity.DECK_NAME);
-
+        Toast.makeText(getApplicationContext(), partieKey, Toast.LENGTH_LONG);
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         refPartie = refGeneral.child(MainMenuActivity.PARTIES).child(partieKey);

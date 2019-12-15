@@ -201,22 +201,15 @@ public class DeckGestion {
     }
 
     public static void moveDeckWithTitle(DatabaseReference refDeckEmetteur, final DatabaseReference refDeckRecepteur) {
-        test = true;
         refDeckEmetteur.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (test) {
-                    refDeckRecepteur.child(dataSnapshot.getKey()).setValue(dataSnapshot.getValue());
-                    test = !test;
-                }
+                refDeckRecepteur.child(dataSnapshot.getKey()).setValue(dataSnapshot.getValue());
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (test) {
-                    refDeckRecepteur.child(dataSnapshot.getKey()).setValue(dataSnapshot.getValue());
-                    test = !test;
-                }
+                refDeckRecepteur.child(dataSnapshot.getKey()).setValue(dataSnapshot.getValue());
             }
 
             @Override

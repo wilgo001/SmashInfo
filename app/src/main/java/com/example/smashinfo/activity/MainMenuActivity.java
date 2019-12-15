@@ -141,6 +141,7 @@ MainMenuActivity extends AppCompatActivity {
                 }
                 switch (step) {
                     case 0:
+                        partieKey = dataSnapshot.getKey();
                         hosterName.setText(partie.hosterName);
                         joinercheck.setClickable(false);
                         step++;
@@ -511,10 +512,6 @@ MainMenuActivity extends AppCompatActivity {
 
     }
 
-    private void finalizeDeck(DatabaseReference ref) {
-        DeckGestion.moveDeckWithTitle(refUser.child("decks").child(choixDeck.getSelectedItem().toString()), ref);
-    }
-
     public void annuler() {
         combat();
         refPartie.child("joinerName").setValue(JOINER_NAME);
@@ -526,6 +523,8 @@ MainMenuActivity extends AppCompatActivity {
     }
 
     public void startPartie() {
+        refPartie.removeEventListener(createdPartie);
+        refPartie.removeEventListener(joinedPartie);
         Intent myIntent = new Intent(MainMenuActivity.this, FieldActivity.class);
         myIntent.putExtra(PARTIE_KEY, partieKey);
         myIntent.putExtra(ROLE, role);
@@ -608,5 +607,11 @@ MainMenuActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        annuler();
     }
 }
