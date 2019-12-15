@@ -525,6 +525,7 @@ MainMenuActivity extends AppCompatActivity {
     public void startPartie() {
         refPartie.removeEventListener(createdPartie);
         refPartie.removeEventListener(joinedPartie);
+
         Intent myIntent = new Intent(MainMenuActivity.this, FieldActivity.class);
         myIntent.putExtra(PARTIE_KEY, partieKey);
         myIntent.putExtra(ROLE, role);
