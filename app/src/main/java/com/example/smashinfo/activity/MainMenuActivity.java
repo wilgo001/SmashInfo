@@ -141,6 +141,7 @@ MainMenuActivity extends AppCompatActivity {
                 }
                 switch (step) {
                     case 0:
+                        role = HOSTER;
                         partieKey = dataSnapshot.getKey();
                         hosterName.setText(partie.hosterName);
                         joinercheck.setClickable(false);
@@ -259,6 +260,7 @@ MainMenuActivity extends AppCompatActivity {
                 if (partie.start) {
                     startPartie();
                 }
+                role = JOINER;
                 hostercheck.setChecked(partie.hosterReady);
                 if (partie.joinerName.equals(JOINER_NAME)) {
                     Toast.makeText(getApplicationContext(), "vous avez été expulsé de la partie", Toast.LENGTH_LONG).show();
@@ -496,7 +498,6 @@ MainMenuActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 refPartie.child("joinerReady").setValue(b);
-                role = JOINER;
                 deckName = choixDeck.getSelectedItem().toString();
             }
         });
@@ -505,7 +506,6 @@ MainMenuActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 refPartie.child("hosterReady").setValue(b);
-                role = HOSTER;
                 deckName = choixDeck.getSelectedItem().toString();
             }
         });
@@ -610,9 +610,4 @@ MainMenuActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        annuler();
-    }
 }
