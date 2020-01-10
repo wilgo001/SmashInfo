@@ -1,6 +1,6 @@
 package com.example.smashinfo.game;
 
-public class CardEffect extends Card {
+public class CardEffect /*extends Card*/ {
     EffectNames effectNames;
     //EffectName effet = EffectName.INVOQUER_CIMETIERE;
 

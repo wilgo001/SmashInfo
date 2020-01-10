@@ -2,8 +2,10 @@ package com.example.smashinfo.game;
 
 import android.widget.ImageButton;
 
-public class PlaceEffect extends place {
-    public PlaceEffect(ImageButton button) {
-        super(button);
+import com.example.smashinfo.activity.FieldActivity;
+
+public class PlaceEffect extends Place {
+    public PlaceEffect(ImageButton button, FieldActivity context) {
+        super(button, context);
     }
 }

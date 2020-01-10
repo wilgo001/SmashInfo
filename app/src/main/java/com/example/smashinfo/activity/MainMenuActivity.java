@@ -28,11 +28,6 @@ import android.widget.Toast;
 
 import com.example.smashinfo.R;
 import com.example.smashinfo.data.DataCard;
-import com.example.smashinfo.data.DataCardsNames;
-import com.example.smashinfo.data.DataEffectCard;
-import com.example.smashinfo.data.DataSmasheurCard;
-import com.example.smashinfo.data.DataSuperSmasheurCard;
-import com.example.smashinfo.data.DeckGestion;
 import com.example.smashinfo.data.Partie;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,8 +38,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -83,6 +76,7 @@ MainMenuActivity extends AppCompatActivity {
     public static int musique, effet;
     private String role;
     private String deckName;
+    private ConstraintLayout.LayoutParams layoutParamsOpen, layoutParamsClose;
 
 
     @Override
@@ -391,11 +385,21 @@ MainMenuActivity extends AppCompatActivity {
         this.loadGameSetting();
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        layoutParamsOpen = new ConstraintLayout.LayoutParams(accueilLayout.getWidth(), accueilLayout.getHeight());
+        layoutParamsClose = new ConstraintLayout.LayoutParams(0, 0);
+        pageAccueil();
+
+
+    }
+
     private void tuto(){
         Intent intent=new Intent(this, TutorielActivity.class);
         startActivity(intent);
     }
-
+//TODO
     private void combat() {
         combat.setBackground(SELECTED_BUTTON_BACKGROUND);
         deck.setBackground(background);
@@ -412,7 +416,7 @@ MainMenuActivity extends AppCompatActivity {
         setPartieLayout.setAlpha(0F);
         parametresLayout.setAlpha(0F);
     }
-
+//TODO
     private void deck() {
         combat.setBackground(background);
         deck.setBackground(SELECTED_BUTTON_BACKGROUND);
@@ -440,11 +444,17 @@ MainMenuActivity extends AppCompatActivity {
         createGame.setClickable(false);
         loadGame.setClickable(false);
         accueilLayout.setAlpha(1F);
+        accueilLayout.setLayoutParams(layoutParamsOpen);
         lootLayout.setAlpha(0F);
+        lootLayout.setLayoutParams(layoutParamsClose);
         deckLayout.setAlpha(0F);
+        deckLayout.setLayoutParams(layoutParamsClose);
         lobbyLayout.setAlpha(0F);
+        lobbyLayout.setLayoutParams(layoutParamsClose);
         setPartieLayout.setAlpha(0F);
+        setPartieLayout.setLayoutParams(layoutParamsClose);
         parametresLayout.setAlpha(0F);
+        parametresLayout.setLayoutParams(layoutParamsClose);
     }
 
     private void lootBox() {
@@ -457,11 +467,17 @@ MainMenuActivity extends AppCompatActivity {
         createGame.setClickable(false);
         loadGame.setClickable(false);
         accueilLayout.setAlpha(0F);
+        accueilLayout.setLayoutParams(layoutParamsClose);
         lootLayout.setAlpha(1F);
+        lootLayout.setLayoutParams(layoutParamsOpen);
         deckLayout.setAlpha(0F);
+        deckLayout.setLayoutParams(layoutParamsClose);
         lobbyLayout.setAlpha(0F);
+        lobbyLayout.setLayoutParams(layoutParamsClose);
         setPartieLayout.setAlpha(0F);
+        setPartieLayout.setLayoutParams(layoutParamsClose);
         parametresLayout.setAlpha(0F);
+        parametresLayout.setLayoutParams(layoutParamsClose);
     }
 
     private void parametres() {
@@ -474,13 +490,19 @@ MainMenuActivity extends AppCompatActivity {
         createGame.setClickable(false);
         loadGame.setClickable(false);
         accueilLayout.setAlpha(0F);
+        accueilLayout.setLayoutParams(layoutParamsClose);
         lootLayout.setAlpha(0F);
+        lootLayout.setLayoutParams(layoutParamsClose);
         deckLayout.setAlpha(0F);
+        deckLayout.setLayoutParams(layoutParamsClose);
         lobbyLayout.setAlpha(0F);
+        lobbyLayout.setLayoutParams(layoutParamsClose);
         setPartieLayout.setAlpha(0F);
+        setPartieLayout.setLayoutParams(layoutParamsClose);
         parametresLayout.setAlpha(1F);
+        parametresLayout.setLayoutParams(layoutParamsOpen);
     }
-
+//TODO
     private void loadPartie() {
         pseudo.setClickable(false);
         createGame.setClickable(false);
