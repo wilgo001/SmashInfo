@@ -58,7 +58,7 @@ MainMenuActivity extends AppCompatActivity {
     private EditText pseudo;
     private DatabaseReference refGeneral, refPartie, refUser;
     private String message, partieKey;
-    private TextView hosterName, joinerName;
+    private TextView hosterName, joinerName, nomJoueur, deckMajeur, nbPartie, nbVictoire;
     private ImageButton combat, deck, pageAccueil, lootBox, parametres;
     private ConstraintLayout accueilLayout, lootLayout, deckLayout, lobbyLayout, setPartieLayout, parametresLayout;
     private FirebaseUser user;
@@ -96,6 +96,31 @@ MainMenuActivity extends AppCompatActivity {
 
         refGeneral = FirebaseDatabase.getInstance().getReference();
         refUser = refGeneral.child(SignInActivity.USERS).child(user.getUid());
+        refUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getKey().equals("pseudo")){
+                    nomJoueur.setText("Bonjour "+dataSnapshot.getValue().toString());
+                }
+
+                if(dataSnapshot.getKey().equals("deckMajeur")){
+                    deckMajeur.setText(dataSnapshot.getValue().toString()+" est votre deck le plus utilisé");
+                }
+
+                if(dataSnapshot.getKey().equals("nbPartie")){
+                    nbPartie.setText(dataSnapshot.getValue().toString()+" partie(s) joué(s)");
+                }
+
+                if(dataSnapshot.getKey().equals("nbVictoire")){
+                    nbVictoire.setText(dataSnapshot.getValue().toString()+" match(s) gagné(s)");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         combat = (ImageButton) findViewById(R.id.combat);
         deck = (ImageButton) findViewById(R.id.deck);
@@ -381,6 +406,11 @@ MainMenuActivity extends AppCompatActivity {
         });
 
         this.loadGameSetting();
+
+        nomJoueur = (TextView) findViewById(R.id.nomJoueur);
+        deckMajeur = (TextView) findViewById(R.id.deckMajeur);
+        nbPartie = (TextView) findViewById(R.id.nbPartie);
+        nbVictoire = (TextView) findViewById(R.id.nbVictoire);
     }
 
     @Override
