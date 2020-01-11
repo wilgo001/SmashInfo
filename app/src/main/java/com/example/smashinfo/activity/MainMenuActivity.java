@@ -390,9 +390,7 @@ MainMenuActivity extends AppCompatActivity {
         super.onWindowFocusChanged(hasFocus);
         layoutParamsOpen = new ConstraintLayout.LayoutParams(accueilLayout.getWidth(), accueilLayout.getHeight());
         layoutParamsClose = new ConstraintLayout.LayoutParams(0, 0);
-        pageAccueil();
-
-
+        //pageAccueil();
     }
 
     private void tuto(){
@@ -409,12 +407,18 @@ MainMenuActivity extends AppCompatActivity {
         pseudo.setClickable(true);
         createGame.setClickable(true);
         loadGame.setClickable(true);
-        accueilLayout.setAlpha(0F);
+        /*accueilLayout.setAlpha(0F);
+        accueilLayout.setLayoutParams(layoutParamsClose);
         lootLayout.setAlpha(0F);
+        lootLayout.setLayoutParams(layoutParamsClose);
         deckLayout.setAlpha(0F);
+        deckLayout.setLayoutParams(layoutParamsClose);
         lobbyLayout.setAlpha(1F);
+        lobbyLayout.setLayoutParams(layoutParamsOpen);
         setPartieLayout.setAlpha(0F);
+        setPartieLayout.setLayoutParams(layoutParamsClose);
         parametresLayout.setAlpha(0F);
+        parametresLayout.setLayoutParams(layoutParamsClose);*/
     }
 //TODO
     private void deck() {
@@ -427,11 +431,17 @@ MainMenuActivity extends AppCompatActivity {
         createGame.setClickable(false);
         loadGame.setClickable(false);
         accueilLayout.setAlpha(0F);
+        accueilLayout.setLayoutParams(layoutParamsClose);
         lootLayout.setAlpha(0F);
+        lootLayout.setLayoutParams(layoutParamsClose);
         deckLayout.setAlpha(1F);
+        deckLayout.setLayoutParams(layoutParamsOpen);
         lobbyLayout.setAlpha(0F);
+        lobbyLayout.setLayoutParams(layoutParamsClose);
         setPartieLayout.setAlpha(0F);
+        setPartieLayout.setLayoutParams(layoutParamsClose);
         parametresLayout.setAlpha(0F);
+        parametresLayout.setLayoutParams(layoutParamsClose);
     }
 
     private void pageAccueil() {
@@ -508,12 +518,17 @@ MainMenuActivity extends AppCompatActivity {
         createGame.setClickable(false);
         loadGame.setClickable(false);
         accueilLayout.setAlpha(0F);
+        accueilLayout.setLayoutParams(layoutParamsClose);
         lootLayout.setAlpha(0F);
+        lootLayout.setLayoutParams(layoutParamsClose);
         deckLayout.setAlpha(0F);
+        deckLayout.setLayoutParams(layoutParamsClose);
         lobbyLayout.setAlpha(0F);
+        lobbyLayout.setLayoutParams(layoutParamsClose);
         setPartieLayout.setAlpha(1F);
-        kickButton.setAlpha(0F);
+        setPartieLayout.setLayoutParams(layoutParamsOpen);
         parametresLayout.setAlpha(0F);
+        parametresLayout.setLayoutParams(layoutParamsClose);
 
 
         joinercheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
