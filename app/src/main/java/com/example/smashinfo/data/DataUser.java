@@ -5,18 +5,18 @@ public class DataUser {
     public String mail;
     public String pseudo;
     public String deckMajeur;
-    public int nbPartie;
-    public int nbVictoire;
+    public int nbPartie, nbVictoire, piece;
 
     public DataUser() {
     }
 
-    public DataUser(String mail, String pseudo, String deckMajeur, int nbPartie, int nbVictoire) {
+    public DataUser(String mail, String pseudo, String deckMajeur, int nbPartie, int nbVictoire, int piece) {
         this.mail = mail;
         this.pseudo = pseudo;
         this.deckMajeur = deckMajeur;
         this.nbPartie = nbPartie;
         this.nbVictoire = nbVictoire;
+        this.piece = piece;
     }
 
     public String getMail() {
@@ -46,4 +46,8 @@ public class DataUser {
     public int getNbVictoire() { return nbVictoire; }
 
     public void setNbVictoire(int nbVictoire) { this.nbVictoire = nbVictoire; }
+
+    public int getPiece() { return piece; }
+
+    public void setPiece(int piece) { this.piece = piece; }
 }
