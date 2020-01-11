@@ -359,8 +359,6 @@ MainMenuActivity extends AppCompatActivity {
             }
         });
 
-        combat();
-
         this.seekBarMusique = (SeekBar) findViewById(R.id.seekBarMusique);
         this.seekBarEffet = (SeekBar) findViewById(R.id.seekBarEffet);
         this.validerVolume = (Button) findViewById(R.id.valider);
@@ -390,7 +388,7 @@ MainMenuActivity extends AppCompatActivity {
         super.onWindowFocusChanged(hasFocus);
         layoutParamsOpen = new ConstraintLayout.LayoutParams(accueilLayout.getWidth(), accueilLayout.getHeight());
         layoutParamsClose = new ConstraintLayout.LayoutParams(0, 0);
-        //pageAccueil();
+        pageAccueil();
     }
 
     private void tuto(){
@@ -407,7 +405,7 @@ MainMenuActivity extends AppCompatActivity {
         pseudo.setClickable(true);
         createGame.setClickable(true);
         loadGame.setClickable(true);
-        /*accueilLayout.setAlpha(0F);
+        accueilLayout.setAlpha(0F);
         accueilLayout.setLayoutParams(layoutParamsClose);
         lootLayout.setAlpha(0F);
         lootLayout.setLayoutParams(layoutParamsClose);
@@ -418,8 +416,7 @@ MainMenuActivity extends AppCompatActivity {
         setPartieLayout.setAlpha(0F);
         setPartieLayout.setLayoutParams(layoutParamsClose);
         parametresLayout.setAlpha(0F);
-        parametresLayout.setLayoutParams(layoutParamsClose);*/
-    }
+        parametresLayout.setLayoutParams(layoutParamsClose);    }
 //TODO
     private void deck() {
         combat.setBackground(background);

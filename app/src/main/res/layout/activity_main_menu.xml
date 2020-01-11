@@ -296,8 +296,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/setpartieLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/barreLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -326,23 +326,28 @@
                 android:id="@+id/textView11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0"
                 android:text="nouvelle partie"
                 android:textAlignment="center"
                 android:textSize="24sp" />
 
             <GridLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
                 android:layout_margin="10dp"
+                android:layout_weight="1"
                 android:background="@color/white_text"
                 android:columnCount="3"
                 android:rowCount="3">
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_row="0"
-                    android:layout_rowWeight="1"
+                    android:layout_rowWeight="0.20"
                     android:layout_column="0"
-                    android:layout_columnWeight="1"
+                    android:layout_columnWeight="0.20"
                     android:layout_margin="2dp"
                     android:background="@android:color/black"
                     android:text="Joueurs"
@@ -350,9 +355,9 @@
 
                 <TextView
                     android:layout_row="0"
-                    android:layout_rowWeight="1"
+                    android:layout_rowWeight="0.20"
                     android:layout_column="1"
-                    android:layout_columnWeight="1"
+                    android:layout_columnWeight="0.20"
                     android:layout_margin="2dp"
                     android:background="@android:color/black"
                     android:text="Autorisation"
@@ -360,8 +365,8 @@
 
                 <TextView
                     android:id="@+id/textView15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_rowWeight="0.20"
+                    android:layout_columnWeight="0.20"
                     android:layout_margin="2dp"
                     android:background="@android:color/black"
                     android:text="Prêt ?"
@@ -370,21 +375,21 @@
                 <TextView
                     android:id="@+id/hosterName"
                     android:layout_row="1"
-                    android:layout_rowWeight="1"
+                    android:layout_rowWeight="0.40"
                     android:layout_column="0"
-                    android:layout_columnWeight="1"
+                    android:layout_columnWeight="0.40"
                     android:layout_margin="2dp"
                     android:background="@android:color/black"
                     android:text="hoster"
                     android:textSize="24sp" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="129dp"
+                    android:layout_height="51dp"
                     android:layout_row="1"
-                    android:layout_rowWeight="1"
+                    android:layout_rowWeight="0.40"
                     android:layout_column="1"
-                    android:layout_columnWeight="1"
+                    android:layout_columnWeight="0.40"
                     android:layout_margin="2dp"
                     app:srcCompat="@android:color/black" />
 
@@ -392,7 +397,9 @@
                     android:layout_width="61dp"
                     android:layout_height="53dp"
                     android:layout_row="1"
+                    android:layout_rowWeight="0.40"
                     android:layout_column="2"
+                    android:layout_columnWeight="0.40"
                     android:layout_margin="2dp"
                     android:background="@android:color/black"
                     app:srcCompat="@android:color/black">
@@ -417,9 +424,9 @@
                 <TextView
                     android:id="@+id/joinerName"
                     android:layout_row="2"
-                    android:layout_rowWeight="1"
+                    android:layout_rowWeight="0.40"
                     android:layout_column="0"
-                    android:layout_columnWeight="1"
+                    android:layout_columnWeight="0.40"
                     android:layout_margin="2dp"
                     android:background="@android:color/black"
                     android:text="searching..."
@@ -428,18 +435,21 @@
                 <Button
                     android:id="@+id/kickButton"
                     android:layout_row="2"
-                    android:layout_rowWeight="1"
+                    android:layout_rowWeight="0.40"
                     android:layout_column="1"
-                    android:layout_columnWeight="1"
+                    android:layout_columnWeight="0.40"
                     android:layout_margin="2dp"
                     android:background="#F44336"
                     android:text="kick" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+
                     android:layout_width="61dp"
                     android:layout_height="53dp"
                     android:layout_row="2"
+                    android:layout_rowWeight="0.40"
                     android:layout_column="2"
+                    android:layout_columnWeight="0.40"
                     android:layout_margin="2dp"
                     android:background="@android:color/black"
                     app:srcCompat="@android:color/black">
@@ -465,12 +475,15 @@
             <Spinner
                 android:id="@+id/choixDeck"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+
+                android:layout_weight="0" />
 
             <Button
                 android:id="@+id/startPartie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0"
                 android:text="lancer la partie"
                 android:textColor="@color/black_overlay" />
 
@@ -478,6 +491,7 @@
                 android:id="@+id/annulation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="0"
                 android:text="annuler"
                 android:textColor="@color/black_overlay" />
 
