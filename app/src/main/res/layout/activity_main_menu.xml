@@ -238,45 +238,45 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/logo" />
 
-                <TextView
-                    android:id="@+id/deckMajeur"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="176dp"
-                    android:layout_marginTop="60dp"
-                    android:layout_marginEnd="176dp"
-                    android:text="TextView"
-                    android:textSize="24sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/nomJoueur" />
+        <TextView
+            android:id="@+id/deckMajeur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="176dp"
+            android:text="TextView"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nomJoueur" />
 
-                <TextView
-                    android:id="@+id/nbPartie"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="176dp"
-                    android:layout_marginTop="60dp"
-                    android:layout_marginEnd="176dp"
-                    android:text="TextView"
-                    android:textSize="24sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/deckMajeur" />
+        <TextView
+            android:id="@+id/nbPartie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="176dp"
+            android:text="TextView"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/deckMajeur" />
 
-                <TextView
-                    android:id="@+id/ratio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="176dp"
-                    android:layout_marginTop="60dp"
-                    android:layout_marginEnd="176dp"
-                    android:text="TextView"
-                    android:textSize="24sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/nbPartie" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/nbVictoire"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="176dp"
+            android:text="TextView"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nbPartie" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/deckLayout"

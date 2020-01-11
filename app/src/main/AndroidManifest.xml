@@ -13,23 +13,28 @@
         tools:ignore="ExtraText,GoogleAppIndexingWarning">
         <activity
             android:name=".activity.IntroActivity"
+            android:screenOrientation="portrait"
             android:clearTaskOnLaunch="true">
 
         </activity>
         <activity
             android:name=".activity.FieldActivity"
             android:screenOrientation="landscape"/>
-        <activity android:name=".activity.MainMenuActivity" />
+        <activity android:name=".activity.MainMenuActivity"
+                  android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.LoginActivity">
+            android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SignInActivity" />
-        <activity android:name=".activity.TutorielActivity"/>
+        <activity android:name=".activity.SignInActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".activity.TutorielActivity"
+                  android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

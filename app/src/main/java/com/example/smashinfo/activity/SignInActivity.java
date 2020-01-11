@@ -129,7 +129,7 @@ public class SignInActivity extends AppCompatActivity {
     private void updateUser(final FirebaseUser user) {
         if(user != null) {
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child(USERS).child(user.getUid());
-            DataUser dataUser = new DataUser(user.getEmail(), editTextPseudo.getText().toString());
+            DataUser dataUser = new DataUser(user.getEmail(), editTextPseudo.getText().toString(), "starter deck", 0, 0);
             databaseReference.setValue(dataUser);
 
             DatabaseReference deckRef = databaseReference.child("decks").child("starter deck");
