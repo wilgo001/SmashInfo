@@ -21,6 +21,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -76,7 +77,8 @@ MainMenuActivity extends AppCompatActivity {
     public static int musique, effet;
     private String role;
     private String deckName;
-    private ConstraintLayout.LayoutParams layoutParamsOpen, layoutParamsClose;
+    private ConstraintLayout.LayoutParams layoutParamsOpen, layoutParamsClose, layoutParamsMenu;
+    private LinearLayout menu;
 
 
     @Override
@@ -111,6 +113,7 @@ MainMenuActivity extends AppCompatActivity {
         lobbyLayout = findViewById(R.id.lobbylayout);
         setPartieLayout = findViewById(R.id.setpartieLayout);
         parametresLayout = findViewById(R.id.parametresLayout);
+        menu = findViewById(R.id.barreLayout);
 
         hostercheck = findViewById(R.id.checkBox2);
         joinercheck = findViewById(R.id.checkBox1);
@@ -144,6 +147,7 @@ MainMenuActivity extends AppCompatActivity {
                         startGame.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                refPartie.child("start").setValue(true);                    //ligne a virer une fois bug corrigé
                                 if (joinercheck.isChecked() && hostercheck.isChecked()) {
                                     refPartie.child("start").setValue(true);
                                 }
@@ -215,6 +219,7 @@ MainMenuActivity extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Partie partie = dataSnapshot.getValue(Partie.class);
                 if ((partie.joinerName.equals(JOINER_NAME)) && (!partie.hosterName.equals(pseudo.getText().toString()))) {
+                    refGeneral.removeEventListener(this);
                     partie.joinerName = pseudo.getText().toString();
                     joinerName.setText(partie.joinerName);
                     partieKey = dataSnapshot.getKey();
@@ -225,15 +230,7 @@ MainMenuActivity extends AppCompatActivity {
                     refPartie.addValueEventListener(joinedPartie);
                     if (alertDialog!=null && alertDialog.isShowing()) {
                         alertDialog.dismiss();
-                        refGeneral.removeEventListener(this);
                     }
-                    loadPartie();
-                }
-                if ((partie.joinerName.equals(JOINER_NAME)) && (!partie.hosterName.equals(pseudo.getText().toString()))) {
-                    partie.joinerName = pseudo.getText().toString();
-                    partieKey = dataSnapshot.getKey();
-                    refGeneral.child(PARTIES).child(partieKey).setValue(partie);
-                    hostercheck.setClickable(false);
                     loadPartie();
                 }
             }
@@ -381,21 +378,24 @@ MainMenuActivity extends AppCompatActivity {
         });
 
         this.loadGameSetting();
-    }
 
+        pageAccueil();
+    }
+/*
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         layoutParamsOpen = new ConstraintLayout.LayoutParams(accueilLayout.getWidth(), accueilLayout.getHeight());
+        layoutParamsMenu = new ConstraintLayout.LayoutParams(menu.getWidth(), menu.getHeight());
         layoutParamsClose = new ConstraintLayout.LayoutParams(0, 0);
-        pageAccueil();
+        //pageAccueil();
     }
-
+*/
     private void tuto(){
         Intent intent=new Intent(this, TutorielActivity.class);
         startActivity(intent);
     }
-//TODO
+
     private void combat() {
         combat.setBackground(SELECTED_BUTTON_BACKGROUND);
         deck.setBackground(background);
@@ -405,19 +405,21 @@ MainMenuActivity extends AppCompatActivity {
         pseudo.setClickable(true);
         createGame.setClickable(true);
         loadGame.setClickable(true);
+        //menu.setLayoutParams(layoutParamsMenu);
         accueilLayout.setAlpha(0F);
-        accueilLayout.setLayoutParams(layoutParamsClose);
+        //accueilLayout.setLayoutParams(layoutParamsClose);
         lootLayout.setAlpha(0F);
-        lootLayout.setLayoutParams(layoutParamsClose);
+        //lootLayout.setLayoutParams(layoutParamsClose);
         deckLayout.setAlpha(0F);
-        deckLayout.setLayoutParams(layoutParamsClose);
+        //deckLayout.setLayoutParams(layoutParamsClose);
         lobbyLayout.setAlpha(1F);
-        lobbyLayout.setLayoutParams(layoutParamsOpen);
+        //lobbyLayout.setLayoutParams(layoutParamsOpen);
         setPartieLayout.setAlpha(0F);
-        setPartieLayout.setLayoutParams(layoutParamsClose);
+        //setPartieLayout.setLayoutParams(layoutParamsClose);
         parametresLayout.setAlpha(0F);
-        parametresLayout.setLayoutParams(layoutParamsClose);    }
-//TODO
+        //parametresLayout.setLayoutParams(layoutParamsClose);
+    }
+
     private void deck() {
         combat.setBackground(background);
         deck.setBackground(SELECTED_BUTTON_BACKGROUND);
@@ -428,17 +430,17 @@ MainMenuActivity extends AppCompatActivity {
         createGame.setClickable(false);
         loadGame.setClickable(false);
         accueilLayout.setAlpha(0F);
-        accueilLayout.setLayoutParams(layoutParamsClose);
+        //accueilLayout.setLayoutParams(layoutParamsClose);
         lootLayout.setAlpha(0F);
-        lootLayout.setLayoutParams(layoutParamsClose);
+        //lootLayout.setLayoutParams(layoutParamsClose);
         deckLayout.setAlpha(1F);
-        deckLayout.setLayoutParams(layoutParamsOpen);
+        //deckLayout.setLayoutParams(layoutParamsOpen);
         lobbyLayout.setAlpha(0F);
-        lobbyLayout.setLayoutParams(layoutParamsClose);
+        //lobbyLayout.setLayoutParams(layoutParamsClose);
         setPartieLayout.setAlpha(0F);
-        setPartieLayout.setLayoutParams(layoutParamsClose);
+        //setPartieLayout.setLayoutParams(layoutParamsClose);
         parametresLayout.setAlpha(0F);
-        parametresLayout.setLayoutParams(layoutParamsClose);
+        //parametresLayout.setLayoutParams(layoutParamsClose);
     }
 
     private void pageAccueil() {
@@ -451,17 +453,17 @@ MainMenuActivity extends AppCompatActivity {
         createGame.setClickable(false);
         loadGame.setClickable(false);
         accueilLayout.setAlpha(1F);
-        accueilLayout.setLayoutParams(layoutParamsOpen);
+        //accueilLayout.setLayoutParams(layoutParamsOpen);
         lootLayout.setAlpha(0F);
-        lootLayout.setLayoutParams(layoutParamsClose);
+        //lootLayout.setLayoutParams(layoutParamsClose);
         deckLayout.setAlpha(0F);
-        deckLayout.setLayoutParams(layoutParamsClose);
+        //deckLayout.setLayoutParams(layoutParamsClose);
         lobbyLayout.setAlpha(0F);
-        lobbyLayout.setLayoutParams(layoutParamsClose);
+        //lobbyLayout.setLayoutParams(layoutParamsClose);
         setPartieLayout.setAlpha(0F);
-        setPartieLayout.setLayoutParams(layoutParamsClose);
+        //setPartieLayout.setLayoutParams(layoutParamsClose);
         parametresLayout.setAlpha(0F);
-        parametresLayout.setLayoutParams(layoutParamsClose);
+        //parametresLayout.setLayoutParams(layoutParamsClose);
     }
 
     private void lootBox() {
@@ -474,17 +476,17 @@ MainMenuActivity extends AppCompatActivity {
         createGame.setClickable(false);
         loadGame.setClickable(false);
         accueilLayout.setAlpha(0F);
-        accueilLayout.setLayoutParams(layoutParamsClose);
+        //accueilLayout.setLayoutParams(layoutParamsClose);
         lootLayout.setAlpha(1F);
-        lootLayout.setLayoutParams(layoutParamsOpen);
+        //lootLayout.setLayoutParams(layoutParamsOpen);
         deckLayout.setAlpha(0F);
-        deckLayout.setLayoutParams(layoutParamsClose);
+        //deckLayout.setLayoutParams(layoutParamsClose);
         lobbyLayout.setAlpha(0F);
-        lobbyLayout.setLayoutParams(layoutParamsClose);
+        //lobbyLayout.setLayoutParams(layoutParamsClose);
         setPartieLayout.setAlpha(0F);
-        setPartieLayout.setLayoutParams(layoutParamsClose);
+        //setPartieLayout.setLayoutParams(layoutParamsClose);
         parametresLayout.setAlpha(0F);
-        parametresLayout.setLayoutParams(layoutParamsClose);
+        //parametresLayout.setLayoutParams(layoutParamsClose);
     }
 
     private void parametres() {
@@ -497,35 +499,36 @@ MainMenuActivity extends AppCompatActivity {
         createGame.setClickable(false);
         loadGame.setClickable(false);
         accueilLayout.setAlpha(0F);
-        accueilLayout.setLayoutParams(layoutParamsClose);
+        //accueilLayout.setLayoutParams(layoutParamsClose);
         lootLayout.setAlpha(0F);
-        lootLayout.setLayoutParams(layoutParamsClose);
+        //lootLayout.setLayoutParams(layoutParamsClose);
         deckLayout.setAlpha(0F);
-        deckLayout.setLayoutParams(layoutParamsClose);
+        //deckLayout.setLayoutParams(layoutParamsClose);
         lobbyLayout.setAlpha(0F);
-        lobbyLayout.setLayoutParams(layoutParamsClose);
+        //lobbyLayout.setLayoutParams(layoutParamsClose);
         setPartieLayout.setAlpha(0F);
-        setPartieLayout.setLayoutParams(layoutParamsClose);
+        //setPartieLayout.setLayoutParams(layoutParamsClose);
         parametresLayout.setAlpha(1F);
-        parametresLayout.setLayoutParams(layoutParamsOpen);
+        //parametresLayout.setLayoutParams(layoutParamsOpen);
     }
-//TODO
+
     private void loadPartie() {
         pseudo.setClickable(false);
         createGame.setClickable(false);
         loadGame.setClickable(false);
+        //menu.setLayoutParams(layoutParamsClose);
         accueilLayout.setAlpha(0F);
-        accueilLayout.setLayoutParams(layoutParamsClose);
+        //accueilLayout.setLayoutParams(layoutParamsClose);
         lootLayout.setAlpha(0F);
-        lootLayout.setLayoutParams(layoutParamsClose);
+        //lootLayout.setLayoutParams(layoutParamsClose);
         deckLayout.setAlpha(0F);
-        deckLayout.setLayoutParams(layoutParamsClose);
+        //deckLayout.setLayoutParams(layoutParamsClose);
         lobbyLayout.setAlpha(0F);
-        lobbyLayout.setLayoutParams(layoutParamsClose);
+        //lobbyLayout.setLayoutParams(layoutParamsClose);
         setPartieLayout.setAlpha(1F);
-        setPartieLayout.setLayoutParams(layoutParamsOpen);
+        //setPartieLayout.setLayoutParams(layoutParamsOpen);
         parametresLayout.setAlpha(0F);
-        parametresLayout.setLayoutParams(layoutParamsClose);
+        //parametresLayout.setLayoutParams(layoutParamsClose);
 
 
         joinercheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
