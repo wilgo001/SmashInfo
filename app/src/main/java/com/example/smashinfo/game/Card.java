@@ -7,7 +7,7 @@ public class Card {
     private String description;
     private PositionCard positionCard;
 
-    public void Card(int id, String name, String description, String cardKey, PositionCard positionCard ){
+    public Card(String name, String description, String cardKey, PositionCard positionCard ){
         this.id = id;
         this.name = name;
         this.description = description;

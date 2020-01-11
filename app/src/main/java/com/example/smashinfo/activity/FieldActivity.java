@@ -17,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smashinfo.R;
+import com.example.smashinfo.data.DataCard;
+import com.example.smashinfo.data.DataSmasheurCard;
 import com.example.smashinfo.data.DeckGestion;
 import com.example.smashinfo.game.Player;
 import com.google.firebase.auth.FirebaseAuth;
@@ -132,16 +134,17 @@ public class FieldActivity extends AppCompatActivity {
             }
         });
 
-        refPartie.addChildEventListener(new ChildEventListener() {
+
+        hoster = new Player(MainMenuActivity.HOSTER, 500, this);
+        joiner = new Player(MainMenuActivity.JOINER, 500, this);
+
+        refPartie.child(MainMenuActivity.HOSTER).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                switch(phase) {
-                    case 0:
-                        if (dataSnapshot.getKey().equals("hosterName"))
-                            nomHoster = dataSnapshot.getValue(String.class);
-                        if (dataSnapshot.getKey().equals("joinerName"))
-                            nomJoiner = dataSnapshot.getValue(String.class);
+                if (dataSnapshot.hasChild("attaque")) {
+                    hoster.getDeck().addCarte(dataSnapshot.getValue(DataSmasheurCard.class), dataSnapshot.getKey());
                 }
+
             }
 
             @Override
@@ -164,9 +167,6 @@ public class FieldActivity extends AppCompatActivity {
 
             }
         });
-
-        hoster = new Player(nomHoster, 500, this);
-        joiner = new Player(nomJoiner, 500, this);
     }
 
 

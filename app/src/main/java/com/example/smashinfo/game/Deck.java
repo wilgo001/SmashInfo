@@ -1,15 +1,24 @@
 package com.example.smashinfo.game;
 
 import com.example.smashinfo.activity.FieldActivity;
+import com.example.smashinfo.data.DataCard;
+import com.example.smashinfo.data.DataSmasheurCard;
 import com.google.firebase.database.DatabaseReference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Deck {
 
     private FieldActivity field;
-    private Card[] cards;
+    private List<Card> cards;
 
-    public Deck(FieldActivity field, DatabaseReference refDeck) {
+    public Deck(FieldActivity field) {
         this.field = field;
-        this.cards = new Card[30];
+        this.cards = new ArrayList<>();
+    }
+
+    public void addCarte(DataSmasheurCard value, String key) {
+        Card card = new CardSmasheur(value.getName(), value.getDescription(), key, PositionCard.DECK, Integer.parseInt(value.attaque), Integer.parseInt(value.defense), field);
     }
 }

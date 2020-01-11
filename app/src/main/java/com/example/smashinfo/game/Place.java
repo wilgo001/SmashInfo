@@ -2,14 +2,18 @@ package com.example.smashinfo.game;
 
 import android.widget.ImageButton;
 
-public class place {
+import com.example.smashinfo.activity.FieldActivity;
+
+public class Place {
 
     private ImageButton button;
     private boolean hasCard;
+    private FieldActivity context;
 
-    public place(ImageButton button) {
+    public Place(ImageButton button, FieldActivity context) {
         this.button = button;
         hasCard = false;
+        this.context = context;
     }
 
     public boolean isEmpty() {
@@ -22,6 +26,14 @@ public class place {
 
     public void selectCard(){
 
+    }
+
+    public FieldActivity getContext() {
+        return context;
+    }
+
+    public void setContext(FieldActivity context) {
+        this.context = context;
     }
 
     public void selectPlace(){
