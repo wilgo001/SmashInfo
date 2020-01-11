@@ -59,7 +59,7 @@ MainMenuActivity extends AppCompatActivity {
     private EditText pseudo;
     private DatabaseReference refGeneral, refPartie, refUser;
     private String message, partieKey;
-    private TextView hosterName, joinerName, nomJoueur, deckMajeur, nbPartie, nbVictoire;
+    private TextView hosterName, joinerName, nomJoueur, deckMajeur, nbPartie, nbVictoire, nbPiece;
     private ImageButton combat, deck, pageAccueil, lootBox, parametres;
     private ConstraintLayout accueilLayout, lootLayout, deckLayout, lobbyLayout, setPartieLayout, parametresLayout;
     private FirebaseUser user;
@@ -116,6 +116,10 @@ MainMenuActivity extends AppCompatActivity {
 
                 if(dataSnapshot.getKey().equals("nbVictoire")){
                     nbVictoire.setText(dataSnapshot.getValue().toString()+" match(s) gagné(s)");
+                }
+
+                if(dataSnapshot.getKey().equals("nbPiece")){
+                    nbPiece.setText(dataSnapshot.getValue().toString()+" pièce(s)");
                 }
             }
 
@@ -411,6 +415,7 @@ MainMenuActivity extends AppCompatActivity {
         nbPartie = (TextView) findViewById(R.id.nbPartie);
         nbVictoire = (TextView) findViewById(R.id.nbVictoire);
         //pageAccueil();
+        nbPiece = (TextView) findViewById(R.id.nbPiece);
     }
 
     @Override
