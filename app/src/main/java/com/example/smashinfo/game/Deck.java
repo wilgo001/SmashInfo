@@ -6,6 +6,8 @@ import com.example.smashinfo.data.DataSmasheurCard;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Deck {
@@ -20,5 +22,14 @@ public class Deck {
 
     public void addCarte(DataSmasheurCard value, String key) {
         Card card = new CardSmasheur(value.getName(), value.getDescription(), key, PositionCard.DECK, Integer.parseInt(value.attaque), Integer.parseInt(value.defense), field);
+    }
+
+    public Card getTopCard() {
+        Collections.shuffle(cards);
+        return cards.remove(0);
+    }
+
+    public int getNbCards() {
+        return cards.size();
     }
 }

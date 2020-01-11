@@ -410,7 +410,7 @@ MainMenuActivity extends AppCompatActivity {
         deckMajeur = (TextView) findViewById(R.id.deckMajeur);
         nbPartie = (TextView) findViewById(R.id.nbPartie);
         nbVictoire = (TextView) findViewById(R.id.nbVictoire);
-        pageAccueil();
+        //pageAccueil();
     }
 
     @Override

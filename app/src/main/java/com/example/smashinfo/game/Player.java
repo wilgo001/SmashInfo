@@ -4,6 +4,9 @@ import com.example.smashinfo.activity.FieldActivity;
 import com.example.smashinfo.data.DataCard;
 import com.example.smashinfo.data.DataSmasheurCard;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Player {
 
     private String role;
@@ -12,6 +15,7 @@ public class Player {
     private Deck deck;
     private PlaceSmasheur[] placesSmasheur;
     private PlaceEffect[] placesEffect;
+    private List<Card> hand = new ArrayList<>();
 
     public Player(String role, int lifePoint, FieldActivity field){
         this.role = role;
@@ -46,6 +50,12 @@ public class Player {
         }
     }
 
+    public void makeHand() {
+        for(int i = 0; i < 4; i++) {
+            hand.add(deck.getTopCard());
+        }
+    }
+
     public String getRole() {
         return role;
     }
@@ -77,4 +87,5 @@ public class Player {
     public void setDeck(Deck deck) {
         this.deck = deck;
     }
+
 }

@@ -21,6 +21,7 @@ import com.example.smashinfo.data.DataCard;
 import com.example.smashinfo.data.DataSmasheurCard;
 import com.example.smashinfo.data.DeckGestion;
 import com.example.smashinfo.game.Player;
+import com.google.android.gms.common.internal.Objects;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -40,7 +41,7 @@ public class FieldActivity extends AppCompatActivity {
     private TextView pv, pvAdverse;
     private DatabaseReference refGeneral = FirebaseDatabase.getInstance().getReference(), refPartie;
     private FirebaseUser user;
-    private int phase;
+    public int phase, turn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +107,7 @@ public class FieldActivity extends AppCompatActivity {
         phaseJeu.setAdapter(leAdaptater);
 
         phase = 0;
-
+        turn = 0;
 
         phaseJeu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -137,36 +138,49 @@ public class FieldActivity extends AppCompatActivity {
 
         hoster = new Player(MainMenuActivity.HOSTER, 500, this);
         joiner = new Player(MainMenuActivity.JOINER, 500, this);
+        if(role == MainMenuActivity.HOSTER) {
+            refPartie.child(MainMenuActivity.HOSTER).addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    if (dataSnapshot.hasChild("attaque")) {
+                        Toast.makeText(getApplicationContext(), dataSnapshot.getValue(DataSmasheurCard.class).toString(), Toast.LENGTH_LONG).show();
+                        hoster.getDeck().addCarte(dataSnapshot.getValue(DataSmasheurCard.class), dataSnapshot.getKey());
+                    }
 
-        refPartie.child(MainMenuActivity.HOSTER).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.hasChild("attaque")) {
-                    hoster.getDeck().addCarte(dataSnapshot.getValue(DataSmasheurCard.class), dataSnapshot.getKey());
                 }
 
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+        /*if (turn == 0) {
+            switch (role) {
+                case MainMenuActivity.HOSTER :
+                    hoster.makeHand();
+                    break;
+                case MainMenuActivity.JOINER :
+                    joiner.makeHand();
+                    break;
             }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+                    turn++;
+        }*/
     }
 
 
@@ -175,6 +189,14 @@ public class FieldActivity extends AppCompatActivity {
     }
 
     private void deck() {
+        switch (role) {
+            case MainMenuActivity.HOSTER :
+                Toast.makeText(this, hoster.getDeck().getNbCards(), Toast.LENGTH_SHORT).show();
+                break;
+            case MainMenuActivity.JOINER :
+                Toast.makeText(this, joiner.getDeck().getNbCards(), Toast.LENGTH_SHORT).show();
+                break;
+        }
 
     }
 
