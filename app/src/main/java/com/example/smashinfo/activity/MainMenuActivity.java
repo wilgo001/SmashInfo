@@ -79,6 +79,7 @@ MainMenuActivity extends AppCompatActivity {
     private String deckName;
     private ConstraintLayout.LayoutParams layoutParamsOpen, layoutParamsClose, layoutParamsMenu;
     private LinearLayout menu;
+    private boolean savoir;
 
 
     @Override
@@ -411,16 +412,19 @@ MainMenuActivity extends AppCompatActivity {
         nbVictoire = (TextView) findViewById(R.id.nbVictoire);
         pageAccueil();
     }
-/*
+
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        layoutParamsOpen = new ConstraintLayout.LayoutParams(accueilLayout.getWidth(), accueilLayout.getHeight());
-        layoutParamsMenu = new ConstraintLayout.LayoutParams(menu.getWidth(), menu.getHeight());
-        layoutParamsClose = new ConstraintLayout.LayoutParams(0, 0);
-        //pageAccueil();
+        if(savoir) {
+            super.onWindowFocusChanged(hasFocus);
+            layoutParamsOpen = new ConstraintLayout.LayoutParams(accueilLayout.getWidth(), accueilLayout.getHeight());
+            layoutParamsMenu = new ConstraintLayout.LayoutParams(menu.getWidth(), menu.getHeight());
+            layoutParamsClose = new ConstraintLayout.LayoutParams(0, 0);
+            pageAccueil();
+            savoir = false;
+        }
     }
-*/
+
     private void tuto(){
         Intent intent=new Intent(this, TutorielActivity.class);
         startActivity(intent);
@@ -437,17 +441,17 @@ MainMenuActivity extends AppCompatActivity {
         loadGame.setClickable(true);
         //menu.setLayoutParams(layoutParamsMenu);
         accueilLayout.setAlpha(0F);
-        //accueilLayout.setLayoutParams(layoutParamsClose);
+        accueilLayout.setLayoutParams(layoutParamsClose);
         lootLayout.setAlpha(0F);
-        //lootLayout.setLayoutParams(layoutParamsClose);
+        lootLayout.setLayoutParams(layoutParamsClose);
         deckLayout.setAlpha(0F);
-        //deckLayout.setLayoutParams(layoutParamsClose);
+        deckLayout.setLayoutParams(layoutParamsClose);
         lobbyLayout.setAlpha(1F);
-        //lobbyLayout.setLayoutParams(layoutParamsOpen);
+        lobbyLayout.setLayoutParams(layoutParamsOpen);
         setPartieLayout.setAlpha(0F);
-        //setPartieLayout.setLayoutParams(layoutParamsClose);
+        setPartieLayout.setLayoutParams(layoutParamsClose);
         parametresLayout.setAlpha(0F);
-        //parametresLayout.setLayoutParams(layoutParamsClose);
+        parametresLayout.setLayoutParams(layoutParamsClose);
     }
 
     private void deck() {
@@ -460,17 +464,17 @@ MainMenuActivity extends AppCompatActivity {
         createGame.setClickable(false);
         loadGame.setClickable(false);
         accueilLayout.setAlpha(0F);
-        //accueilLayout.setLayoutParams(layoutParamsClose);
+        accueilLayout.setLayoutParams(layoutParamsClose);
         lootLayout.setAlpha(0F);
-        //lootLayout.setLayoutParams(layoutParamsClose);
+        lootLayout.setLayoutParams(layoutParamsClose);
         deckLayout.setAlpha(1F);
-        //deckLayout.setLayoutParams(layoutParamsOpen);
+        deckLayout.setLayoutParams(layoutParamsOpen);
         lobbyLayout.setAlpha(0F);
-        //lobbyLayout.setLayoutParams(layoutParamsClose);
+        lobbyLayout.setLayoutParams(layoutParamsClose);
         setPartieLayout.setAlpha(0F);
-        //setPartieLayout.setLayoutParams(layoutParamsClose);
+        setPartieLayout.setLayoutParams(layoutParamsClose);
         parametresLayout.setAlpha(0F);
-        //parametresLayout.setLayoutParams(layoutParamsClose);
+        parametresLayout.setLayoutParams(layoutParamsClose);
     }
 
     private void pageAccueil() {
@@ -483,17 +487,17 @@ MainMenuActivity extends AppCompatActivity {
         createGame.setClickable(false);
         loadGame.setClickable(false);
         accueilLayout.setAlpha(1F);
-        //accueilLayout.setLayoutParams(layoutParamsOpen);
+        accueilLayout.setLayoutParams(layoutParamsOpen);
         lootLayout.setAlpha(0F);
-        //lootLayout.setLayoutParams(layoutParamsClose);
+        lootLayout.setLayoutParams(layoutParamsClose);
         deckLayout.setAlpha(0F);
-        //deckLayout.setLayoutParams(layoutParamsClose);
+        deckLayout.setLayoutParams(layoutParamsClose);
         lobbyLayout.setAlpha(0F);
-        //lobbyLayout.setLayoutParams(layoutParamsClose);
+        lobbyLayout.setLayoutParams(layoutParamsClose);
         setPartieLayout.setAlpha(0F);
-        //setPartieLayout.setLayoutParams(layoutParamsClose);
+        setPartieLayout.setLayoutParams(layoutParamsClose);
         parametresLayout.setAlpha(0F);
-        //parametresLayout.setLayoutParams(layoutParamsClose);
+        parametresLayout.setLayoutParams(layoutParamsClose);
     }
 
     private void lootBox() {
@@ -506,17 +510,17 @@ MainMenuActivity extends AppCompatActivity {
         createGame.setClickable(false);
         loadGame.setClickable(false);
         accueilLayout.setAlpha(0F);
-        //accueilLayout.setLayoutParams(layoutParamsClose);
+        accueilLayout.setLayoutParams(layoutParamsClose);
         lootLayout.setAlpha(1F);
-        //lootLayout.setLayoutParams(layoutParamsOpen);
+        lootLayout.setLayoutParams(layoutParamsOpen);
         deckLayout.setAlpha(0F);
-        //deckLayout.setLayoutParams(layoutParamsClose);
+        deckLayout.setLayoutParams(layoutParamsClose);
         lobbyLayout.setAlpha(0F);
-        //lobbyLayout.setLayoutParams(layoutParamsClose);
+        lobbyLayout.setLayoutParams(layoutParamsClose);
         setPartieLayout.setAlpha(0F);
-        //setPartieLayout.setLayoutParams(layoutParamsClose);
+        setPartieLayout.setLayoutParams(layoutParamsClose);
         parametresLayout.setAlpha(0F);
-        //parametresLayout.setLayoutParams(layoutParamsClose);
+        parametresLayout.setLayoutParams(layoutParamsClose);
     }
 
     private void parametres() {
@@ -529,17 +533,17 @@ MainMenuActivity extends AppCompatActivity {
         createGame.setClickable(false);
         loadGame.setClickable(false);
         accueilLayout.setAlpha(0F);
-        //accueilLayout.setLayoutParams(layoutParamsClose);
+        accueilLayout.setLayoutParams(layoutParamsClose);
         lootLayout.setAlpha(0F);
-        //lootLayout.setLayoutParams(layoutParamsClose);
+        lootLayout.setLayoutParams(layoutParamsClose);
         deckLayout.setAlpha(0F);
-        //deckLayout.setLayoutParams(layoutParamsClose);
+        deckLayout.setLayoutParams(layoutParamsClose);
         lobbyLayout.setAlpha(0F);
-        //lobbyLayout.setLayoutParams(layoutParamsClose);
+        lobbyLayout.setLayoutParams(layoutParamsClose);
         setPartieLayout.setAlpha(0F);
-        //setPartieLayout.setLayoutParams(layoutParamsClose);
+        setPartieLayout.setLayoutParams(layoutParamsClose);
         parametresLayout.setAlpha(1F);
-        //parametresLayout.setLayoutParams(layoutParamsOpen);
+        parametresLayout.setLayoutParams(layoutParamsOpen);
     }
 
     private void loadPartie() {
@@ -548,17 +552,17 @@ MainMenuActivity extends AppCompatActivity {
         loadGame.setClickable(false);
         //menu.setLayoutParams(layoutParamsClose);
         accueilLayout.setAlpha(0F);
-        //accueilLayout.setLayoutParams(layoutParamsClose);
+        accueilLayout.setLayoutParams(layoutParamsClose);
         lootLayout.setAlpha(0F);
-        //lootLayout.setLayoutParams(layoutParamsClose);
+        lootLayout.setLayoutParams(layoutParamsClose);
         deckLayout.setAlpha(0F);
-        //deckLayout.setLayoutParams(layoutParamsClose);
+        deckLayout.setLayoutParams(layoutParamsClose);
         lobbyLayout.setAlpha(0F);
-        //lobbyLayout.setLayoutParams(layoutParamsClose);
+        lobbyLayout.setLayoutParams(layoutParamsClose);
         setPartieLayout.setAlpha(1F);
-        //setPartieLayout.setLayoutParams(layoutParamsOpen);
+        setPartieLayout.setLayoutParams(layoutParamsOpen);
         parametresLayout.setAlpha(0F);
-        //parametresLayout.setLayoutParams(layoutParamsClose);
+        parametresLayout.setLayoutParams(layoutParamsClose);
 
 
         joinercheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -646,6 +650,7 @@ MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        savoir = true;
         refUser.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -675,6 +680,8 @@ MainMenuActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
 
 }
