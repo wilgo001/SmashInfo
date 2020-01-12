@@ -207,7 +207,12 @@ public class tirageActivity extends AppCompatActivity {
             String defense = ((DataSmasheurCard) (normal.get(index).getValue())).getDefense();
             cartesUser.child(normal.get(index).getKey()).setValue(normal.get(index).getValue());
         } else {
-
+            int index = (int) (Math.random() * normal.size());
+            String nom = rareSuperLegendaire.get(index).getValue().getName();
+            String description = rareSuperLegendaire.get(index).getValue().getDescription();
+            String attaque = ((DataSmasheurCard) (rareSuperLegendaire.get(index).getValue())).getAttaque();
+            String defense = ((DataSmasheurCard) (rareSuperLegendaire.get(index).getValue())).getDefense();
+            cartesUser.child(rareSuperLegendaire.get(index).getKey()).setValue(rareSuperLegendaire.get(index).getValue());
         }
         i++;
     }
