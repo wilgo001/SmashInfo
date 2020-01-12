@@ -17,7 +17,7 @@ public class Card {
         this.description = description;
         this.cardKey = cardKey;
         this.positionCard = positionCard;
-        this.imageRef = FirebaseStorage.getInstance().getReference().child("cartes/" + this.cardKey + "/" + nomImage + ".jpg");
+        this.imageRef = FirebaseStorage.getInstance().getReference().child("cartes/" + this.cardKey + "/" + nomImage);
     }
 
     public String getCardKey() {

@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Constraints;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -27,6 +28,7 @@ import com.example.smashinfo.data.DeckGestion;
 import com.example.smashinfo.game.Card;
 import com.example.smashinfo.game.Player;
 import com.google.android.gms.common.internal.Objects;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,6 +42,7 @@ import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,7 +115,11 @@ public class FieldActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                main();
+                try {
+                    main();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -264,15 +271,25 @@ public class FieldActivity extends AppCompatActivity {
         retour.setLayoutParams(layoutParamsClose);
     }
 */
-    private void main() {
+    private void main() throws IOException {
         Toast.makeText(this, "main : " + player.getHand().size(), Toast.LENGTH_SHORT).show();
         //retour.setLayoutParams(layoutParamsRetour);
         for (int i = 0; i < player.getHand().size(); i++) {
             Card card = player.getHand().get(i);
+            StorageReference imageRef = card.getImageRef();
+            File localFile = File.createTempFile(card.getCardKey(), "jpeg");
+            imageRef.getFile(localFile).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getApplicationContext(), "echec de l'upload", Toast.LENGTH_SHORT).show();
 
+                }
+            });
 
             //Toast.makeText(this, file.toString(), Toast.LENGTH_SHORT).show();
-            //handImages.get(i).setImageURI(file);
+            handImages.get(i).setImageURI(Uri.fromFile(localFile));
+            handImages.get(i).setImageResource(R.drawable.square);
+            retour.setImageURI(Uri.fromFile(localFile));
         }
     }
 

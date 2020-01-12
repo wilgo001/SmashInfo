@@ -4,8 +4,8 @@ public class DataSuperSmasheurCard extends DataSmasheurCard {
 
     public String sacrifice;
 
-    public DataSuperSmasheurCard(String name, String description, String probabilite, String valAttaque, String valDefense, String attaque, String defense, String groupe1, String groupe2, String sacrifice) {
-        super(name, description, probabilite, attaque, defense, groupe1, groupe2);
+    public DataSuperSmasheurCard(String name, String description, String probabilite, String attaque, String defense, String groupe1, String groupe2, String sacrifice, int id) {
+        super(name, description, probabilite, attaque, defense, groupe1, groupe2, id);
         this.sacrifice = sacrifice;
     }
 
