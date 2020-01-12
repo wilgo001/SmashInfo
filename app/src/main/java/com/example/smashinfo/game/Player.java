@@ -1,8 +1,6 @@
 package com.example.smashinfo.game;
 
 import com.example.smashinfo.activity.FieldActivity;
-import com.example.smashinfo.data.DataCard;
-import com.example.smashinfo.data.DataSmasheurCard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +50,7 @@ public class Player {
 
     public void makeHand() {
         for(int i = 0; i < 4; i++) {
-            hand.add(deck.getTopCard());
+            hand.add(deck.drawCard());
         }
     }
 
@@ -88,4 +86,7 @@ public class Player {
         this.deck = deck;
     }
 
+    public List<Card> getHand() {
+        return hand;
+    }
 }

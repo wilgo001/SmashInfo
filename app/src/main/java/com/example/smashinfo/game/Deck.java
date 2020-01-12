@@ -20,16 +20,24 @@ public class Deck {
         this.cards = new ArrayList<>();
     }
 
-    public void addCarte(DataSmasheurCard value, String key) {
-        Card card = new CardSmasheur(value.getName(), value.getDescription(), key, PositionCard.DECK, Integer.parseInt(value.attaque), Integer.parseInt(value.defense), field);
+    public void addCarte(DataSmasheurCard value, String key, String imageName) {
+        Card card = new CardSmasheur(value.getName(), value.getDescription(), key, PositionCard.DECK, Integer.parseInt(value.attaque), Integer.parseInt(value.defense), field, imageName);
+        cards.add(card);
     }
 
-    public Card getTopCard() {
+    public Card drawCard() {
         Collections.shuffle(cards);
         return cards.remove(0);
     }
 
+    public Card getTopCard() {
+        return cards.get(cards.size()-1);
+    }
+
     public int getNbCards() {
+        if(cards.size() < 1) {
+            return 0;
+        }
         return cards.size();
     }
 }

@@ -57,7 +57,6 @@ MainMenuActivity extends AppCompatActivity {
     public static final String ROLE = "role";
     public static final String DECK_NAME = "deckName";
     private Button buttonDeconnexion, createGame, loadGame, startGame, kickButton, validerVolume, tutoriel, annuler;
-    private EditText pseudo;
     private DatabaseReference refGeneral, refPartie, refUser;
     private String message, partieKey;
     private TextView hosterName, joinerName, nomJoueur, deckMajeur, nbPartie, nbVictoire, nbPiece;
@@ -76,7 +75,7 @@ MainMenuActivity extends AppCompatActivity {
     private Spinner choixDeck;
     private DatabaseReference refDeck;
     public static int musique, effet;
-    private String role;
+    private String role, userName = null;
     private String deckName;
     private ConstraintLayout.LayoutParams layoutParamsOpen, layoutParamsClose, layoutParamsMenu;
     private LinearLayout menu;
@@ -96,7 +95,6 @@ MainMenuActivity extends AppCompatActivity {
         buttonDeconnexion = (Button) findViewById(R.id.deconnexion);
         createGame = (Button) findViewById(R.id.createGame);
         loadGame = (Button) findViewById(R.id.loadGame);
-        pseudo = (EditText) findViewById(R.id.pseudo);
         startGame = findViewById(R.id.startPartie);
 
         refGeneral = FirebaseDatabase.getInstance().getReference();
@@ -104,25 +102,11 @@ MainMenuActivity extends AppCompatActivity {
         refUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getKey().equals("pseudo")){
-                    nomJoueur.setText("Bonjour "+dataSnapshot.getValue().toString());
-                }
-
-                if(dataSnapshot.getKey().equals("deckMajeur")){
-                    deckMajeur.setText(dataSnapshot.getValue().toString()+" est votre deck le plus utilisé");
-                }
-
-                if(dataSnapshot.getKey().equals("nbPartie")){
-                    nbPartie.setText(dataSnapshot.getValue().toString()+" partie(s) joué(s)");
-                }
-
-                if(dataSnapshot.getKey().equals("nbVictoire")){
-                    nbVictoire.setText(dataSnapshot.getValue().toString()+" match(s) gagné(s)");
-                }
-
-                if(dataSnapshot.getKey().equals("nbPiece")){
-                    nbPiece.setText(dataSnapshot.getValue().toString()+" pièce(s)");
-                }
+                    nomJoueur.setText("Bonjour "+dataSnapshot.child("pseudo").getValue().toString());
+                    userName = dataSnapshot.child("pseudo").getValue().toString();
+                    deckMajeur.setText(dataSnapshot.child("deckMajeur").getValue().toString()+" est votre deck le plus utilisé");
+                    nbPartie.setText(dataSnapshot.child("nbPartie").getValue().toString()+" partie(s) joué(s)");
+                    nbVictoire.setText(dataSnapshot.child("nbVictoire").getValue().toString()+" match(s) gagné(s)");
             }
 
             @Override
@@ -225,12 +209,10 @@ MainMenuActivity extends AppCompatActivity {
         createGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (pseudo.getText().toString().equals("")) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "complete pseudo please", Toast.LENGTH_SHORT);
-                    toast.show();
-                    return;
+                if (userName.equals(null)) {
+                    userName = "anonyme";
                 }
-                Partie partie = new Partie(pseudo.getText().toString(), JOINER_NAME, "white", false, false, false);
+                Partie partie = new Partie(userName, JOINER_NAME, "white", false, false, false);
                 refPartie = refGeneral.child(PARTIES).push();
                 partieKey = refPartie.getKey();
                 refPartie.addValueEventListener(createdPartie);
@@ -250,9 +232,12 @@ MainMenuActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Partie partie = dataSnapshot.getValue(Partie.class);
-                if ((partie.joinerName.equals(JOINER_NAME)) && (!partie.hosterName.equals(pseudo.getText().toString()))) {
+                if ((partie.joinerName.equals(JOINER_NAME)) && (!partie.hosterName.equals(userName))) {
                     refGeneral.removeEventListener(this);
-                    partie.joinerName = pseudo.getText().toString();
+                    if (userName.equals(null)) {
+                        userName = "anonymous";
+                    }
+                    partie.joinerName = userName;
                     joinerName.setText(partie.joinerName);
                     partieKey = dataSnapshot.getKey();
                     refPartie = refGeneral.child(PARTIES).child(partieKey);
@@ -457,7 +442,6 @@ MainMenuActivity extends AppCompatActivity {
         pageAccueil.setBackground(background);
         lootBox.setBackground(background);
         parametres.setBackground(background);
-        pseudo.setClickable(true);
         createGame.setClickable(true);
         loadGame.setClickable(true);
         //menu.setLayoutParams(layoutParamsMenu);
@@ -481,7 +465,6 @@ MainMenuActivity extends AppCompatActivity {
         pageAccueil.setBackground(background);
         lootBox.setBackground(background);
         parametres.setBackground(background);
-        pseudo.setClickable(false);
         createGame.setClickable(false);
         loadGame.setClickable(false);
         accueilLayout.setAlpha(0F);
@@ -504,7 +487,6 @@ MainMenuActivity extends AppCompatActivity {
         pageAccueil.setBackground(SELECTED_BUTTON_BACKGROUND);
         lootBox.setBackground(background);
         parametres.setBackground(background);
-        pseudo.setClickable(false);
         createGame.setClickable(false);
         loadGame.setClickable(false);
         accueilLayout.setAlpha(1F);
@@ -527,7 +509,6 @@ MainMenuActivity extends AppCompatActivity {
         pageAccueil.setBackground(background);
         lootBox.setBackground(SELECTED_BUTTON_BACKGROUND);
         parametres.setBackground(background);
-        pseudo.setClickable(false);
         createGame.setClickable(false);
         loadGame.setClickable(false);
         accueilLayout.setAlpha(0F);
@@ -550,7 +531,6 @@ MainMenuActivity extends AppCompatActivity {
         pageAccueil.setBackground(background);
         lootBox.setBackground(background);
         parametres.setBackground(SELECTED_BUTTON_BACKGROUND);
-        pseudo.setClickable(false);
         createGame.setClickable(false);
         loadGame.setClickable(false);
         accueilLayout.setAlpha(0F);
@@ -568,7 +548,6 @@ MainMenuActivity extends AppCompatActivity {
     }
 
     private void loadPartie() {
-        pseudo.setClickable(false);
         createGame.setClickable(false);
         loadGame.setClickable(false);
         //menu.setLayoutParams(layoutParamsClose);

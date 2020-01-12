@@ -8,8 +8,8 @@ public class CardSmasheur extends Card {
     private int valDefense;
     private FieldActivity context;
 
-    public CardSmasheur(String name, String description, String cardKey, PositionCard positionCard, int valAttack, int valDefense, FieldActivity context) {
-        super(name, description, cardKey, positionCard);
+    public CardSmasheur(String name, String description, String cardKey, PositionCard positionCard, int valAttack, int valDefense, FieldActivity context, String imageName) {
+        super(name, description, cardKey, positionCard, imageName);
         this.valAttack = valAttack;
         this.valDefense = valDefense;
         this.context = context;
