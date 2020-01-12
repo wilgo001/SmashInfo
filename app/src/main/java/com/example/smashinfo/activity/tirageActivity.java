@@ -109,6 +109,7 @@ public class tirageActivity extends AppCompatActivity {
                         String attaque = ((DataSmasheurCard) (normal.get(index).getValue())).getAttaque();
                         String defense = ((DataSmasheurCard) (normal.get(index).getValue())).getDefense();
                         cartesUser.child(normal.get(index).getKey()).setValue(normal.get(index).getValue());
+
                     } else {
                         String nom = rareSuperLegendaire.get(index).getValue().getName();
                         String description = rareSuperLegendaire.get(index).getValue().getDescription();
@@ -206,6 +207,8 @@ public class tirageActivity extends AppCompatActivity {
             String attaque = ((DataSmasheurCard) (normal.get(index).getValue())).getAttaque();
             String defense = ((DataSmasheurCard) (normal.get(index).getValue())).getDefense();
             cartesUser.child(normal.get(index).getKey()).setValue(normal.get(index).getValue());
+            this.nom.setText(nom);
+            this.description.setText("Description : "+description);
         } else {
             int index = (int) (Math.random() * normal.size());
             String nom = rareSuperLegendaire.get(index).getValue().getName();
@@ -213,6 +216,8 @@ public class tirageActivity extends AppCompatActivity {
             String attaque = ((DataSmasheurCard) (rareSuperLegendaire.get(index).getValue())).getAttaque();
             String defense = ((DataSmasheurCard) (rareSuperLegendaire.get(index).getValue())).getDefense();
             cartesUser.child(rareSuperLegendaire.get(index).getKey()).setValue(rareSuperLegendaire.get(index).getValue());
+            this.nom.setText(nom);
+            this.description.setText("Description : "+description);
         }
         i++;
     }
@@ -224,6 +229,8 @@ public class tirageActivity extends AppCompatActivity {
         String attaque = ((DataSmasheurCard) (normal.get(index).getValue())).getAttaque();
         String defense = ((DataSmasheurCard) (normal.get(index).getValue())).getDefense();
         cartesUser.child(normal.get(index).getKey()).setValue(normal.get(index).getValue());
+        this.nom.setText(nom);
+        this.description.setText("Description : "+description);
         i++;
     }
 }
