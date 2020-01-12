@@ -2,17 +2,17 @@ package com.example.smashinfo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.smashinfo.R;
 import com.example.smashinfo.data.CarteWithId;
-import com.example.smashinfo.data.DataCard;
 import com.example.smashinfo.data.DataSmasheurCard;
-import com.github.paolorotolo.appintro.AppIntroFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -22,19 +22,25 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.Map;
 
-public class tirageActivity extends com.github.paolorotolo.appintro.AppIntro {
+public class tirageActivity extends AppCompatActivity {
 
     private String tir;
     private DatabaseReference db;
     private FirebaseUser user;
     private DatabaseReference cartesUser;
+    private ArrayList<CarteWithId> normal;
+    private ArrayList<CarteWithId> rareSuperLegendaire;
+    private ArrayList<CarteWithId> normalRare;
+    private ArrayList<CarteWithId> superLegendaire;
+    private int i;
+    private Button suivant;
+    private TextView nom, description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_app_intro);
+        setContentView(R.layout.activity_tirage);
 
         Intent intent = this.getIntent();
         tir = intent.getStringExtra(MainMenuActivity.TIRAGE_KEY);
@@ -44,10 +50,10 @@ public class tirageActivity extends com.github.paolorotolo.appintro.AppIntro {
         user = FirebaseAuth.getInstance().getCurrentUser();
         cartesUser = db.child("users").child(user.getUid()).child("card list");
 
-        final ArrayList<CarteWithId> normal = new ArrayList<>();
-        final ArrayList<CarteWithId> rareSuperLegendaire = new ArrayList<>();
-        final ArrayList<CarteWithId> normalRare = new ArrayList<>();
-        final ArrayList<CarteWithId> superLegendaire = new ArrayList<>();
+        normal = new ArrayList<>();
+        rareSuperLegendaire = new ArrayList<>();
+        normalRare = new ArrayList<>();
+        superLegendaire = new ArrayList<>();
         db = db.child("cartes");
 
         switch (tir) {
@@ -60,6 +66,11 @@ public class tirageActivity extends com.github.paolorotolo.appintro.AppIntro {
                             normal.add(new CarteWithId(dataSnapshot.getKey(), dataSnapshot.getValue(DataSmasheurCard.class)));
                         } else {
                             rareSuperLegendaire.add(new CarteWithId(dataSnapshot.getKey(), dataSnapshot.getValue(DataSmasheurCard.class)));
+                        }
+
+                        if (normal.size() + rareSuperLegendaire.size() >= 61) {
+                            i = 0;
+                            tirage();
                         }
                     }
 
@@ -97,14 +108,12 @@ public class tirageActivity extends com.github.paolorotolo.appintro.AppIntro {
                         String description = normal.get(index).getValue().getDescription();
                         String attaque = ((DataSmasheurCard) (normal.get(index).getValue())).getAttaque();
                         String defense = ((DataSmasheurCard) (normal.get(index).getValue())).getDefense();
-                        addSlide(AppIntroFragment.newInstance(nom, description, R.drawable.yg, ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary)));
                         cartesUser.child(normal.get(index).getKey()).setValue(normal.get(index).getValue());
                     } else {
                         String nom = rareSuperLegendaire.get(index).getValue().getName();
                         String description = rareSuperLegendaire.get(index).getValue().getDescription();
                         String attaque = ((DataSmasheurCard) (rareSuperLegendaire.get(index).getValue())).getAttaque();
                         String defense = ((DataSmasheurCard) (rareSuperLegendaire.get(index).getValue())).getDefense();
-                        addSlide(AppIntroFragment.newInstance(nom, description, R.drawable.yg, ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary)));
                         cartesUser.child(rareSuperLegendaire.get(index).getKey()).setValue(rareSuperLegendaire.get(index).getValue());
                     }
                 }
@@ -156,33 +165,60 @@ public class tirageActivity extends com.github.paolorotolo.appintro.AppIntro {
                         String description = normalRare.get(index).getDescription();
                         String attaque = ((DataSmasheurCard) (normalRare.get(index))).getAttaque();
                         String defense = ((DataSmasheurCard) (normalRare.get(index))).getDefense();
-                        addSlide(AppIntroFragment.newInstance(nom, description, R.drawable.yg, ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary)));
-
                     } else {
                         String nom = superLegendaire.get(index).getName();
                         String description = superLegendaire.get(index).getDescription();
                         String attaque = ((DataSmasheurCard) (superLegendaire.get(index))).getAttaque();
                         String defense = ((DataSmasheurCard) (superLegendaire.get(index))).getDefense();
-                        addSlide(AppIntroFragment.newInstance(nom, description, R.drawable.yg, ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary)));
                     }
                 }
                 break;*/
         }
+
+        suivant = (Button) findViewById(R.id.suivant);
+        nom = (TextView) findViewById(R.id.nomCarte);
+        description = (TextView) findViewById(R.id.descriptionCarte);
+
+        suivant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (i < 10) {
+                    tirageSuivant();
+                } else {
+                    retourMenu();
+                }
+            }
+        });
+
     }
 
-    @Override
-    public void onDonePressed(Fragment currentfragment) {
-        super.onDonePressed(currentfragment);
+
+    private void retourMenu() {
         Intent intent = new Intent(this, MainMenuActivity.class);
         startActivity(intent);
-
     }
 
-    @Override
-    public void onSkipPressed(Fragment currentfragment) {
-        super.onSkipPressed(currentfragment);
-        Intent intent = new Intent(this, MainMenuActivity.class);
-        startActivity(intent);
+    private void tirageSuivant() {
+        if (i < 9) {
+            int index = (int) (Math.random() * normal.size());
+            String nom = normal.get(index).getValue().getName();
+            String description = normal.get(index).getValue().getDescription();
+            String attaque = ((DataSmasheurCard) (normal.get(index).getValue())).getAttaque();
+            String defense = ((DataSmasheurCard) (normal.get(index).getValue())).getDefense();
+            cartesUser.child(normal.get(index).getKey()).setValue(normal.get(index).getValue());
+        } else {
 
+        }
+        i++;
+    }
+
+    private void tirage() {
+        int index = (int) (Math.random() * normal.size());
+        String nom = normal.get(index).getValue().getName();
+        String description = normal.get(index).getValue().getDescription();
+        String attaque = ((DataSmasheurCard) (normal.get(index).getValue())).getAttaque();
+        String defense = ((DataSmasheurCard) (normal.get(index).getValue())).getDefense();
+        cartesUser.child(normal.get(index).getKey()).setValue(normal.get(index).getValue());
+        i++;
     }
 }
