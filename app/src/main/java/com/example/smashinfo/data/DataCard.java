@@ -5,14 +5,16 @@ public class DataCard {
     public String nom;
     public String description;
     public String probabilite;
+    public int id;
 
     public DataCard() {
     }
 
-    public DataCard(String nom, String description, String probabilite) {
+    public DataCard(String nom, String description, String probabilite, int id) {
         this.nom = nom;
         this.description = description;
         this.probabilite = probabilite;
+        this.id = id;
     }
 
     public String getName() {
@@ -37,4 +39,6 @@ public class DataCard {
                 ", description:" + description +
                 ", probabilite:" + probabilite;
     }
+
+
 }
