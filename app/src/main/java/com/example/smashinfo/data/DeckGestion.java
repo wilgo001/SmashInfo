@@ -1,5 +1,7 @@
 package com.example.smashinfo.data;
 
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -51,10 +53,6 @@ public class DeckGestion {
         moveCardWithTitle(DataCardsNames.William_Lechat, SMASHEUR, deckRef);
         moveCardWithTitle(DataCardsNames.Yanis_Saupin, SMASHEUR, deckRef);
         moveCardWithTitle(DataCardsNames.Alexandre_Clouet, SMASHEUR, deckRef);
-
-    }
-
-    public static void addCardToDeck(String idCarte, String refDeck) {
 
     }
 

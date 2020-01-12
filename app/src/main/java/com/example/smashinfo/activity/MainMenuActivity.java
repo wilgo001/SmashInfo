@@ -50,6 +50,7 @@ MainMenuActivity extends AppCompatActivity {
     public static final String MESSAGE = "Veuillez patientez, nous recherchons une partie\n";
     public static final String HOSTER_NAME = "hosterName";
     public static final String PARTIE_KEY = "com.example.smashinfo.PARTIE_KEY";
+    public static final String TIRAGE_KEY = "com.example.smashinfo.TIRAGE_KEY";
     private final static DatabaseReference CARDREF = FirebaseDatabase.getInstance().getReference().child("cartes");
     public static final String JOINER = "joiner";
     public static final String HOSTER = "hoster";
@@ -80,6 +81,7 @@ MainMenuActivity extends AppCompatActivity {
     private ConstraintLayout.LayoutParams layoutParamsOpen, layoutParamsClose, layoutParamsMenu;
     private LinearLayout menu;
     private boolean savoir;
+    private ImageButton coffre;
 
 
     @Override
@@ -416,6 +418,20 @@ MainMenuActivity extends AppCompatActivity {
         nbVictoire = (TextView) findViewById(R.id.nbVictoire);
         //pageAccueil();
         nbPiece = (TextView) findViewById(R.id.nbPiece);
+
+        coffre = (ImageButton) findViewById(R.id.tresor_normal);
+
+        coffre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tirage("normal");
+            }
+        });
+    }
+
+    public void tirage(String tir){
+        Intent myIntent = new Intent(MainMenuActivity.this, tirageActivity.class);
+        myIntent.putExtra(TIRAGE_KEY, tir);
     }
 
     @Override
