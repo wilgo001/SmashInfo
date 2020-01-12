@@ -417,6 +417,7 @@ MainMenuActivity extends AppCompatActivity {
     public void tirage(String tir){
         Intent myIntent = new Intent(MainMenuActivity.this, tirageActivity.class);
         myIntent.putExtra(TIRAGE_KEY, tir);
+        startActivity(myIntent);
     }
 
     @Override
