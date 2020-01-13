@@ -17,8 +17,8 @@ public class TutorielActivity extends com.github.paolorotolo.appintro.AppIntro {
         //setContentView(R.layout.activity_app_intro);
 
         addSlide(AppIntroFragment.newInstance("Smash Info","Bienvenue dans Smash Info !",R.drawable.yg, ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary)));
-        addSlide(AppIntroFragment.newInstance("Explication","Bla Bla Bla Bla Bla",R.drawable.yg, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
-        addSlide(AppIntroFragment.newInstance("Suite","Bla Bla Bla Bla Bla",R.drawable.yg, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
+        addSlide(AppIntroFragment.newInstance("Nombre de joueurs","Ce jeu se joue a 2 joueurs, chacun son écran !",R.drawable.yg, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
+        addSlide(AppIntroFragment.newInstance("But du jeu","Le but de ce jeu est de réduire les points de Vie(PV) de l'autre joueur à 0",R.drawable.yg, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
     }
 
     @Override
