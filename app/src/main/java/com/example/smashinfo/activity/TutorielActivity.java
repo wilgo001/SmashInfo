@@ -34,12 +34,25 @@ public class TutorielActivity extends com.github.paolorotolo.appintro.AppIntro {
         addSlide(AppIntroFragment.newInstance("Plateau 5/5","Vos différents tas de cartes",R.drawable.plateau5, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
 
         addSlide(AppIntroFragment.newInstance("Les phases","Il y a un total de 6 phases :",R.drawable.phases, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
-        addSlide(AppIntroFragment.newInstance("Phases 1/6","La Draw phase : vous piochez une carte",R.drawable.phases1, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
-        addSlide(AppIntroFragment.newInstance("Phases 2/6","La Standby phase : rien de special ne se passe",R.drawable.phases2, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
-        addSlide(AppIntroFragment.newInstance("Phases 3/6","La Main phase 1 : vous pouvez poser des cartes depuis votre main",R.drawable.phases3, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
-        addSlide(AppIntroFragment.newInstance("Phases 4/6","La Battle phase : vous pouvez attaquer avec vos smasheurs",R.drawable.phases4, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
-        addSlide(AppIntroFragment.newInstance("Phases 5/6","La Main phase 2 : vous pouvez de nouveau poser des cartes depuis votre main",R.drawable.phases5, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
-        addSlide(AppIntroFragment.newInstance("Phases 6/6","La End phase : vous donnez la main à votre adversaire",R.drawable.phases6, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
+        addSlide(AppIntroFragment.newInstance("Phases 1/5","La Draw phase : vous piochez une carte (4 cartes au début de la partie)",R.drawable.phases1, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
+        addSlide(AppIntroFragment.newInstance("Phases 2/5","La Main phase 1 : vous pouvez poser des cartes depuis votre main",R.drawable.phases2, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
+        addSlide(AppIntroFragment.newInstance("Phases 3/5","La Battle phase : vous pouvez attaquer avec vos smasheurs",R.drawable.phases3, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
+        addSlide(AppIntroFragment.newInstance("Phases 4/5","La Main phase 2 : vous pouvez de nouveau poser des cartes depuis votre main",R.drawable.phases4, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
+        addSlide(AppIntroFragment.newInstance("Phases 5/5","La End phase : vous donnez la main à votre adversaire",R.drawable.phases5, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
+
+        addSlide(AppIntroFragment.newInstance("Main phase 1/2","Vous pouvez poser vos \"smasheur\" en position d'attaque",R.drawable.attaque, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
+        addSlide(AppIntroFragment.newInstance("Main phase 2/2","ou bien en position de défense",R.drawable.defense, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
+
+        addSlide(AppIntroFragment.newInstance("Battle Phase","La Battle phase : vous pouvez attaquer avec vos smasheurs en position d'attaque",R.drawable.Bphase, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
+        addSlide(AppIntroFragment.newInstance("Battle Phase","Un smasheur = une attaque maximum par tour",R.drawable.Bphase1, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
+
+        addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Att","Si un combat entre 2 \"smasheur\" en position d'attaque a lieu",R.drawable.BphaseAtt1, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
+        addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Att","On compare l'\"Att\" des deux \"smasheur\"",R.drawable.BphaseAtt2, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
+        addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Att","le smasheur avec la plus faible attaque est détruit et envoyé au cimetière",R.drawable.BphaseAtt3, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
+
+        addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Def","Si un combat entre 1 \"smasheur\" en position d'attaque et un \"smasheur\" en position de défense a lieu",R.drawable.BphaseDef1, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
+        addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Def","On compare l'\"Att\" et la \"Déf\" de chaque \"smasheur\"",R.drawable.BphaseDef2, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
+        addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Def","Si le \"smasheur\" en position de Defense a une \"Déf\" supérieure à l'\"Att\" du deuxième \"smasheur\"",R.drawable.BphaseDef3, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
 
 
     }
