@@ -33,7 +33,7 @@
              android:background="#FF9800">
 
             <ImageButton
-                android:id="@+id/B4"
+                android:id="@+id/B3"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginEnd="50dp"
@@ -53,7 +53,7 @@
                 app:srcCompat="@color/colorPrimary" />
 
             <ImageButton
-                android:id="@+id/B3"
+                android:id="@+id/B4"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="85dp"
@@ -104,7 +104,7 @@
                 android:layout_marginStart="85dp"
                 android:layout_marginTop="25dp"
                 android:layout_marginBottom="12dp"
-                app:layout_constraintBottom_toTopOf="@+id/B3"
+                app:layout_constraintBottom_toTopOf="@+id/B4"
                 app:layout_constraintStart_toEndOf="@+id/A2"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
@@ -117,7 +117,7 @@
                 android:layout_marginTop="25dp"
                 android:layout_marginEnd="50dp"
                 android:layout_marginBottom="12dp"
-                app:layout_constraintBottom_toTopOf="@+id/B4"
+                app:layout_constraintBottom_toTopOf="@+id/B3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"

@@ -1,5 +1,7 @@
 package com.example.smashinfo.game;
 
+import android.widget.TextView;
+
 import com.example.smashinfo.activity.FieldActivity;
 
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ public class Player {
     private Deck deck;
     private PlaceSmasheur[] placesSmasheur;
     private PlaceEffect[] placesEffect;
+    private TextView pv;
     private List<Card> hand = new ArrayList<>();
 
     public Player(String role, int lifePoint, FieldActivity field){
@@ -54,6 +57,11 @@ public class Player {
         }
     }
 
+    public void updatePv() {
+        pv.setText(pv.getText().toString() + " " + Integer.toString(lifePoint));
+        field.refPartie.child(role + "Pv").setValue(lifePoint);
+    }
+
     public String getRole() {
         return role;
     }
@@ -68,6 +76,12 @@ public class Player {
 
     public void setLifePoint(int lifePoint) {
         this.lifePoint = lifePoint;
+        updatePv();
+    }
+
+    public void looseLifePoint(int loselife) {
+        this.lifePoint -= loselife;
+        updatePv();
     }
 
     public FieldActivity getField() {
@@ -88,5 +102,13 @@ public class Player {
 
     public List<Card> getHand() {
         return hand;
+    }
+
+    public TextView getPv() {
+        return pv;
+    }
+
+    public void setPv(TextView pv) {
+        this.pv = pv;
     }
 }

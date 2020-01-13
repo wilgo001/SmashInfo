@@ -1,6 +1,8 @@
 package com.example.smashinfo.game;
 
 import com.example.smashinfo.activity.FieldActivity;
+import com.example.smashinfo.data.DataCard;
+import com.example.smashinfo.data.DataSmasheurCard;
 
 public class CardSmasheur extends Card {
 
@@ -54,6 +56,11 @@ public class CardSmasheur extends Card {
         }else if (difference > 0) {
             cible.getCard().setPositionCard(PositionCard.CIMETIERRE);
         }
+    }
+
+    public DataSmasheurCard replaceData() {
+        DataSmasheurCard card = new DataSmasheurCard(this.getName(), this.getDescription(), "A", Integer.toString(this.valAttack), Integer.toString(this.valDefense), this.groupe1, "?", Integer.parseInt(this.getId()));
+        return card;
     }
 
 

@@ -1,18 +1,20 @@
 package com.example.smashinfo.game;
 
+import com.example.smashinfo.data.DataCard;
+import com.example.smashinfo.data.DataSmasheurCard;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class Card {
 
     private String name, cardKey;
-    private int id;
+    private String id;
     private String description;
     private PositionCard positionCard;
     private StorageReference imageRef;
 
     public Card(String name, String description, String cardKey, PositionCard positionCard, String nomImage ){
-        this.id = id;
+        this.id = nomImage;
         this.name = name;
         this.description = description;
         this.cardKey = cardKey;
@@ -24,11 +26,11 @@ public class Card {
         return cardKey;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -77,6 +79,4 @@ public class Card {
                 ", description='" + description + '\'' +
                 '}';
     }
-
-
 }

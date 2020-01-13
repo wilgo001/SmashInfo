@@ -236,7 +236,7 @@ public class tirageActivity extends AppCompatActivity {
             @Override
             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                 Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
-                image.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 516, 516, false));
+                image.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 400 , 400, false));
             }
         });
     }
