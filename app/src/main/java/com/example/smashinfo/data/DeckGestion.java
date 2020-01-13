@@ -98,7 +98,7 @@ public class DeckGestion {
         CARDREF.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.child("nom").getValue().equals(title)) {
+                if (dataSnapshot.child("name").getValue().equals(title)) {
                     switch (typeCard) {
                         case SMASHEUR:
                             dataCard = dataSnapshot.getValue(DataSmasheurCard.class);
@@ -118,7 +118,7 @@ public class DeckGestion {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.child("nom").getValue().equals(title)) {
+                if (dataSnapshot.child("name").getValue().equals(title)) {
                     switch (typeCard) {
                         case SMASHEUR:
                             dataCard = dataSnapshot.getValue(DataSmasheurCard.class);
@@ -169,14 +169,14 @@ public class DeckGestion {
         CARDREF.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.child("nom").getValue().equals(DeckGestion.getStringName(title))) {
+                if (dataSnapshot.child("name").getValue().equals(DeckGestion.getStringName(title))) {
                     refDeck.child(dataSnapshot.getKey()).setValue(dataSnapshot.getValue());
                 }
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.child("nom").getValue().equals(DeckGestion.getStringName(title))) {
+                if (dataSnapshot.child("name").getValue().equals(DeckGestion.getStringName(title))) {
                     refDeck.child(dataSnapshot.getKey()).setValue(dataSnapshot.getValue());
                 }
             }

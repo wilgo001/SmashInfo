@@ -13,7 +13,7 @@ public class DataSmasheurCard extends  DataCard{
         super();
     }
 
-    public DataSmasheurCard(String nom, String description, String probabilite, String attaque, String defense, String groupe1, String groupe2, int id) {
+    public DataSmasheurCard(String nom, String description, String probabilite, String attaque, String defense, String groupe1, String groupe2, String id) {
         super(nom, description, probabilite, id);
         this.attaque = attaque;
         this.defense = defense;

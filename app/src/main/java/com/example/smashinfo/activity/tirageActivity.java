@@ -138,12 +138,12 @@ public class tirageActivity extends AppCompatActivity {
                 for (int i = 1; i > 10; i++) {
                     int index = (int) (Math.random() * normal.size());
                     if (i < 9) {
-                        String nom = normalRare.get(index).getName();
+                        String name = normalRare.get(index).getName();
                         String description = normalRare.get(index).getDescription();
                         String attaque = ((DataSmasheurCard) (normalRare.get(index))).getAttaque();
                         String defense = ((DataSmasheurCard) (normalRare.get(index))).getDefense();
                     } else {
-                        String nom = superLegendaire.get(index).getName();
+                        String name = superLegendaire.get(index).getName();
                         String description = superLegendaire.get(index).getDescription();
                         String attaque = ((DataSmasheurCard) (superLegendaire.get(index))).getAttaque();
                         String defense = ((DataSmasheurCard) (superLegendaire.get(index))).getDefense();
