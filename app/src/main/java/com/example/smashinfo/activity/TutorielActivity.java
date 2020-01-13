@@ -49,7 +49,7 @@ public class TutorielActivity extends com.github.paolorotolo.appintro.AppIntro {
         addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Att","Si un combat entre 2 \"smasheur\" en position d'attaque a lieu",R.drawable.BphaseAtt1, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
         addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Att","On compare l'\"Att\" des deux \"smasheur\"",R.drawable.BphaseAtt2, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
         addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Att","le smasheur avec la plus faible attaque est détruit et envoyé au cimetière",R.drawable.BphaseAtt3, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
-        addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Att","Et le joueur dont le \"smasheur\" est détruit perd des PV égaux à la différence des deux \"Att\"",R.drawable.BphaseDef3, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
+        addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Att","Et le joueur dont le \"smasheur\" est détruit perd des PV égaux à la différence des deux \"Att\"",R.drawable.BphaseAtt4, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
 
 
         addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Def","Si un combat entre 1 \"smasheur\" en position d'attaque et un \"smasheur\" en position de défense a lieu",R.drawable.BphaseDef1, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
@@ -60,8 +60,8 @@ public class TutorielActivity extends com.github.paolorotolo.appintro.AppIntro {
         addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Def","Sinon le \"smasheurs\" en position de défense est détruit",R.drawable.BphaseDef6, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
         addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Def","Et aucun des deux joueurs ne perd de PV",R.drawable.BphaseDef7, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
 
-        addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Rien","Si un joueur subit une attaque alors qu'il n'a plus de \"smasheur\" sur le terrain",R.drawable.BphaseR1, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
-        addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Rien","Il subit une attaque \"directe\" et perd des PV égaux à l'\"Att\" du \"smasheur\" attaquant",R.drawable.BphaseR2, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
+        addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Rien","Si un joueur subit une attaque alors qu'il n'a plus de \"smasheur\" sur le terrain",R.drawable.b_phase_r1, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
+        addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Rien","Il subit une attaque \"directe\" et perd des PV égaux à l'\"Att\" du \"smasheur\" attaquant",R.drawable.b_phase_r2, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
 
 
 
