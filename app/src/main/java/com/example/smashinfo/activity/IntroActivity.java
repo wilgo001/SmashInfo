@@ -117,7 +117,7 @@ public class  IntroActivity extends AppCompatActivity {
 
     private void goToLogIn() {
         Log.i("info", "go to sign in");
-        Intent myIntent = new Intent(this, SignInActivity.class);
+        Intent myIntent = new Intent(this, LoginActivity.class);
         this.startActivity(myIntent);
         Log.i("info", "intent done");
     }

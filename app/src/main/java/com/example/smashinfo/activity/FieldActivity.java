@@ -68,7 +68,6 @@ public class FieldActivity extends AppCompatActivity {
     private DatabaseReference refGeneral = FirebaseDatabase.getInstance().getReference(), refPartie;
     private FirebaseUser user;
     public int phase, turn;
-    public GridLayout gridHand;
     public List<ImageView> handImages;
     private ConstraintLayout.LayoutParams layoutParamsHand, layoutParamsClose;
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -77,7 +76,7 @@ public class FieldActivity extends AppCompatActivity {
     private int index;
     private Bitmap bitmap;
 
-    private ConstraintLayout show1;
+    private ConstraintLayout show1, gridHand;
     private TextView titre, archetype, descriptionCarte, attaque, defense;
     private Button action1, action2, annuler;
     private ImageView imageCarte;
@@ -153,8 +152,9 @@ public class FieldActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mainButton.setClickable(false);
+                gridHand.setLayoutParams(layoutParamsHand);
                 try {
-                    //gridHand.setLayoutParams(layoutParamsHand);
+
                     main();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -315,30 +315,29 @@ public class FieldActivity extends AppCompatActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        layoutParamsHand = new ConstraintLayout.LayoutParams(gridHand.getWidth(), gridHand.getHeight());
-        //gridHand.setLayoutParams(layoutParamsClose);
+        layoutParamsHand = new ConstraintLayout.LayoutParams(show1.getWidth(), show1.getHeight());
+        gridHand.setLayoutParams(layoutParamsClose);
         show1.setLayoutParams(layoutParamsClose);
     }
 
     private void main() throws IOException {
         Toast.makeText(this, "main : " + player.getHand().size(), Toast.LENGTH_SHORT).show();
-        //retour.setLayoutParams(layoutParamsRetour);
-        //if (player.getHand().size() > 0) {
+        if (player.getHand().size() > 0) {
             afficherImage(M1, player.getHand().get(0));
             addCardListener(M1, (CardSmasheur) player.getHand().get(0), "hand");
-        //}
-        //if (player.getHand().size() > 1) {
+        }
+        if (player.getHand().size() > 1) {
             afficherImage(M2, player.getHand().get(1));
             addCardListener(M2, (CardSmasheur) player.getHand().get(1), "hand");
-        //}
-        //if (player.getHand().size() > 2) {
+        }
+        if (player.getHand().size() > 2) {
             afficherImage(M3, player.getHand().get(2));
             addCardListener(M3, (CardSmasheur) player.getHand().get(2), "hand");
-        //}
-        //if (player.getHand().size() >3) {
+        }
+        if (player.getHand().size() >3) {
             afficherImage(M4, player.getHand().get(3));
             addCardListener(M4, (CardSmasheur) player.getHand().get(3), "hand");
-        //}
+        }
         if (player.getHand().size() > 4) {
             afficherImage(M5, player.getHand().get(4));
         }
@@ -391,7 +390,7 @@ public class FieldActivity extends AppCompatActivity {
                 attaque.setText(Integer.toString(card.getValAttack()));
                 defense.setText(Integer.toString(card.getValDefense()));
                 try {
-                    afficherImageWithTaille(imageCarte, card, imageCarte.getWidth(), imageCarte.getHeight());
+                    afficherImage(imageCarte, card);
                 }catch(IOException e) {
                     e.printStackTrace();
                 }
