@@ -35,6 +35,8 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".activity.TutorielActivity"
                   android:screenOrientation="portrait"/>
+        <activity android:name=".activity.tirageActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

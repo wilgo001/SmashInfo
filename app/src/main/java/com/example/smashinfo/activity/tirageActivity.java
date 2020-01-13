@@ -62,13 +62,13 @@ public class tirageActivity extends AppCompatActivity {
                 db.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                        if (dataSnapshot.child("probabilite").getValue() == "N") {
+                        if (dataSnapshot.child("probabilite").getValue().equals("N")) {
                             normal.add(new CarteWithId(dataSnapshot.getKey(), dataSnapshot.getValue(DataSmasheurCard.class)));
                         } else {
                             rareSuperLegendaire.add(new CarteWithId(dataSnapshot.getKey(), dataSnapshot.getValue(DataSmasheurCard.class)));
                         }
 
-                        if (normal.size() + rareSuperLegendaire.size() >= 61) {
+                        if (normal.size() + rareSuperLegendaire.size() >= 60) {
                             i = 0;
                             tirage();
                         }
@@ -94,30 +94,6 @@ public class tirageActivity extends AppCompatActivity {
 
                     }
                 });
-
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    // gestion de l'erreur
-                }
-
-                for (int i = 1; i > 10; i++) {
-                    int index = (int) (Math.random() * normal.size());
-                    if (i < 9) {
-                        String nom = normal.get(index).getValue().getName();
-                        String description = normal.get(index).getValue().getDescription();
-                        String attaque = ((DataSmasheurCard) (normal.get(index).getValue())).getAttaque();
-                        String defense = ((DataSmasheurCard) (normal.get(index).getValue())).getDefense();
-                        cartesUser.child(normal.get(index).getKey()).setValue(normal.get(index).getValue());
-
-                    } else {
-                        String nom = rareSuperLegendaire.get(index).getValue().getName();
-                        String description = rareSuperLegendaire.get(index).getValue().getDescription();
-                        String attaque = ((DataSmasheurCard) (rareSuperLegendaire.get(index).getValue())).getAttaque();
-                        String defense = ((DataSmasheurCard) (rareSuperLegendaire.get(index).getValue())).getDefense();
-                        cartesUser.child(rareSuperLegendaire.get(index).getKey()).setValue(rareSuperLegendaire.get(index).getValue());
-                    }
-                }
 
 
                 break;
