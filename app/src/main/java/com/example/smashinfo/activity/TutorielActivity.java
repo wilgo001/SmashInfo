@@ -53,6 +53,8 @@ public class TutorielActivity extends com.github.paolorotolo.appintro.AppIntro {
         addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Def","Si un combat entre 1 \"smasheur\" en position d'attaque et un \"smasheur\" en position de défense a lieu",R.drawable.BphaseDef1, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
         addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Def","On compare l'\"Att\" et la \"Déf\" de chaque \"smasheur\"",R.drawable.BphaseDef2, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
         addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Def","Si le \"smasheur\" en position de Defense a une \"Déf\" supérieure à l'\"Att\" du deuxième \"smasheur\"",R.drawable.BphaseDef3, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
+        addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Def","Aucun des 2 \"smasheurs\" n'est détruit",R.drawable.BphaseDef2, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
+        addSlide(AppIntroFragment.newInstance("Battle Phase Att vs Def","Sinon le \"smasheurs\" en position de défense est détruit",R.drawable.BphaseDef3, ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary)));
 
 
     }
