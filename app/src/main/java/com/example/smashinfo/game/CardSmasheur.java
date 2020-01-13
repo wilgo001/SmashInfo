@@ -7,16 +7,26 @@ public class CardSmasheur extends Card {
     private int valAttack;
     private int valDefense;
     private FieldActivity context;
+    private String groupe1;
 
-    public CardSmasheur(String name, String description, String cardKey, PositionCard positionCard, int valAttack, int valDefense, FieldActivity context, String imageName) {
+    public CardSmasheur(String name, String description, String cardKey, PositionCard positionCard, int valAttack, int valDefense, FieldActivity context, String groupe1, String imageName) {
         super(name, description, cardKey, positionCard, imageName);
         this.valAttack = valAttack;
         this.valDefense = valDefense;
         this.context = context;
+        this.groupe1 = groupe1;
     }
 
     public void Attack(){
 
+    }
+
+    public String getGroupe1() {
+        return groupe1;
+    }
+
+    public void setGroupe1(String groupe1) {
+        this.groupe1 = groupe1;
     }
 
     public int getValAttack() {

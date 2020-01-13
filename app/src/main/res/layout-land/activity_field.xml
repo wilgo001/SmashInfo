@@ -290,6 +290,7 @@
         android:layout_height="match_parent"
         android:columnCount="5"
         android:rowCount="2"
+        android:useDefaultMargins="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -308,22 +309,28 @@
 
         <ImageView
             android:id="@+id/M1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_rowWeight="0.5"
             android:layout_column="1"
             android:layout_columnWeight="0.20"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center" />
 
         <ImageView
             android:id="@+id/M2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_rowWeight="0.5"
             android:layout_column="2"
             android:layout_columnWeight="0.20"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center" />
 
         <ImageView
             android:id="@+id/M3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_rowWeight="0.5"
             android:layout_column="3"
@@ -332,7 +339,7 @@
 
         <ImageView
             android:id="@+id/M4"
-            android:layout_row="1"
+            android:layout_row="0"
             android:layout_rowWeight="0.5"
             android:layout_column="4"
             android:layout_columnWeight="0.20"
@@ -350,6 +357,8 @@
 
         <ImageView
             android:id="@+id/M6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_row="1"
             android:layout_rowWeight="0.5"
             android:layout_column="1"
@@ -358,6 +367,8 @@
 
         <ImageView
             android:id="@+id/M7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_row="1"
             android:layout_rowWeight="0.5"
             android:layout_column="2"
@@ -366,6 +377,8 @@
 
         <ImageView
             android:id="@+id/M8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_row="1"
             android:layout_rowWeight="0.5"
             android:layout_column="3"
@@ -374,6 +387,8 @@
 
         <ImageView
             android:id="@+id/M9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_row="1"
             android:layout_rowWeight="0.5"
             android:layout_column="4"
@@ -381,4 +396,127 @@
             android:layout_gravity="center" />
 
     </GridLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/show1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/show2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="25dp"
+                android:layout_weight="0.5"
+                android:background="@drawable/card_patern"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/titreCarte"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_weight="0.77"
+                    android:text="titre"
+                    android:textAlignment="viewStart"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/imagecarte"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="0.48"
+                    android:src="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/archetype"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="0.86"
+                    android:text="archetype"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/descriptionCarte"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="0.80"
+                    android:text="descriptionCarte" />
+
+                <LinearLayout
+                    android:id="@+id/textView17"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_weight="0.83"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/attaque"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:text="attaque"
+                        tools:ignore="InvalidId" />
+
+                    <TextView
+                        android:id="@+id/defense"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:text="defense" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/controls"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="25dp"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/annuler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="annuler" />
+
+                <Button
+                    android:id="@+id/action1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="action1" />
+
+                <Button
+                    android:id="@+id/action2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="action2" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,7 +21,7 @@ public class Deck {
     }
 
     public void addCarte(DataSmasheurCard value, String key, String imageName) {
-        Card card = new CardSmasheur(value.getName(), value.getDescription(), key, PositionCard.DECK, Integer.parseInt(value.attaque), Integer.parseInt(value.defense), field, imageName);
+        Card card = new CardSmasheur(value.getName(), value.getDescription(), key, PositionCard.DECK, Integer.parseInt(value.attaque), Integer.parseInt(value.defense), field, value.groupe1, imageName);
         cards.add(card);
     }
 

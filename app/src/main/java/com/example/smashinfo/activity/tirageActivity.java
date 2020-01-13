@@ -1,10 +1,14 @@
 package com.example.smashinfo.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.smashinfo.R;
 import com.example.smashinfo.data.CarteWithId;
 import com.example.smashinfo.data.DataSmasheurCard;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -20,7 +26,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class tirageActivity extends AppCompatActivity {
@@ -36,12 +47,14 @@ public class tirageActivity extends AppCompatActivity {
     private int i;
     private Button suivant;
     private TextView nom, description;
+    private ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tirage);
 
+        image = findViewById(R.id.carteScreen);
         Intent intent = this.getIntent();
         tir = intent.getStringExtra(MainMenuActivity.TIRAGE_KEY);
 
@@ -160,7 +173,7 @@ public class tirageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (i < 10) {
-                    tirageSuivant();
+                    tirage();
                 } else {
                     retourMenu();
                 }
@@ -175,7 +188,7 @@ public class tirageActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void tirageSuivant() {
+    private void tirage() {
         if (i < 9) {
             int index = (int) (Math.random() * normal.size());
             String nom = normal.get(index).getValue().getName();
@@ -185,8 +198,15 @@ public class tirageActivity extends AppCompatActivity {
             cartesUser.child(normal.get(index).getKey()).setValue(normal.get(index).getValue());
             this.nom.setText(nom);
             this.description.setText("Description : "+description);
+            StorageReference cardRef = FirebaseStorage.getInstance().getReference("cartes/" + normal.get(index).getKey() + "/" + normal.get(index).getValue().getId());
+            try {
+                afficherImage(cardRef);
+            }catch(IOException e) {
+                e.printStackTrace();
+            }
+
         } else {
-            int index = (int) (Math.random() * normal.size());
+            int index = (int) (Math.random() * rareSuperLegendaire.size());
             String nom = rareSuperLegendaire.get(index).getValue().getName();
             String description = rareSuperLegendaire.get(index).getValue().getDescription();
             String attaque = ((DataSmasheurCard) (rareSuperLegendaire.get(index).getValue())).getAttaque();
@@ -194,19 +214,30 @@ public class tirageActivity extends AppCompatActivity {
             cartesUser.child(rareSuperLegendaire.get(index).getKey()).setValue(rareSuperLegendaire.get(index).getValue());
             this.nom.setText(nom);
             this.description.setText("Description : "+description);
+            StorageReference cardRef = FirebaseStorage.getInstance().getReference("cartes/" + rareSuperLegendaire.get(index).getKey() + "/" + rareSuperLegendaire.get(index).getValue().getId());
+            try {
+                afficherImage(cardRef);
+            }catch(IOException e) {
+                e.printStackTrace();
+            }
         }
         i++;
     }
 
-    private void tirage() {
-        int index = (int) (Math.random() * normal.size());
-        String nom = normal.get(index).getValue().getName();
-        String description = normal.get(index).getValue().getDescription();
-        String attaque = ((DataSmasheurCard) (normal.get(index).getValue())).getAttaque();
-        String defense = ((DataSmasheurCard) (normal.get(index).getValue())).getDefense();
-        cartesUser.child(normal.get(index).getKey()).setValue(normal.get(index).getValue());
-        this.nom.setText(nom);
-        this.description.setText("Description : "+description);
-        i++;
+    public void afficherImage(StorageReference imageRef) throws IOException {
+        final File localFile = File.createTempFile("image", "jpeg");
+        imageRef.getFile(localFile).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), "echec de l'upload", Toast.LENGTH_SHORT).show();
+
+            }
+        }).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                Bitmap bitmap = BitmapFactory.decodeFile(localFile.getAbsolutePath());
+                image.setImageBitmap(Bitmap.createScaledBitmap(bitmap, 516, 516, false));
+            }
+        });
     }
 }

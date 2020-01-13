@@ -59,7 +59,7 @@
                 android:layout_marginStart="85dp"
                 android:layout_marginBottom="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/B2"
+                app:layout_constraintStart_toEndOf="@+id/carteScreen"
                 app:srcCompat="@color/colorPrimary" />
 
             <ImageButton
@@ -91,7 +91,7 @@
                 android:layout_marginStart="85dp"
                 android:layout_marginTop="25dp"
                 android:layout_marginBottom="12dp"
-                app:layout_constraintBottom_toTopOf="@+id/B2"
+                app:layout_constraintBottom_toTopOf="@+id/carteScreen"
                 app:layout_constraintStart_toEndOf="@+id/A1"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"

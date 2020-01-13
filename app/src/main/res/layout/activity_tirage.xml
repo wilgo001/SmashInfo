@@ -41,17 +41,16 @@
             android:textSize="18sp" />
 
         <ImageView
-            android:id="@+id/B2"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
+            android:id="@+id/carteScreen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_rowWeight="0.5"
             android:layout_column="0"
             android:layout_columnWeight="0.25"
             android:layout_gravity="center"
             android:layout_marginTop="92dp"
-            android:layout_weight="0.20"
-            app:srcCompat="@drawable/square" />
+            android:layout_weight="0.20" />
 
         <TextView
             android:id="@+id/descriptionCarte"

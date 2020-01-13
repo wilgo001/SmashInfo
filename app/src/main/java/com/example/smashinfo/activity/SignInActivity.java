@@ -133,7 +133,7 @@ public class SignInActivity extends AppCompatActivity {
             databaseReference.setValue(dataUser);
 
             DatabaseReference deckRef = databaseReference.child("decks").child("starter deck");
-            final DatabaseReference listRef = databaseReference.child("card list");
+            DatabaseReference listRef = databaseReference.child("card list");
             DeckGestion.generateAutoDeck(deckRef);
             DeckGestion.moveDeckWithTitle(deckRef, listRef);
         }

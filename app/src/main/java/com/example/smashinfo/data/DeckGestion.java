@@ -16,7 +16,7 @@ public class DeckGestion {
     public static final String SMASHEUR = "Smasheur";
     public static final String EFFET = "Effet";
     public static final String SUPER_SMASHEUR = "Super-Smasheur";
-    private final static DatabaseReference CARDREF = FirebaseDatabase.getInstance().getReference().child("cartes");
+    public final static DatabaseReference CARDREF = FirebaseDatabase.getInstance().getReference().child("cartes");
     private static DataCard dataCard;
     private static boolean test;
 
@@ -169,16 +169,16 @@ public class DeckGestion {
         CARDREF.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.child("name").getValue().equals(DeckGestion.getStringName(title))) {
+                if (dataSnapshot.child("nom").getValue().equals(DeckGestion.getStringName(title))) {
                     refDeck.child(dataSnapshot.getKey()).setValue(dataSnapshot.getValue());
                 }
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.child("name").getValue().equals(DeckGestion.getStringName(title))) {
+                /*if (dataSnapshot.child("name").getValue().equals(DeckGestion.getStringName(title))) {
                     refDeck.child(dataSnapshot.getKey()).setValue(dataSnapshot.getValue());
-                }
+                }*/
             }
 
             @Override
