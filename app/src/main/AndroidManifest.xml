@@ -16,6 +16,11 @@
             android:screenOrientation="portrait"
             android:clearTaskOnLaunch="true">
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.FieldActivity"
@@ -25,11 +30,7 @@
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".activity.SignInActivity"
                   android:screenOrientation="portrait"/>
